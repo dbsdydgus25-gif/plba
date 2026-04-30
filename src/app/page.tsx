@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+
 import { ArrowRight, Store, QrCode, UserCheck, Coins } from "lucide-react";
 
 export default function LandingPage() {

@@ -69,7 +69,7 @@ const MOCK_CAMPAIGNS = [
 ];
 
 export default function ExplorePage() {
-  const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
+  const [selectedCampaign, setSelectedCampaign] = useState<typeof MOCK_CAMPAIGNS[0] | null>(null);
   const [copied, setCopied] = useState(false);
 
   const handleCopy = (link: string) => {

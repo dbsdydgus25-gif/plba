@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Store, Link as LinkIcon, Share2, Coins, ArrowRight, UserPlus, TrendingUp, CheckCircle, ShieldCheck } from "lucide-react";
+import { Store, Link as LinkIcon, Share2, Coins, ArrowRight, UserPlus, ShieldCheck } from "lucide-react";
 
 export default function GuidePage() {
   return (
