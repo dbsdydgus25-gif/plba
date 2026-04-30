@@ -1,27 +1,563 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   CSS 커스텀 변수 — 플바 디자인 시스템
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 배경 */
+  --bg-base: #FFFFFF;
+  --bg-card: #F8F9FA;
+  --bg-card-hover: #F1F3F5;
+  --bg-elevated: #FFFFFF;
+
+  /* 메인 컬러 */
+  --color-primary: #5B5BD6;
+  --color-primary-light: #7B7BE8;
+  --color-primary-dark: #4646C0;
+  --color-primary-subtle: rgba(91, 91, 214, 0.1);
+
+  /* 보조 컬러 (리워드·성공) */
+  --color-mint: #00C896;
+  --color-mint-light: #00E0A8;
+  --color-mint-subtle: rgba(0, 200, 150, 0.1);
+
+  /* 텍스트 */
+  --text-primary: #1A1A24;
+  --text-secondary: #66667A;
+  --text-muted: #9999AA;
+
+  /* 보더 */
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-default: rgba(0, 0, 0, 0.12);
+
+  /* 상태 컬러 */
+  --color-danger: #FF4D6D;
+  --color-warning: #FFB830;
+  --color-success: #00C896;
+
+  /* 반응형 기준 */
+  --max-app-width: 390px;
+  --nav-height: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================================
+   베이스 스타일
+   ============================================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  /* 모바일 앱처럼 스크롤 동작 */
+  -webkit-overflow-scrolling: touch;
 }
 
+/* 숫자·영문은 Inter 폰트 */
+.font-inter,
+.font-number {
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* ============================================================
+   앱 레이아웃 래퍼
+   ============================================================ */
+.app-container {
+  max-width: var(--max-app-width);
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+  background: var(--bg-base);
+  overflow: hidden;
+}
+
+/* 콘텐츠 영역 (하단 네비게이션 높이만큼 패딩) */
+.page-content {
+  padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + 16px);
+  min-height: 100dvh;
+}
+
+/* ============================================================
+   카드 컴포넌트
+   ============================================================ */
+.card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  padding: 20px;
+  transition: background 0.15s ease;
+}
+
+.card-sm {
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.card-lg {
+  border-radius: 20px;
+  padding: 24px;
+}
+
+/* Apple Wallet 스타일 카드 */
+.wallet-card {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+  border-radius: 24px;
+  border: 1px solid var(--border-default);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.wallet-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: var(--color-primary-subtle);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wallet-card-primary {
+  background: linear-gradient(135deg, #7B7BE8 0%, #5B5BD6 50%, #4646C0 100%);
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 8px 24px rgba(91, 91, 214, 0.25);
+}
+
+.wallet-card-mint {
+  background: linear-gradient(135deg, #00E0A8 0%, #00C896 50%, #00916E 100%);
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 8px 24px rgba(0, 200, 150, 0.25);
+}
+
+/* ============================================================
+   버튼
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 16px 24px;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-light);
+}
+
+.btn-mint {
+  background: var(--color-mint);
+  color: #fff;
+  padding: 16px 24px;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  padding: 15px 24px;
+}
+
+.btn-outline:hover {
+  background: var(--bg-card);
+}
+
+.btn-ghost {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  padding: 14px 20px;
+}
+
+/* 점주 승인 버튼 — 화면 1/3 높이 */
+.btn-approve {
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: 800;
+  height: 33dvh;
+  width: 100%;
+  letter-spacing: -0.5px;
+  transition: all 0.2s ease;
+}
+
+.btn-approve:active {
+  transform: scale(0.98);
+  background: var(--color-primary-dark);
+}
+
+.btn-full {
+  width: 100%;
+  padding: 17px;
+}
+
+.btn-sm {
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 10px;
+}
+
+/* ============================================================
+   입력 필드
+   ============================================================ */
+.input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 16px;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+  -webkit-appearance: none;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  background: var(--bg-elevated);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+/* OTP 입력 */
+.otp-input {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 12px;
+}
+
+/* ============================================================
+   하단 네비게이션 바
+   ============================================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-app-width);
+  height: calc(var(--nav-height) + var(--safe-bottom));
+  background: rgba(22, 22, 30, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 8px;
+  z-index: 50;
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+  text-decoration: none;
+}
+
+.bottom-nav-item.active {
+  color: var(--color-primary);
+}
+
+.bottom-nav-item svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ============================================================
+   배지 / 상태 칩
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-primary { background: var(--color-primary-subtle); color: var(--color-primary-light); }
+.badge-mint { background: var(--color-mint-subtle); color: var(--color-mint); }
+.badge-warning { background: rgba(255, 184, 48, 0.15); color: var(--color-warning); }
+.badge-danger { background: rgba(255, 77, 109, 0.15); color: var(--color-danger); }
+.badge-muted { background: rgba(136, 136, 160, 0.15); color: var(--text-secondary); }
+
+/* ============================================================
+   숫자 애니메이션 (하우머치 카운터)
+   ============================================================ */
+@keyframes countUp {
+  from { transform: translateY(4px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.counter-animate {
+  animation: countUp 0.1s ease;
+}
+
+/* ============================================================
+   진행률 바
+   ============================================================ */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--border-subtle);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.progress-fill-mint {
+  background: var(--color-mint);
+}
+
+.progress-fill-warning {
+  background: var(--color-warning);
+}
+
+/* ============================================================
+   구분선
+   ============================================================ */
+.divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 16px 0;
+}
+
+/* ============================================================
+   섹션 헤더
+   ============================================================ */
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* ============================================================
+   페이지 헤더 (상단)
+   ============================================================ */
+.page-header {
+  padding: 56px 20px 20px;
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 15, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 40;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ============================================================
+   로딩 스피너
+   ============================================================ */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* ============================================================
+   빈 상태 (Empty State) — 절대 허용 안 함, 항상 CTA 포함
+   ============================================================ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-state-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--bg-card);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   토스트 / 알림
+   ============================================================ */
+.toast-container {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  max-width: calc(var(--max-app-width) - 32px);
+  width: 100%;
+}
+
+/* ============================================================
+   스크롤바 숨김 (모바일 앱 느낌)
+   ============================================================ */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ============================================================
+   탭 컴포넌트
+   ============================================================ */
+.tab-bar {
+  display: flex;
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.tab-item {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ============================================================
+   입력 필드 그룹
+   ============================================================ */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   리스트 아이템
+   ============================================================ */
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+/* ============================================================
+   펄스 (온라인 인디케이터)
+   ============================================================ */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-mint);
+  border-radius: 50%;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   Tailwind 오버라이드
+   ============================================================ */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-primary { color: var(--text-primary); }
+  .text-secondary { color: var(--text-secondary); }
+  .text-muted { color: var(--text-muted); }
+  .text-mint { color: var(--color-mint); }
+  .text-brand { color: var(--color-primary); }
+
+  .bg-base { background-color: var(--bg-base); }
+  .bg-card { background-color: var(--bg-card); }
+  .bg-elevated { background-color: var(--bg-elevated); }
+
+  .border-subtle { border-color: var(--border-subtle); }
+  .border-default { border-color: var(--border-default); }
 }
