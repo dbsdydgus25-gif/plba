@@ -35,7 +35,7 @@ export default function DashboardPage() {
           <div className="flex justify-center gap-3 mt-4 text-sm">
             <span className="text-gray-400 font-medium">추천 키워드:</span>
             {["강남역 카페", "홍대 맛집", "필라테스", "신규 오픈"].map(keyword => (
-              <Link key={keyword} href="/explore" className="text-[#5B5BD6] hover:underline font-medium">
+              <Link key={keyword} href="/campaigns" className="text-[#5B5BD6] hover:underline font-medium">
                 {keyword}
               </Link>
             ))}

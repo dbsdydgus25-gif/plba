@@ -35,17 +35,11 @@ export default function LandingPage() {
           
           <div className="flex flex-col sm:flex-row items-center gap-4 animate-slide-up" style={{ animationDelay: "200ms" }}>
             <Link 
-              href="/explore" 
+              href="/dashboard" 
               className="w-full sm:w-auto px-8 py-4 bg-[#5B5BD6] text-white rounded-xl font-bold text-lg hover:bg-[#4646C0] transition-all shadow-xl shadow-[#5B5BD6]/25 flex items-center justify-center gap-2 group"
             >
-              캠페인 둘러보기
+              시작하기
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link 
-              href="/for-business" 
-              className="w-full sm:w-auto px-8 py-4 bg-white text-gray-900 border border-gray-200 hover:border-gray-300 hover:bg-gray-50 rounded-xl font-bold text-lg transition-all flex items-center justify-center"
-            >
-              사장님이신가요?
             </Link>
           </div>
         </div>
@@ -152,9 +146,9 @@ export default function LandingPage() {
           <p className="text-xl text-gray-400 mb-12">
             내가 자주 가는 단골집, 동네 맛집을 홍보하고 매일 수익을 창출할 수 있습니다.
           </p>
-          <button className="px-10 py-5 bg-[#5B5BD6] text-white rounded-2xl font-bold text-xl hover:bg-[#4646C0] transition-all shadow-2xl shadow-[#5B5BD6]/40">
-            3초만에 무료 회원가입
-          </button>
+          <Link href="/dashboard" className="inline-flex px-10 py-5 bg-[#5B5BD6] text-white rounded-2xl font-bold text-xl hover:bg-[#4646C0] transition-all shadow-2xl shadow-[#5B5BD6]/40">
+            3초만에 무료 시작하기
+          </Link>
         </div>
       </section>
 
