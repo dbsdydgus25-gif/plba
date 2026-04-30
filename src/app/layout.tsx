@@ -3,7 +3,7 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "플바 (+알바) - 로컬 마케팅 파트너스",
+  title: "플바 plba",
   description: "오프라인 매장 무료 근태관리 + 로컬 리워드 마케팅 플랫폼",
 };
 
