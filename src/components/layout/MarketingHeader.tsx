@@ -40,7 +40,7 @@ export default function MarketingHeader() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-10 font-medium">
-          <Link href="/" className={`text-lg font-bold transition-colors ${pathname === '/' ? 'text-[#5B5BD6]' : 'text-gray-600 hover:text-[#5B5BD6]'}`}>
+          <Link href="/guide" className={`text-lg font-bold transition-colors ${pathname === '/guide' ? 'text-[#5B5BD6]' : 'text-gray-600 hover:text-[#5B5BD6]'}`}>
             플바란?
           </Link>
           <Link href="/terms" className={`text-lg font-bold transition-colors ${pathname === '/terms' ? 'text-[#5B5BD6]' : 'text-gray-600 hover:text-[#5B5BD6]'}`}>
@@ -66,7 +66,7 @@ export default function MarketingHeader() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 right-0 bg-white shadow-xl border-t border-gray-100 flex flex-col p-6 gap-6 md:hidden">
-          <Link href="/" className={`text-xl font-bold ${pathname === '/' ? 'text-[#5B5BD6]' : 'text-gray-800'}`} onClick={() => setIsMobileMenuOpen(false)}>
+          <Link href="/guide" className={`text-xl font-bold ${pathname === '/guide' ? 'text-[#5B5BD6]' : 'text-gray-800'}`} onClick={() => setIsMobileMenuOpen(false)}>
             플바란?
           </Link>
           <Link href="/terms" className={`text-xl font-bold ${pathname === '/terms' ? 'text-[#5B5BD6]' : 'text-gray-800'}`} onClick={() => setIsMobileMenuOpen(false)}>
