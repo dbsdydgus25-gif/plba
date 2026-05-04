@@ -43,6 +43,9 @@ export default function MarketingHeader() {
           <Link href="/guide" className={`text-lg font-bold transition-colors ${pathname === '/guide' ? 'text-[#5B5BD6]' : 'text-gray-600 hover:text-[#5B5BD6]'}`}>
             플바란?
           </Link>
+          <Link href="/form" className={`text-lg font-bold transition-colors ${pathname === '/form' ? 'text-[#5B5BD6]' : 'text-gray-600 hover:text-[#5B5BD6]'}`}>
+            사전등록
+          </Link>
           <Link href="/terms" className={`text-lg font-bold transition-colors ${pathname === '/terms' ? 'text-[#5B5BD6]' : 'text-gray-600 hover:text-[#5B5BD6]'}`}>
             이용약관
           </Link>
@@ -68,6 +71,9 @@ export default function MarketingHeader() {
         <div className="absolute top-full left-0 right-0 bg-white shadow-xl border-t border-gray-100 flex flex-col p-6 gap-6 md:hidden">
           <Link href="/guide" className={`text-xl font-bold ${pathname === '/guide' ? 'text-[#5B5BD6]' : 'text-gray-800'}`} onClick={() => setIsMobileMenuOpen(false)}>
             플바란?
+          </Link>
+          <Link href="/form" className={`text-xl font-bold ${pathname === '/form' ? 'text-[#5B5BD6]' : 'text-gray-800'}`} onClick={() => setIsMobileMenuOpen(false)}>
+            사전등록
           </Link>
           <Link href="/terms" className={`text-xl font-bold ${pathname === '/terms' ? 'text-[#5B5BD6]' : 'text-gray-800'}`} onClick={() => setIsMobileMenuOpen(false)}>
             이용약관
