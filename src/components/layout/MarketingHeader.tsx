@@ -22,7 +22,7 @@ export default function MarketingHeader() {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/90 backdrop-blur-md shadow-sm py-4" : "bg-white border-b border-gray-100 py-6"
+        isScrolled ? "bg-white shadow-sm py-4" : "bg-white py-6"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -51,8 +51,8 @@ export default function MarketingHeader() {
           </Link>
           
           <div className="flex items-center ml-4">
-            <Link href="/dashboard" className="px-8 py-3.5 bg-[#5B5BD6] text-white rounded-full font-bold text-lg hover:bg-[#4646C0] transition-colors shadow-lg shadow-[#5B5BD6]/30">
-              시작하기
+            <Link href="/form" className="px-8 py-3.5 bg-[#5B5BD6] text-white rounded-full font-bold text-lg hover:bg-[#4646C0] transition-colors shadow-lg shadow-[#5B5BD6]/30">
+              사전등록하기
             </Link>
           </div>
         </nav>
@@ -79,8 +79,8 @@ export default function MarketingHeader() {
             이용약관
           </Link>
           <hr className="border-gray-100" />
-          <Link href="/dashboard" className="w-full py-4 bg-[#5B5BD6] text-white rounded-xl text-center font-bold text-lg" onClick={() => setIsMobileMenuOpen(false)}>
-            시작하기
+          <Link href="/form" className="w-full py-4 bg-[#5B5BD6] text-white rounded-xl text-center font-bold text-lg" onClick={() => setIsMobileMenuOpen(false)}>
+            사전등록하기
           </Link>
         </div>
       )}

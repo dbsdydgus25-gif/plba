@@ -38,13 +38,13 @@ export default function LandingPage() {
             성과 보장형 오프라인 마케팅
           </motion.div>
 
-          <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tighter leading-[1.15] md:leading-[1.1] mb-6 text-balance break-keep">
+          <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6 text-balance break-keep">
             진짜 손님이 올 때만 <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5B5BD6] to-[#00C896]">결제하세요</span>
           </motion.h1>
           
-          <motion.p variants={fadeUp} className="text-lg md:text-2xl text-gray-500 mb-12 max-w-2xl mx-auto font-medium tracking-tight leading-relaxed text-balance break-keep">
-            초기 비용 0원. 배달앱 수수료 0원. <br />
+          <motion.p variants={fadeUp} className="text-lg md:text-2xl text-gray-500 mb-12 max-w-2xl mx-auto font-medium leading-relaxed text-balance break-keep">
+            초기 비용 0원. <br />
             확실한 방문 성과가 증명될 때만 마케팅비를 냅니다.
           </motion.p>
           
@@ -53,7 +53,7 @@ export default function LandingPage() {
               href="/form" 
               className="w-full sm:w-auto px-8 py-5 bg-[#1A1A24] text-white rounded-2xl font-bold text-lg md:text-xl hover:bg-black transition-all shadow-2xl shadow-black/20 flex items-center justify-center gap-2 group"
             >
-              얼리버드 20,000P 받기
+              사전신청하기
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
@@ -197,9 +197,6 @@ export default function LandingPage() {
                   <button className="w-full py-4 bg-[#FEE500] text-[#000000] font-bold rounded-xl text-sm shadow-sm">
                     카카오톡 공유하기
                   </button>
-                  <button className="w-full py-4 bg-[#FF7E36] text-white font-bold rounded-xl text-sm shadow-sm">
-                    당근마켓 공유하기
-                  </button>
                 </div>
               </div>
             </motion.div>
@@ -238,13 +235,6 @@ export default function LandingPage() {
                     <p className="text-[#00C896] text-4xl font-extrabold tracking-tighter">
                       12<span className="text-lg text-gray-900">팀</span>
                     </p>
-                  </div>
-
-                  <div className="bg-[#5B5BD6] p-4 rounded-t-2xl mt-auto shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
-                    <div className="flex justify-between items-center text-white">
-                      <span className="text-sm font-bold opacity-80">이번 달 총 매출 증가</span>
-                      <span className="font-extrabold text-xl">+ 3,450,000원</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -295,7 +285,7 @@ export default function LandingPage() {
                 <div className="inline-block px-6 py-2 bg-black text-white rounded-full font-bold text-lg mb-6 shadow-lg shadow-black/20">
                   ROAS (광고비 대비 매출액)
                 </div>
-                <h3 className="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00C896] to-[#5B5BD6] tracking-tighter drop-shadow-sm">
+                <h3 className="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00C896] to-[#5B5BD6] pb-4 leading-normal">
                   3,000%
                 </h3>
                 <p className="text-gray-500 font-bold mt-6 text-xl tracking-tight">
@@ -335,10 +325,6 @@ export default function LandingPage() {
               </div>
               <div className="flex items-center gap-4">
                 <CheckCircle2 className="w-8 h-8 text-[#00C896] shrink-0" />
-                <p className="text-white text-lg md:text-xl font-bold tracking-tight">출시 후 3개월간 시스템 기본 이용료 0원</p>
-              </div>
-              <div className="flex items-center gap-4">
-                <CheckCircle2 className="w-8 h-8 text-[#00C896] shrink-0" />
                 <p className="text-white text-lg md:text-xl font-bold tracking-tight">우수 동네 파트너 우선 배정 혜택</p>
               </div>
             </motion.div>
@@ -348,7 +334,7 @@ export default function LandingPage() {
                 href="/form" 
                 className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-12 py-6 bg-white text-[#1A1A24] rounded-full font-extrabold text-2xl hover:bg-gray-100 hover:scale-105 transition-all shadow-2xl shadow-white/10"
               >
-                20,000P 받고 무료 등록하기 <ArrowRight className="w-7 h-7" />
+                사전신청하기 <ArrowRight className="w-7 h-7" />
               </Link>
             </motion.div>
           </motion.div>
