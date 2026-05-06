@@ -1,16 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Store, Users, TrendingUp, HandCoins, QrCode, CheckCircle2, HelpCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight, Store, TrendingUp, HandCoins, QrCode, CheckCircle2 } from "lucide-react";
+import { motion, Variants } from "framer-motion";
 
 // Animation Variants
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -135,7 +135,7 @@ export default function LandingPage() {
                 효과 없는 광고비,<br />이제 1원도 버리지 마세요.
               </motion.h2>
               <motion.p variants={fadeInUp} className="text-xl text-[#66667A] mb-10 leading-relaxed">
-                플바의 마케팅은 <strong>'성과(방문)'가 발생했을 때만</strong> 비용이 차감됩니다.<br />
+                플바의 마케팅은 <strong>&apos;성과(방문)&apos;가 발생했을 때만</strong> 비용이 차감됩니다.<br />
                 리스크 제로의 확실한 로컬 마케팅을 경험하세요.
               </motion.p>
               
