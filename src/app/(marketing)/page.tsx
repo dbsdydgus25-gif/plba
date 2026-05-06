@@ -1,345 +1,360 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, QrCode, CheckCircle2, MessageCircleQuestion, Users } from "lucide-react";
+import { ArrowRight, TrendingUp, HandCoins, QrCode, CheckCircle2, Store, Users, Gift, Smartphone } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 
-// Animation Variants
-const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
-const staggerContainer: Variants = {
+const stagger: Variants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 }
-  }
+  visible: { transition: { staggerChildren: 0.15 } }
 };
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col w-full min-h-screen font-sans bg-[#FFFFFF]">
+    <div className="flex flex-col w-full min-h-screen font-sans bg-[#F9FAFB] overflow-x-hidden selection:bg-[#5B5BD6]/20">
       
-      {/* 1. Hero Section */}
-      <section className="relative w-full pt-32 pb-24 overflow-hidden flex flex-col items-center justify-start">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-gradient-to-r from-[#5B5BD6]/10 to-[#00C896]/10 blur-[100px] rounded-full -z-10" />
+      {/* 1. HERO SECTION */}
+      <section className="relative w-full pt-32 pb-24 px-6 flex flex-col items-center justify-center min-h-[90vh]">
+        {/* Background Gradients */}
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#5B5BD6]/20 rounded-full blur-[120px] mix-blend-multiply opacity-70 -z-10 animate-pulse" />
+        <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-[#00C896]/20 rounded-full blur-[100px] mix-blend-multiply opacity-70 -z-10" />
 
         <motion.div 
-          className="max-w-5xl mx-auto px-6 text-center z-10 flex flex-col items-center mt-12"
+          className="max-w-4xl w-full mx-auto text-center z-10"
           initial="hidden"
           animate="visible"
-          variants={staggerContainer}
+          variants={stagger}
         >
-          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-[#5B5BD6]/20 text-[#5B5BD6] font-semibold text-sm mb-10 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-[#5B5BD6] animate-pulse"></span>
-            오프라인 매장 전용 스마트 제휴 마케팅
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 text-[#5B5BD6] font-bold text-xs md:text-sm mb-8 shadow-sm tracking-tight">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5B5BD6] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#5B5BD6]"></span>
+            </span>
+            성과 보장형 오프라인 마케팅
           </motion.div>
 
-          <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-extrabold text-[#1A1A24] tracking-tight mb-10 leading-[1.3] break-keep">
-            돈 먹는 검색 광고는 그만,<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5B5BD6] to-[#00C896]">진짜 손님이 올 때만 결제하세요</span>
+          <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tighter leading-[1.15] md:leading-[1.1] mb-6 text-balance break-keep">
+            진짜 손님이 올 때만 <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5B5BD6] to-[#00C896]">결제하세요</span>
           </motion.h1>
           
-          <motion.p variants={fadeInUp} className="text-xl md:text-2xl text-[#66667A] mb-16 max-w-3xl mx-auto font-medium leading-loose break-keep">
-            사장님은 확실하게 돈을 번 방문에만 비용을 내고,<br />
-            파트너는 내 단골 가게를 홍보하며 돈을 버는 아주 쉬운 상생 플랫폼.
+          <motion.p variants={fadeUp} className="text-lg md:text-2xl text-gray-500 mb-12 max-w-2xl mx-auto font-medium tracking-tight leading-relaxed text-balance break-keep">
+            초기 비용 0원. 배달앱 수수료 0원. <br />
+            확실한 방문 성과가 증명될 때만 마케팅비를 냅니다.
           </motion.p>
           
-          <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20">
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 sm:px-0">
             <Link 
               href="/form" 
-              className="px-10 py-5 bg-[#5B5BD6] text-white rounded-full font-bold text-xl hover:bg-[#4646C0] transition-all shadow-xl shadow-[#5B5BD6]/20 flex items-center gap-2 group hover:-translate-y-1"
+              className="w-full sm:w-auto px-8 py-5 bg-[#1A1A24] text-white rounded-2xl font-bold text-lg md:text-xl hover:bg-black transition-all shadow-2xl shadow-black/20 flex items-center justify-center gap-2 group"
             >
-              사장님 100팀 무료 사전등록
+              얼리버드 20,000P 받기
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
         </motion.div>
-      </section>
 
-      {/* 2. Concept FAQ Section - Very easy explanation */}
-      <section className="py-24 bg-[#F8F9FA] border-y border-[#000000]/5">
-        <div className="max-w-4xl mx-auto px-6">
-          <motion.div 
-            className="text-center mb-20"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-          >
-            <h2 className="text-3xl md:text-5xl font-bold text-[#1A1A24] mb-8">플바(PLBA), 도대체 뭔가요?</h2>
-            <p className="text-xl text-[#66667A] leading-loose break-keep">
-              초등학생도 이해할 수 있게 딱 3가지만 설명해 드릴게요.
-            </p>
-          </motion.div>
-
-          <div className="space-y-24">
-            {/* Q1 */}
-            <motion.div 
-              className="flex flex-col md:flex-row gap-12 items-center"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-            >
-              <div className="flex-1 space-y-6">
-                <div className="inline-flex items-center gap-2 text-[#5B5BD6] font-bold text-lg">
-                  <MessageCircleQuestion className="w-6 h-6" /> Q1. 플바는 무슨 서비스인가요?
-                </div>
-                <h3 className="text-2xl font-bold text-[#1A1A24] leading-relaxed">
-                  &quot;동네 인싸들이 우리 가게 영업사원이 되는 서비스&quot;
-                </h3>
-                <p className="text-lg text-[#66667A] leading-loose break-keep">
-                  블로그, 인스타에 몇백만 원씩 주고 광고를 맡겼는데, 진짜로 손님이 왔는지 알 수 없어 답답하셨죠?<br />
-                  플바는 다릅니다. 우리 동네 사람들이 직접 우리 가게의 특별 혜택 링크를 인터넷에 뿌리고 홍보해 줍니다.<br />
-                  그 링크를 보고 **실제로 손님이 매장에 찾아와 결제까지 마쳤을 때만** 마케팅 비용이 빠져나갑니다.
-                </p>
-              </div>
-              <div className="flex-1 w-full relative">
-                <div className="bg-white p-8 rounded-[32px] shadow-lg border border-gray-100 transform rotate-2">
-                  <div className="flex items-center gap-4 mb-6 border-b pb-6">
-                    <div className="w-14 h-14 bg-[#5B5BD6]/10 rounded-full flex items-center justify-center text-[#5B5BD6]">
-                      <Users className="w-7 h-7" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-lg">동네 마당발 지훈씨</p>
-                      <p className="text-gray-500 text-sm">우리 가게 홍보 파트너</p>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 p-6 rounded-2xl">
-                    <p className="text-[#5B5BD6] font-bold mb-2">홍보 효과</p>
-                    <p className="text-gray-800 text-lg leading-relaxed">&quot;이번 주에 지훈씨 덕분에 신규 손님이 15명이나 왔네요! 광고비 쓴 보람이 확실합니다.&quot;</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Q2 */}
-            <motion.div 
-              className="flex flex-col md:flex-row-reverse gap-12 items-center"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-            >
-              <div className="flex-1 space-y-6">
-                <div className="inline-flex items-center gap-2 text-[#00C896] font-bold text-lg">
-                  <MessageCircleQuestion className="w-6 h-6" /> Q2. 파트너는 어떻게 홍보하나요?
-                </div>
-                <h3 className="text-2xl font-bold text-[#1A1A24] leading-relaxed">
-                  &quot;나만의 고유 링크와 QR코드로 무제한 공유&quot;
-                </h3>
-                <p className="text-lg text-[#66667A] leading-loose break-keep">
-                  사장님이 캠페인을 올리면, 파트너들은 앱에서 버튼 하나만 눌러서 &apos;나만의 홍보 링크&apos;를 발급받습니다.<br />
-                  이 링크를 카카오톡 단톡방, 당근마켓 동네생활, 개인 SNS 등에 자유롭게 공유합니다.<br />
-                  손님이 이 링크를 누르거나 QR을 보여주고 매장을 방문하면, 플바가 똑똑하게 추적해서 성과를 기록합니다.
-                </p>
-              </div>
-              <div className="flex-1 w-full flex justify-center">
-                {/* Virtual App UI for Partner Share */}
-                <div className="relative w-[280px] bg-white rounded-[40px] shadow-2xl border-[10px] border-gray-900 overflow-hidden transform -rotate-2">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-gray-900 rounded-b-2xl z-20"></div>
-                  <div className="pt-8 px-5 pb-6 bg-[#00C896] text-white">
-                    <p className="text-sm font-bold opacity-80 mb-1">내 고유 홍보 링크</p>
-                    <p className="font-bold text-xl mb-4">플바 커피숍 - 음료 1잔 무료 혜택</p>
-                    <div className="bg-white p-4 rounded-xl text-center">
-                      <QrCode className="w-20 h-20 text-black mx-auto mb-2" />
-                      <p className="text-[#00C896] font-bold text-sm">QR 다운로드</p>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <button className="w-full py-4 bg-gray-100 text-gray-800 rounded-xl font-bold mb-3 flex justify-center items-center gap-2">
-                      카카오톡으로 공유하기
-                    </button>
-                    <button className="w-full py-4 bg-gray-100 text-gray-800 rounded-xl font-bold flex justify-center items-center gap-2">
-                      당근마켓에 자랑하기
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Q3 */}
-            <motion.div 
-              className="flex flex-col md:flex-row gap-12 items-center"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-            >
-              <div className="flex-1 space-y-6">
-                <div className="inline-flex items-center gap-2 text-[#5B5BD6] font-bold text-lg">
-                  <MessageCircleQuestion className="w-6 h-6" /> Q3. 파트너스들은 어떤 혜택을 받나요?
-                </div>
-                <h3 className="text-2xl font-bold text-[#1A1A24] leading-relaxed">
-                  &quot;방문이 성사될 때마다 쌓이는 쏠쏠한 현금 수익&quot;
-                </h3>
-                <p className="text-lg text-[#66667A] leading-loose break-keep">
-                  파트너가 뿌린 링크를 통해 손님이 매장에 방문해서 결제를 하면, 파트너의 앱 계좌에 바로바로 현금이 꽂힙니다.<br />
-                  동네에 아는 사람이 많거나 글을 잘 쓰는 파트너라면 한 달에 수십만 원의 부수익을 올릴 수 있습니다.<br />
-                  이것이 파트너들이 사장님 가게를 발 벗고 나서서 홍보해 주는 이유입니다.
-                </p>
-              </div>
-              <div className="flex-1 w-full flex justify-center">
-                {/* Virtual App UI for Partner Revenue */}
-                 <div className="relative w-[280px] bg-white rounded-[40px] shadow-2xl border-[10px] border-gray-900 overflow-hidden transform rotate-2">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-gray-900 rounded-b-2xl z-20"></div>
-                  <div className="pt-12 px-6 pb-6 bg-[#F8F9FA] h-[400px] flex flex-col">
-                    <p className="text-center text-gray-500 font-bold mb-2">이번 달 출금 가능한 총 수익금</p>
-                    <p className="text-center text-[#5B5BD6] text-4xl font-extrabold mb-8">
-                      500,000<span className="text-2xl">원</span>
-                    </p>
-                    
-                    <div className="flex-1 bg-white rounded-2xl shadow-sm border border-gray-100 p-4 space-y-4">
-                      <p className="font-bold text-sm text-gray-800">최근 적립 내역</p>
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-500">플바 커피숍 (지인 방문)</span>
-                        <span className="text-[#00C896] font-bold">+ 5,000원</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-500">플바 고깃집 (커뮤니티)</span>
-                        <span className="text-[#00C896] font-bold">+ 15,000원</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-500">플바 네일샵 (인스타)</span>
-                        <span className="text-[#00C896] font-bold">+ 10,000원</span>
-                      </div>
-                    </div>
-                    <button className="w-full py-4 mt-4 bg-[#1A1A24] text-white rounded-xl font-bold">
-                      계좌로 현금 출금하기
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Owner ROI Calculation Section */}
-      <section className="py-32 bg-white">
-        <div className="max-w-4xl mx-auto px-6">
-          <motion.div 
-            className="text-center mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-          >
-            <div className="inline-flex px-4 py-2 bg-[#00C896]/10 text-[#00C896] font-bold rounded-full mb-6">
-              사장님 시뮬레이션
-            </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-[#1A1A24] mb-8 leading-tight">
-              실제로 매출이 얼마나 오를까요?<br />
-              계산기로 직접 두드려 보았습니다.
-            </h2>
-            <p className="text-xl text-[#66667A] leading-loose break-keep">
-              초등학생도 이해할 수 있는 아주 쉽고 확실한 수익 계산법입니다.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="bg-[#f0fbf8] rounded-[40px] p-8 md:p-16 border-2 border-[#00C896]/20 shadow-2xl"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-          >
-            <h3 className="text-2xl font-bold text-[#1A1A24] mb-10 text-center">
-              일반 한식당 사장님의 &quot;음료수 1캔&quot; 캠페인
-            </h3>
-
-            <div className="space-y-8 text-lg text-gray-700 leading-loose">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#00C896] flex items-center justify-center text-white font-bold shrink-0 mt-1">1</div>
-                <div>
-                  <p>
-                    동네 파트너가 <strong>10팀의 손님</strong>을 가게로 보냈다고 가정해 보겠습니다.<br />
-                    보통 2명이 함께 오셔서 기본 3만 원짜리 식사를 하십니다.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#00C896] flex items-center justify-center text-white font-bold shrink-0 mt-1">2</div>
-                <div>
-                  <p>
-                    10팀이 와서 3만 원씩 결제했으니 <strong>총 매출은 30만 원</strong>이 발생했습니다.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#00C896] flex items-center justify-center text-white font-bold shrink-0 mt-1">3</div>
-                <div>
-                  <p>
-                    그럼 사장님이 지출한 마케팅 비용은 얼마일까요?<br />
-                    손님 한 팀당 음료수 한 캔(원가 약 1,000원)을 서비스로 드렸다고 치면, <strong>10팀이니까 총 1만 원</strong>입니다.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-12 bg-white rounded-3xl p-8 text-center shadow-lg border border-[#00C896]/30 transform hover:scale-105 transition-transform">
-              <p className="text-[#66667A] font-medium text-lg mb-4">결과적으로 사장님은</p>
-              <h4 className="text-3xl md:text-4xl font-extrabold text-[#1A1A24] mb-4">
-                단돈 <span className="text-[#5B5BD6]">1만 원</span>으로<br className="md:hidden" /> 매출 <span className="text-[#00C896]">30만 원</span>을 달성했습니다.
-              </h4>
-              <p className="text-xl text-[#66667A] font-medium mt-6 bg-gray-50 py-3 rounded-xl">
-                이게 바로 <span className="text-[#00C896] font-bold">검색 광고 대비 3,000% 높은 수익률</span>입니다.<br />
-                오지 않을 사람들에게 돈을 버리지 말고, 진짜 온 사람에게만 투자하세요.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 4. Early Bird */}
-      <section className="py-32 bg-[#1A1A24] text-white">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="inline-block px-5 py-2 bg-[#00C896] text-white font-bold rounded-full text-sm mb-10 shadow-lg shadow-[#00C896]/20">
-            EARLY BIRD 선착순 100팀
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-16 leading-tight">지금 사전등록 하시는 사장님께만</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-            <div className="bg-white/10 rounded-3xl p-10 border border-white/5 hover:bg-white/15 transition-colors">
-              <CheckCircle2 className="w-10 h-10 text-[#00C896] mb-6" />
-              <h3 className="text-2xl font-bold mb-4 leading-relaxed">출시 후 3개월<br />기본 이용료 전액 0원</h3>
-              <p className="text-gray-400 text-lg leading-loose">초기 런칭 파트너로서, 가장 먼저 플바의 폭발적인 유입 효과를 완전히 무료로 누려보세요.</p>
-            </div>
-            
-            <div className="bg-white/10 rounded-3xl p-10 border border-white/5 hover:bg-white/15 transition-colors">
-              <CheckCircle2 className="w-10 h-10 text-[#00C896] mb-6" />
-              <h3 className="text-2xl font-bold mb-4 leading-relaxed">우수 홍보 파트너<br />집중 우선 매칭</h3>
-              <p className="text-gray-400 text-lg leading-loose">사장님 매장을 적극적으로 홍보해 줄 지역 내 열성 파트너들을 가장 먼저 연결해 드립니다.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. CTA Section */}
-      <section className="py-40 bg-white">
+        {/* Floating UI Elements for visual impact */}
         <motion.div 
-          className="max-w-4xl mx-auto px-6 text-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 w-full max-w-5xl px-6 hidden md:flex justify-between -z-10"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 1 }}
         >
-          <h2 className="text-4xl md:text-6xl font-extrabold text-[#1A1A24] mb-10 leading-tight">
-            지금 바로 플바와 함께<br />단골 손님을 쓸어 담으세요.
-          </h2>
-          <p className="text-2xl text-[#66667A] mb-16 leading-loose">
-            가입비 0원, 매달 나가는 고정비 0원.<br />손해가 날 수 없는 완벽한 마케팅을 시작하세요.
-          </p>
-          <Link href="/form" className="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-12 py-6 bg-[#1A1A24] text-white rounded-full font-bold text-2xl hover:bg-[#5B5BD6] hover:scale-105 transition-all shadow-2xl shadow-black/10">
-            무료 사전등록 하러 가기 <ArrowRight className="w-7 h-7" />
-          </Link>
+          <div className="bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/50 transform -rotate-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center"><TrendingUp className="text-[#00C896] w-5 h-5" /></div>
+              <div><p className="text-xs text-gray-500 font-bold">실제 방문 객수</p><p className="font-extrabold text-gray-900">+124명</p></div>
+            </div>
+          </div>
+          <div className="bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/50 transform rotate-6 translate-y-10">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center"><HandCoins className="text-[#5B5BD6] w-5 h-5" /></div>
+              <div><p className="text-xs text-gray-500 font-bold">사용된 마케팅비</p><p className="font-extrabold text-gray-900">12,000원</p></div>
+            </div>
+          </div>
         </motion.div>
       </section>
+
+      {/* 2. CORE FEATURES (BENTO GRID) - Less text, more visual */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">왜 플바인가요?</h2>
+            <p className="text-gray-500 text-lg tracking-tight">딱 3가지만 기억하세요.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-[#f0fbf8] rounded-[32px] p-8 md:p-10 border border-[#00C896]/10 col-span-1 md:col-span-2 flex flex-col justify-between overflow-hidden relative group">
+              <div className="z-10">
+                <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                  <HandCoins className="w-7 h-7 text-[#00C896]" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                  100% 후불제 <br />성과형 마케팅
+                </h3>
+                <p className="text-gray-600 font-medium tracking-tight text-balance">
+                  검색 광고처럼 클릭만 해도 돈이 나가는 시대는 끝. <br />
+                  진짜 손님이 결제까지 마쳤을 때만 돈을 냅니다.
+                </p>
+              </div>
+              {/* Decorative element */}
+              <div className="absolute right-[-20%] bottom-[-20%] opacity-10 group-hover:scale-110 transition-transform duration-500">
+                <TrendingUp className="w-96 h-96 text-[#00C896]" />
+              </div>
+            </div>
+
+            <div className="bg-[#F8F9FA] rounded-[32px] p-8 md:p-10 border border-gray-100 flex flex-col justify-between">
+              <div>
+                <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                  <Store className="w-7 h-7 text-[#5B5BD6]" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                  초기 도입비<br /><span className="text-[#5B5BD6]">완전 무료</span>
+                </h3>
+                <p className="text-gray-600 text-sm font-medium tracking-tight text-balance">
+                  가입비, 월 고정비 절대 없습니다. 리스크 제로.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-[#F8F9FA] rounded-[32px] p-8 md:p-10 border border-gray-100 flex flex-col justify-between">
+              <div>
+                <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                  <Users className="w-7 h-7 text-orange-500" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                  단골이<br />영업사원으로
+                </h3>
+                <p className="text-gray-600 text-sm font-medium tracking-tight text-balance">
+                  동네 마당발들이 스스로 내 가게를 홍보합니다.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-[#f5f5ff] rounded-[32px] p-8 md:p-10 border border-[#5B5BD6]/10 col-span-1 md:col-span-2 flex flex-col justify-between overflow-hidden relative group">
+              <div className="z-10">
+                <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                  <Smartphone className="w-7 h-7 text-[#5B5BD6]" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                  앱 설치 없이 <br />QR 하나로 끝
+                </h3>
+                <p className="text-gray-600 font-medium tracking-tight text-balance">
+                  복잡한 기기 설치? 필요 없습니다. <br />
+                  사장님도, 손님도 스마트폰 하나면 끝납니다.
+                </p>
+              </div>
+              {/* Decorative element */}
+              <div className="absolute right-[-10%] bottom-[-10%] opacity-10 group-hover:scale-110 transition-transform duration-500">
+                <QrCode className="w-64 h-64 text-[#5B5BD6]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. VISUAL EXPLANATION (VIRTUAL APPS) */}
+      <section className="py-32 px-6 bg-[#1A1A24] text-white overflow-hidden">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-24">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6">어떻게 작동하나요?</h2>
+            <p className="text-gray-400 text-lg md:text-xl font-medium tracking-tight">앱 화면으로 직관적으로 보여드릴게요.</p>
+          </div>
+
+          <div className="flex flex-col md:flex-row items-center justify-center gap-16 md:gap-24">
+            
+            {/* Step 1: Partner App */}
+            <motion.div 
+              className="flex-1 w-full max-w-[320px] flex flex-col items-center"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="text-center mb-8">
+                <div className="inline-block px-4 py-1.5 bg-[#00C896]/20 text-[#00C896] rounded-full font-bold text-sm mb-4">
+                  STEP 1. 파트너 홍보
+                </div>
+                <h3 className="text-2xl font-bold tracking-tight">고유 링크 생성 & 공유</h3>
+              </div>
+              
+              {/* Virtual App UI */}
+              <div className="w-full aspect-[1/2.1] bg-white rounded-[40px] shadow-2xl border-[8px] border-gray-800 relative overflow-hidden flex flex-col">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-800 rounded-b-[20px] z-20"></div>
+                <div className="w-full pt-10 px-5 pb-6 bg-[#00C896] flex-shrink-0">
+                  <p className="text-white/80 text-xs font-bold mb-1">내 홍보 링크</p>
+                  <p className="text-white font-extrabold text-lg leading-tight break-keep">플바 삼겹살<br/>음료 1캔 무료 증정!</p>
+                </div>
+                <div className="flex-1 bg-gray-50 p-5 flex flex-col gap-4">
+                  <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-center">
+                    <QrCode className="w-24 h-24 text-gray-900" />
+                  </div>
+                  <button className="w-full py-4 bg-[#FEE500] text-[#000000] font-bold rounded-xl text-sm shadow-sm">
+                    카카오톡 공유하기
+                  </button>
+                  <button className="w-full py-4 bg-[#FF7E36] text-white font-bold rounded-xl text-sm shadow-sm">
+                    당근마켓 공유하기
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Step 2: Owner App */}
+            <motion.div 
+              className="flex-1 w-full max-w-[320px] flex flex-col items-center"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="text-center mb-8">
+                <div className="inline-block px-4 py-1.5 bg-[#5B5BD6]/20 text-[#5B5BD6] rounded-full font-bold text-sm mb-4">
+                  STEP 2. 사장님 성과 확인
+                </div>
+                <h3 className="text-2xl font-bold tracking-tight">즉시 꽂히는 매출 데이터</h3>
+              </div>
+              
+              {/* Virtual App UI */}
+              <div className="w-full aspect-[1/2.1] bg-white rounded-[40px] shadow-2xl border-[8px] border-gray-800 relative overflow-hidden flex flex-col">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-800 rounded-b-[20px] z-20"></div>
+                <div className="flex-1 bg-[#F8F9FA] pt-12 px-5 flex flex-col">
+                  <div className="bg-white p-4 rounded-2xl shadow-sm mb-4 flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#5B5BD6]/10 rounded-full flex items-center justify-center">
+                      <Store className="w-5 h-5 text-[#5B5BD6]" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 font-bold">내 가게</p>
+                      <p className="text-gray-900 font-bold">플바 삼겹살</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-6 rounded-2xl shadow-sm mb-4 flex-1 flex flex-col justify-center items-center text-center">
+                    <TrendingUp className="w-12 h-12 text-[#00C896] mb-4" />
+                    <p className="text-gray-500 text-sm font-bold mb-1">오늘 링크 방문 결제</p>
+                    <p className="text-[#00C896] text-4xl font-extrabold tracking-tighter">
+                      12<span className="text-lg text-gray-900">팀</span>
+                    </p>
+                  </div>
+
+                  <div className="bg-[#5B5BD6] p-4 rounded-t-2xl mt-auto shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+                    <div className="flex justify-between items-center text-white">
+                      <span className="text-sm font-bold opacity-80">이번 달 총 매출 증가</span>
+                      <span className="font-extrabold text-xl">+ 3,450,000원</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 4. ROI CALCULATOR - Big Visual Numbers */}
+      <section className="py-24 px-6 bg-white overflow-hidden">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+              압도적인 수익률 증명
+            </h2>
+            <p className="text-gray-500 text-lg md:text-xl font-medium tracking-tight break-keep">
+              초등학생이 봐도 이해되는 가장 확실한 마케팅 계산법
+            </p>
+          </div>
+
+          <motion.div 
+            className="bg-gradient-to-br from-[#f0fbf8] to-white rounded-[40px] p-8 md:p-16 border-2 border-[#00C896]/20 shadow-2xl relative"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeUp}
+          >
+            {/* Background Icon */}
+            <HandCoins className="absolute -right-10 -bottom-10 w-64 h-64 text-[#00C896]/5" />
+
+            <div className="relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
+                <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+                  <p className="text-gray-500 font-bold mb-2">마케팅 비용 (음료 1캔 원가)</p>
+                  <p className="text-4xl font-extrabold text-[#5B5BD6] tracking-tighter">1,000원</p>
+                </div>
+                <div className="hidden md:flex justify-center">
+                  <ArrowRight className="w-12 h-12 text-gray-300" />
+                </div>
+                <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+                  <p className="text-gray-500 font-bold mb-2">실제 결제 매출 (2인 기준)</p>
+                  <p className="text-4xl font-extrabold text-[#00C896] tracking-tighter">30,000원</p>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <div className="inline-block px-6 py-2 bg-black text-white rounded-full font-bold text-lg mb-6 shadow-lg shadow-black/20">
+                  ROAS (광고비 대비 매출액)
+                </div>
+                <h3 className="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00C896] to-[#5B5BD6] tracking-tighter drop-shadow-sm">
+                  3,000%
+                </h3>
+                <p className="text-gray-500 font-bold mt-6 text-xl tracking-tight">
+                  오지 않을 사람에게 버리는 돈은 0원.<br />
+                  가장 합리적인 장사를 시작하세요.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 5. EARLY BIRD CTA */}
+      <section className="py-24 px-6 bg-[#1A1A24] relative overflow-hidden">
+        {/* Abstract Backgrounds */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-[#5B5BD6]/20 to-transparent rounded-full blur-[100px] -z-10" />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={stagger}
+          >
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-[#FFD700] to-[#FF8C00] text-black font-extrabold rounded-full text-sm md:text-base mb-8 shadow-xl shadow-[#FFD700]/20 transform -rotate-2">
+              <Gift className="w-5 h-5" /> 선착순 100팀 한정 혜택
+            </motion.div>
+            
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight mb-12 text-balance">
+              지금 가입하면<br />마케팅 포인트 <span className="text-[#FFD700]">20,000P</span> 즉시 지급!
+            </motion.h2>
+
+            <motion.div variants={fadeUp} className="bg-white/10 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-white/10 max-w-2xl mx-auto mb-12 text-left space-y-6">
+              <div className="flex items-center gap-4">
+                <CheckCircle2 className="w-8 h-8 text-[#00C896] shrink-0" />
+                <p className="text-white text-lg md:text-xl font-bold tracking-tight">마케팅으로 바로 쓸 수 있는 20,000P 충전</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <CheckCircle2 className="w-8 h-8 text-[#00C896] shrink-0" />
+                <p className="text-white text-lg md:text-xl font-bold tracking-tight">출시 후 3개월간 시스템 기본 이용료 0원</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <CheckCircle2 className="w-8 h-8 text-[#00C896] shrink-0" />
+                <p className="text-white text-lg md:text-xl font-bold tracking-tight">우수 동네 파트너 우선 배정 혜택</p>
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeUp}>
+              <Link 
+                href="/form" 
+                className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-12 py-6 bg-white text-[#1A1A24] rounded-full font-extrabold text-2xl hover:bg-gray-100 hover:scale-105 transition-all shadow-2xl shadow-white/10"
+              >
+                20,000P 받고 무료 등록하기 <ArrowRight className="w-7 h-7" />
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
     </div>
   );
 }
