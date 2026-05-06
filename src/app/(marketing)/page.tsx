@@ -11,7 +11,7 @@ const fadeUp: Variants = {
 
 const stagger: Variants = {
   hidden: { opacity: 0 },
-  visible: { transition: { staggerChildren: 0.15 } }
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
 };
 
 export default function LandingPage() {
