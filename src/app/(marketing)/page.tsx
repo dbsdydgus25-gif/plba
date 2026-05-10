@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { 
-  ArrowRight, TrendingUp, HandCoins, HelpCircle, Store,
-  CheckCircle2, Users, Smartphone, CreditCard, BarChart3,
-  Target, ShieldCheck, Zap, Star, AlertCircle, Eye,
-  MapPin, Camera, ChevronRight, X
+  ArrowRight,
+  CheckCircle2,
+  Star,
+  ChevronRight
 } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import { useState } from "react";
