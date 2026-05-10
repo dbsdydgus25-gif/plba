@@ -106,21 +106,21 @@ export default function LandingPage() {
               <div className="text-[44px] mb-6">📱</div>
               <h3 className="text-[22px] font-bold text-[#191F28] mb-4">SNS / 지역 광고</h3>
               <p className="text-[16px] md:text-[17px] text-[#4E5968] leading-[1.8] break-keep">
-                "몇 명이 봤다는데, 정작 오늘 우리 가게 문 열고 들어온 손님이 그 광고를 본 건지 알 수가 없어요."
+                &quot;몇 명이 봤다는데, 정작 오늘 우리 가게 문 열고 들어온 손님이 그 광고를 본 건지 알 수가 없어요.&quot;
               </p>
             </div>
             <div className="bg-white p-8 md:p-10 rounded-[24px] shadow-sm border border-[#F2F4F6]">
               <div className="text-[44px] mb-6">🛵</div>
               <h3 className="text-[22px] font-bold text-[#191F28] mb-4">배달앱 수수료</h3>
               <p className="text-[16px] md:text-[17px] text-[#4E5968] leading-[1.8] break-keep">
-                "팔면 팔수록 수수료랑 배달비로 다 나가니까, 오프라인 홀 장사를 늘려야 하는데 방법이 없네요."
+                &quot;팔면 팔수록 수수료랑 배달비로 다 나가니까, 오프라인 홀 장사를 늘려야 하는데 방법이 없네요.&quot;
               </p>
             </div>
             <div className="bg-white p-8 md:p-10 rounded-[24px] shadow-sm border border-[#F2F4F6]">
               <div className="text-[44px] mb-6">📝</div>
               <h3 className="text-[22px] font-bold text-[#191F28] mb-4">블로그 체험단</h3>
               <p className="text-[16px] md:text-[17px] text-[#4E5968] leading-[1.8] break-keep">
-                "음식 공짜로 주고 포스팅 비용까지 줬는데, 그 글 보고 진짜 찾아오는 사람이 몇 명인지 측정이 안 됩니다."
+                &quot;음식 공짜로 주고 포스팅 비용까지 줬는데, 그 글 보고 진짜 찾아오는 사람이 몇 명인지 측정이 안 됩니다.&quot;
               </p>
             </div>
           </div>
@@ -151,10 +151,10 @@ export default function LandingPage() {
                   마포구 삼겹살 전문점
                 </div>
                 <h3 className="text-[24px] md:text-[28px] font-bold text-[#191F28] mb-6 leading-[1.5] break-keep">
-                  "매달 버려지던 전단지 비용을<br />실제 방문객 혜택으로 돌렸어요"
+                  &quot;매달 버려지던 전단지 비용을<br />실제 방문객 혜택으로 돌렸어요&quot;
                 </h3>
                 <p className="text-[16px] md:text-[18px] text-[#4E5968] leading-[1.9] break-keep">
-                  "전단지 알바 쓰고 인스타 광고 돌리던 돈을 플바 포인트로 충전해뒀습니다. 손님이 밥 다 먹고 결제할 때만 예산이 차감되니까, 진짜 1원도 낭비되는 느낌이 없어요. 단골들이 알아서 주변에 홍보해주니 일석이조입니다."
+                  &quot;전단지 알바 쓰고 인스타 광고 돌리던 돈을 플바 포인트로 충전해뒀습니다. 손님이 밥 다 먹고 결제할 때만 예산이 차감되니까, 진짜 1원도 낭비되는 느낌이 없어요. 단골들이 알아서 주변에 홍보해주니 일석이조입니다.&quot;
                 </p>
               </div>
             </div>
@@ -169,10 +169,10 @@ export default function LandingPage() {
                   홍대 로스터리 카페
                 </div>
                 <h3 className="text-[24px] md:text-[28px] font-bold text-[#191F28] mb-6 leading-[1.5] break-keep">
-                  "평일 애매한 시간대,<br />빈자리를 동네 주민들이 알아서 채워줍니다"
+                  &quot;평일 애매한 시간대,<br />빈자리를 동네 주민들이 알아서 채워줍니다&quot;
                 </h3>
                 <p className="text-[16px] md:text-[18px] text-[#4E5968] leading-[1.9] break-keep">
-                  "카페는 객단가가 낮아서 배달 앱 수수료 내면 남는 게 없거든요. 플바는 오프라인 홀 장사에 딱 맞습니다. 방문한 손님 앱 화면 확인하고 결제만 해주면 되니까 바쁠 때도 전혀 번거롭지 않아요."
+                  &quot;카페는 객단가가 낮아서 배달 앱 수수료 내면 남는 게 없거든요. 플바는 오프라인 홀 장사에 딱 맞습니다. 방문한 손님 앱 화면 확인하고 결제만 해주면 되니까 바쁠 때도 전혀 번거롭지 않아요.&quot;
                 </p>
               </div>
             </div>
@@ -187,10 +187,10 @@ export default function LandingPage() {
                   강남구 헤어살롱
                 </div>
                 <h3 className="text-[24px] md:text-[28px] font-bold text-[#191F28] mb-6 leading-[1.5] break-keep">
-                  "노쇼 걱정 제로!<br />머리 다 하고 결제할 때 정산되니까요"
+                  &quot;노쇼 걱정 제로!<br />머리 다 하고 결제할 때 정산되니까요&quot;
                 </h3>
                 <p className="text-[16px] md:text-[18px] text-[#4E5968] leading-[1.9] break-keep">
-                  "예약만 걸어두고 안 오는 손님들 때문에 광고 효율 따지기가 너무 힘들었어요. 플바는 100% 매장에서 카드 긁을 때 성과로 인정되니까, 마케팅 비용 계산이 초등학생도 할 수 있을 만큼 명확해졌습니다."
+                  &quot;예약만 걸어두고 안 오는 손님들 때문에 광고 효율 따지기가 너무 힘들었어요. 플바는 100% 매장에서 카드 긁을 때 성과로 인정되니까, 마케팅 비용 계산이 초등학생도 할 수 있을 만큼 명확해졌습니다.&quot;
                 </p>
               </div>
             </div>
