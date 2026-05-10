@@ -160,10 +160,10 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight mb-8 break-keep">
-              "플바는 동네 사람들이<br className="hidden sm:block"/>
+              &quot;플바는 동네 사람들이<br className="hidden sm:block"/>
               직접 매장을 소개하고,<br/>
               <span className="text-[#00C896]">실제 방문·결제가 일어났을 때만</span><br/>
-              사장님 예산에서 비용이 차감됩니다"
+              사장님 예산에서 비용이 차감됩니다&quot;
             </h2>
             <p className="text-xl md:text-2xl text-gray-400 font-medium">
               광고를 사는 게 아니라, 매출을 사는 겁니다.
@@ -359,7 +359,7 @@ export default function LandingPage() {
                 <Star fill="currentColor" className="w-5 h-5" />
               </div>
               <p className="text-gray-700 font-medium leading-relaxed mb-6 break-keep">
-                "매달 광고비 50만 원 썼는데 효과를 몰랐어요. 플바는 실제로 온 손님 기준으로 비용이 나가니까 계산이 딱 됩니다."
+                &quot;매달 광고비 50만 원 썼는데 효과를 몰랐어요. 플바는 실제로 온 손님 기준으로 비용이 나가니까 계산이 딱 됩니다.&quot;
               </p>
               <p className="text-sm font-bold text-gray-400">홍대 카페 운영, 32세</p>
             </div>
@@ -372,7 +372,7 @@ export default function LandingPage() {
                 <Star fill="currentColor" className="w-5 h-5" />
               </div>
               <p className="text-gray-700 font-medium leading-relaxed mb-6 break-keep">
-                "배달앱 빼고 오프라인 손님 늘릴 방법이 없었는데 동네 사람들이 직접 소개해준다는 게 신선했어요."
+                &quot;배달앱 빼고 오프라인 손님 늘릴 방법이 없었는데 동네 사람들이 직접 소개해준다는 게 신선했어요.&quot;
               </p>
               <p className="text-sm font-bold text-gray-400">마포구 고깃집 운영, 45세</p>
             </div>
