@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(req: NextRequest) {
   try {
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY || "dummy",
+    });
+
     const { prompt, size = "1024x1024", quality = "standard", n = 1 } = await req.json();
 
     if (!prompt) {
