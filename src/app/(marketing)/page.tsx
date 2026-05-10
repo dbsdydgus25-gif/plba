@@ -1,24 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { 
-  ArrowRight,
-  CheckCircle2,
-  Star,
-  ChevronRight
-} from "lucide-react";
-import { motion, Variants } from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { ArrowRight, Store, ShieldCheck, ChevronRight } from "lucide-react";
 import { useState } from "react";
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-};
-
-const stagger: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-};
 
 export default function LandingPage() {
   const [storeName, setStoreName] = useState("");
@@ -27,302 +12,235 @@ export default function LandingPage() {
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    // Pre-registration logic would go here
-    alert("사전 등록이 완료되었습니다. (테스트)");
+    alert("사전 등록이 완료되었습니다.");
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen font-sans bg-white overflow-x-hidden selection:bg-blue-500/20 text-gray-900">
+    <div className="w-full min-h-screen bg-white text-[#191F28] font-sans selection:bg-[#3182F6]/20">
       
-      {/* S1. HERO */}
-      <section className="relative w-full pt-32 pb-20 px-6 flex flex-col items-center justify-center bg-gray-50/50">
+      {/* 1. HERO SECTION */}
+      <section className="relative w-full pt-20 pb-32 px-6 overflow-hidden flex flex-col items-center text-center">
+        <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#3182F6]/5 rounded-full blur-[100px] -z-10" />
+        
         <motion.div 
-          className="max-w-4xl w-full mx-auto text-center z-10"
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto mt-16"
         >
-          <motion.div variants={fadeUp} className="inline-block px-4 py-1.5 rounded-full bg-blue-100/50 border border-blue-200 text-blue-600 font-bold text-sm mb-6 shadow-sm">
-            오프라인 매장을 위한 성과 기반 마케팅
-          </motion.div>
-
-          <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6 break-keep">
-            이제 광고비는 <br className="hidden md:block" />
-            <span className="text-blue-600">손님이 왔을 때만 내세요</span>
-          </motion.h1>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#E8F3FF] text-[#1B64DA] font-bold text-sm mb-6">
+            🎉 선착순 100곳 사장님 한정 20,000P 무상 지원
+          </div>
           
-          <motion.p variants={fadeUp} className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto font-medium leading-relaxed break-keep">
-            플바는 실제 방문·구매가 이루어졌을 때만 비용이 발생합니다.<br className="hidden md:block" />
-            노출도, 클릭도, 체험단도 아닌 — 진짜 매출에만 반응하는 마케팅.
-          </motion.p>
+          <h1 className="text-[40px] md:text-[64px] font-extrabold leading-[1.2] tracking-tight mb-6 break-keep">
+            손님이 <span className="text-[#3182F6]">결제했을 때만</span><br className="hidden md:block" />
+            광고비 내세요.
+          </h1>
           
-          <motion.div variants={fadeUp} className="flex flex-col items-center justify-center gap-6 w-full">
-            <Link 
-              href="#register" 
-              className="w-full sm:w-auto px-8 py-4 bg-gray-900 text-white rounded-xl font-bold text-lg hover:bg-black transition-all shadow-xl shadow-gray-900/20 flex items-center justify-center gap-2 group"
-            >
-              사장님 무료 등록하기
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            
-            <div className="flex flex-wrap justify-center items-center gap-3 text-sm font-medium text-gray-500 border-t border-gray-200 pt-6 px-4">
-              <span className="flex items-center gap-1.5 text-gray-900 whitespace-nowrap">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                </span> 
-                지금 100여 개 매장이 사전 등록
-              </span>
-              <span className="w-1 h-1 rounded-full bg-gray-300 hidden sm:block"></span>
-              <span className="whitespace-nowrap">무료 시작</span>
-              <span className="w-1 h-1 rounded-full bg-gray-300 hidden sm:block"></span>
-              <span className="whitespace-nowrap">등록 1분 완료</span>
-            </div>
-          </motion.div>
+          <p className="text-[18px] md:text-[22px] text-[#4E5968] mb-12 font-medium leading-[1.6] break-keep max-w-2xl mx-auto">
+            노출, 클릭, 체험단? 다 필요 없습니다.<br />
+            우리 가게에 진짜 방문해서 돈을 쓴 손님에게만 비용을 지불하는<br />
+            사장님을 위한 100% 후불제 마케팅 플랫폼, 플바.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full px-4 sm:px-0">
+            <a href="#register" className="w-full sm:w-auto px-8 py-5 bg-[#3182F6] hover:bg-[#1B64DA] text-white rounded-2xl font-bold text-xl transition-colors shadow-lg shadow-[#3182F6]/30 flex items-center justify-center gap-2">
+              무료로 내 가게 등록하기
+              <ArrowRight className="w-6 h-6" />
+            </a>
+          </div>
+          <p className="mt-4 text-[15px] text-[#8B95A1] font-medium">가입비 없음 · 월 고정비 0원 · 언제든 해지 가능</p>
         </motion.div>
       </section>
 
-      {/* S2. Problem Empathy */}
-      <section className="py-24 px-6 bg-white">
+      {/* 2. PROBLEM SECTION */}
+      <section className="py-32 px-6 bg-[#F9FAFB]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">사장님, 이런 적 있으시죠?</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {/* Card 1 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gray-50 rounded-[28px] p-8 border border-gray-100 flex flex-col"
-            >
-              <div className="text-4xl mb-6">💸</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 break-keep leading-snug">
-                광고비는 나가는데<br/>효과를 모르겠다
-              </h3>
-              <p className="text-gray-500 text-sm font-medium leading-relaxed break-keep">
-                SNS 광고, 블로그 체험단, 지역 카드사 광고 매달 수십만 원인데 매출 연결은 불투명
-              </p>
-            </motion.div>
-
-            {/* Card 2 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-gray-50 rounded-[28px] p-8 border border-gray-100 flex flex-col"
-            >
-              <div className="text-4xl mb-6">📊</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 break-keep leading-snug">
-                매출은 그대로인데<br/>비용만 늘고 있다
-              </h3>
-              <p className="text-gray-500 text-sm font-medium leading-relaxed break-keep">
-                배달앱 수수료에 포스팅 비용까지, 나가는 돈 대비 체감이 없다
-              </p>
-            </motion.div>
-
-            {/* Card 3 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-gray-50 rounded-[28px] p-8 border border-gray-100 flex flex-col"
-            >
-              <div className="text-4xl mb-6">🤷</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 break-keep leading-snug">
-                어디서 왔는지<br/>알 수가 없다
-              </h3>
-              <p className="text-gray-500 text-sm font-medium leading-relaxed break-keep">
-                클릭 수는 보이는데 실제 내 가게에 온 건지 광고 덕분인지 측정이 안 된다
-              </p>
-            </motion.div>
-          </div>
-
-          <div className="text-center max-w-2xl mx-auto bg-blue-50/50 p-8 rounded-3xl border border-blue-100">
-            <p className="text-lg md:text-xl text-gray-700 font-bold leading-relaxed break-keep">
-              광고비는 쓸수록 쌓이는데, 매출 기여는 여전히 불확실합니다.<br/>
-              <span className="text-blue-600 mt-2 block text-2xl">플바는 이 구조를 완전히 뒤집습니다.</span>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* S3. Solution Definition */}
-      <section className="py-32 px-6 bg-[#1A1A24] text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight mb-8 break-keep">
-              &quot;플바는 동네 사람들이<br className="hidden sm:block"/>
-              직접 매장을 소개하고,<br/>
-              <span className="text-[#00C896]">실제 방문·결제가 일어났을 때만</span><br/>
-              사장님 예산에서 비용이 차감됩니다&quot;
+            <h2 className="text-[32px] md:text-[42px] font-extrabold tracking-tight text-[#191F28] mb-4">
+              사장님, 혹시 이렇게 돈 쓰고 계신가요?
             </h2>
-            <p className="text-xl md:text-2xl text-gray-400 font-medium">
-              광고를 사는 게 아니라, 매출을 사는 겁니다.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* S4. How it works */}
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">사장님은 딱 이것만 하면 됩니다</h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-16 relative">
-            {/* Step connectors (desktop only) */}
-            <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-[2px] bg-gray-200 z-0"></div>
-
-            {/* Step 1 */}
-            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative z-10 flex flex-col items-center text-center">
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-gray-500 mb-6 border-4 border-white shadow-sm">1</div>
-              <div className="text-4xl mb-4">🏪</div>
-              <h3 className="text-lg font-bold text-gray-900 mb-3">가게 무료 등록</h3>
-              <hr className="w-full border-gray-100 mb-3"/>
-              <p className="text-sm text-gray-500 font-medium break-keep">메뉴·위치·사진만<br/>입력하면 완료<br/>1분이면 끝납니다</p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative z-10 flex flex-col items-center text-center">
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-gray-500 mb-6 border-4 border-white shadow-sm">2</div>
-              <div className="text-4xl mb-4">💰</div>
-              <h3 className="text-lg font-bold text-gray-900 mb-3">원하는 만큼 예산 충전</h3>
-              <hr className="w-full border-gray-100 mb-3"/>
-              <p className="text-sm text-gray-500 font-medium break-keep">최소 충전 후<br/>언제든 중지 가능<br/>소진 전까지 자동 운영</p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative z-10 flex flex-col items-center text-center">
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-gray-500 mb-6 border-4 border-white shadow-sm">3</div>
-              <div className="text-4xl mb-4">🚶</div>
-              <h3 className="text-lg font-bold text-gray-900 mb-3">손님이 방문·결제</h3>
-              <hr className="w-full border-gray-100 mb-3"/>
-              <p className="text-sm text-gray-500 font-medium break-keep">플바 앱 사용자가<br/>실제 구매하면<br/>그때만 비용 차감</p>
-            </div>
-
-            {/* Step 4 */}
-            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative z-10 flex flex-col items-center text-center">
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-gray-500 mb-6 border-4 border-white shadow-sm">4</div>
-              <div className="text-4xl mb-4">📈</div>
-              <h3 className="text-lg font-bold text-gray-900 mb-3">대시보드 확인</h3>
-              <hr className="w-full border-gray-100 mb-3"/>
-              <p className="text-sm text-gray-500 font-medium break-keep">누가, 언제,<br/>얼마를 쓰고<br/>왔는지 실시간</p>
-            </div>
-          </div>
-
-          <div className="flex justify-center">
-            <Link 
-              href="#register" 
-              className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 flex items-center gap-2"
-            >
-              사장님 무료 등록하기
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* S5. Core Benefits */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">플바로 바뀌는 것들</h2>
+            <p className="text-[18px] text-[#4E5968] font-medium">매달 나가는 광고비 대비 효과를 체감하기 어려우셨을 겁니다.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Benefit 1 */}
-            <div className="bg-[#f0fbf8] rounded-[28px] p-8 border border-[#00C896]/20">
-              <div className="flex items-center gap-3 mb-4">
-                <CheckCircle2 className="w-6 h-6 text-[#00C896]" />
-                <h3 className="text-xl font-bold text-gray-900">확실한 CAC</h3>
-              </div>
-              <p className="text-gray-600 font-medium leading-relaxed break-keep">
-                고객 1명 유치에 정확히 얼마가 들었는지 처음으로 알 수 있습니다.
+            <div className="bg-white p-8 rounded-[24px] shadow-sm border border-[#F2F4F6]">
+              <div className="text-[40px] mb-4">📱</div>
+              <h3 className="text-[20px] font-bold text-[#191F28] mb-3">SNS / 지역 광고</h3>
+              <p className="text-[16px] text-[#4E5968] leading-relaxed break-keep">
+                &quot;몇 명이 봤다는데, 정작 오늘 우리 가게 문 열고 들어온 손님이 그 광고를 본 건지 알 수가 없어요.&quot;
               </p>
             </div>
-
-            {/* Benefit 2 */}
-            <div className="bg-blue-50/50 rounded-[28px] p-8 border border-blue-100">
-              <div className="flex items-center gap-3 mb-4">
-                <CheckCircle2 className="w-6 h-6 text-blue-600" />
-                <h3 className="text-xl font-bold text-gray-900">리스크 제로</h3>
-              </div>
-              <p className="text-gray-600 font-medium leading-relaxed break-keep">
-                충전한 예산 안에서만 운영되고, 실구매 없으면 비용은 0원입니다.
+            <div className="bg-white p-8 rounded-[24px] shadow-sm border border-[#F2F4F6]">
+              <div className="text-[40px] mb-4">🛵</div>
+              <h3 className="text-[20px] font-bold text-[#191F28] mb-3">배달앱 수수료</h3>
+              <p className="text-[16px] text-[#4E5968] leading-relaxed break-keep">
+                &quot;팔면 팔수록 수수료랑 배달비로 다 나가니까, 오프라인 홀 장사를 늘려야 하는데 방법이 없네요.&quot;
               </p>
             </div>
-
-            {/* Benefit 3 */}
-            <div className="bg-purple-50/50 rounded-[28px] p-8 border border-purple-100">
-              <div className="flex items-center gap-3 mb-4">
-                <CheckCircle2 className="w-6 h-6 text-purple-600" />
-                <h3 className="text-xl font-bold text-gray-900">별도 관리 없음</h3>
-              </div>
-              <p className="text-gray-600 font-medium leading-relaxed break-keep">
-                등록 후 가게를 신경 쓰지 않아도 자동으로 홍보됩니다.
+            <div className="bg-white p-8 rounded-[24px] shadow-sm border border-[#F2F4F6]">
+              <div className="text-[40px] mb-4">📝</div>
+              <h3 className="text-[20px] font-bold text-[#191F28] mb-3">블로그 체험단</h3>
+              <p className="text-[16px] text-[#4E5968] leading-relaxed break-keep">
+                &quot;음식 공짜로 주고 포스팅 비용까지 줬는데, 그 글 보고 진짜 찾아오는 사람이 몇 명인지 측정이 안 됩니다.&quot;
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* S6. Comparison Table */}
-      <section className="py-24 px-6 bg-gray-50">
+      {/* 3. SOLUTION / USE CASES */}
+      <section className="py-32 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">기존 광고와 무엇이 다른가요?</h2>
+          <div className="mb-20">
+            <h2 className="text-[32px] md:text-[42px] font-extrabold tracking-tight text-[#191F28] mb-6 leading-tight break-keep">
+              플바는 다릅니다.<br />
+              <span className="text-[#3182F6]">진짜 매출이 일어날 때만</span> 정산됩니다.
+            </h2>
+            <p className="text-[20px] text-[#4E5968] font-medium break-keep">
+              이미 많은 동네 사장님들이 광고비 낭비를 멈추고 플바를 선택했습니다.
+            </p>
           </div>
 
-          <div className="overflow-x-auto rounded-3xl border border-gray-200 bg-white shadow-sm">
-            <table className="w-full text-left border-collapse min-w-[600px]">
+          <div className="flex flex-col gap-12">
+            {/* Case 1 */}
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 bg-[#F9FAFB] p-6 md:p-10 rounded-[32px]">
+              <div className="w-full md:w-1/2 rounded-[24px] overflow-hidden shadow-lg aspect-[4/3] relative bg-gray-200">
+                <Image src="/images/bbq.png" alt="고깃집" fill className="object-cover" />
+              </div>
+              <div className="w-full md:w-1/2">
+                <div className="inline-block px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-bold mb-4">
+                  마포구 삼겹살 전문점
+                </div>
+                <h3 className="text-[24px] font-bold text-[#191F28] mb-4 break-keep">
+                  &quot;매달 버려지던 전단지 비용을<br />실제 방문객 혜택으로 돌렸어요&quot;
+                </h3>
+                <p className="text-[16px] text-[#4E5968] leading-relaxed break-keep">
+                  &quot;전단지 알바 쓰고 인스타 광고 돌리던 돈을 플바 포인트로 충전해뒀습니다. 손님이 밥 다 먹고 결제할 때만 예산이 차감되니까, 진짜 1원도 낭비되는 느낌이 없어요. 단골들이 알아서 주변에 홍보해주니 일석이조입니다.&quot;
+                </p>
+              </div>
+            </div>
+
+            {/* Case 2 */}
+            <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12 bg-[#F9FAFB] p-6 md:p-10 rounded-[32px]">
+              <div className="w-full md:w-1/2 rounded-[24px] overflow-hidden shadow-lg aspect-[4/3] relative bg-gray-200">
+                <Image src="/images/cafe.png" alt="카페" fill className="object-cover" />
+              </div>
+              <div className="w-full md:w-1/2">
+                <div className="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-bold mb-4">
+                  홍대 로스터리 카페
+                </div>
+                <h3 className="text-[24px] font-bold text-[#191F28] mb-4 break-keep">
+                  &quot;평일 애매한 시간대,<br />빈자리를 동네 주민들이 알아서 채워줍니다&quot;
+                </h3>
+                <p className="text-[16px] text-[#4E5968] leading-relaxed break-keep">
+                  &quot;카페는 객단가가 낮아서 배달 앱 수수료 내면 남는 게 없거든요. 플바는 오프라인 홀 장사에 딱 맞습니다. 방문한 손님 앱 화면 확인하고 결제만 해주면 되니까 바쁠 때도 전혀 번거롭지 않아요.&quot;
+                </p>
+              </div>
+            </div>
+
+            {/* Case 3 */}
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 bg-[#F9FAFB] p-6 md:p-10 rounded-[32px]">
+              <div className="w-full md:w-1/2 rounded-[24px] overflow-hidden shadow-lg aspect-[4/3] relative bg-gray-200">
+                <Image src="/images/salon.png" alt="미용실" fill className="object-cover" />
+              </div>
+              <div className="w-full md:w-1/2">
+                <div className="inline-block px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm font-bold mb-4">
+                  강남구 헤어살롱
+                </div>
+                <h3 className="text-[24px] font-bold text-[#191F28] mb-4 break-keep">
+                  &quot;노쇼 걱정 제로!<br />머리 다 하고 결제할 때 정산되니까요&quot;
+                </h3>
+                <p className="text-[16px] text-[#4E5968] leading-relaxed break-keep">
+                  &quot;예약만 걸어두고 안 오는 손님들 때문에 광고 효율 따지기가 너무 힘들었어요. 플바는 100% 매장에서 카드 긁을 때 성과로 인정되니까, 마케팅 비용 계산이 초등학생도 할 수 있을 만큼 명확해졌습니다.&quot;
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. HOW IT WORKS */}
+      <section className="py-32 px-6 bg-[#191F28] text-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-[32px] md:text-[42px] font-extrabold tracking-tight mb-4">
+              딱 3단계면 충분합니다
+            </h2>
+            <p className="text-[18px] text-[#8B95A1] font-medium">복잡한 기기 설치? 전혀 필요 없습니다. 스마트폰만 있으면 됩니다.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            <div className="bg-[#242A32] p-8 rounded-[24px] border border-[#333D4B]">
+              <div className="w-12 h-12 bg-[#3182F6] rounded-full flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-[#3182F6]/30">1</div>
+              <h3 className="text-[22px] font-bold mb-3">내 가게 무료 등록</h3>
+              <p className="text-[16px] text-[#B0B8C1] leading-relaxed break-keep">
+                1분이면 끝납니다. 매장 사진, 메뉴, 원하는 마케팅 예산만 충전해두세요. 소진 전까지 알아서 돌아갑니다.
+              </p>
+            </div>
+            
+            <div className="bg-[#242A32] p-8 rounded-[24px] border border-[#333D4B]">
+              <div className="w-12 h-12 bg-[#3182F6] rounded-full flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-[#3182F6]/30">2</div>
+              <h3 className="text-[22px] font-bold mb-3">동네 주민의 방문·결제</h3>
+              <p className="text-[16px] text-[#B0B8C1] leading-relaxed break-keep">
+                플바 유저들이 앱을 보고 매장에 방문합니다. 밥을 다 먹고 평소처럼 카드로 결제합니다.
+              </p>
+            </div>
+
+            <div className="bg-[#242A32] p-8 rounded-[24px] border border-[#333D4B]">
+              <div className="w-12 h-12 bg-[#3182F6] rounded-full flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-[#3182F6]/30">3</div>
+              <h3 className="text-[22px] font-bold mb-3">결제 시에만 비용 차감</h3>
+              <p className="text-[16px] text-[#B0B8C1] leading-relaxed break-keep">
+                실제 결제가 일어난 것이 확인된 손님에 한해서만, 사장님이 설정해둔 마케팅 예산에서 비용이 차감됩니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. COMPARISON */}
+      <section className="py-32 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-[32px] md:text-[42px] font-extrabold tracking-tight text-[#191F28] mb-4">
+              왜 플바를 선택해야 할까요?
+            </h2>
+          </div>
+
+          <div className="overflow-hidden rounded-[24px] border border-[#F2F4F6] shadow-sm">
+            <table className="w-full text-left bg-white">
               <thead>
-                <tr className="border-b border-gray-200 bg-gray-50/50">
-                  <th className="p-5 text-gray-500 font-bold w-1/4"></th>
-                  <th className="p-5 text-gray-900 font-bold w-1/4 text-center">SNS 광고</th>
-                  <th className="p-5 text-gray-900 font-bold w-1/4 text-center">당근 광고</th>
-                  <th className="p-5 text-blue-600 font-extrabold w-1/4 text-center bg-blue-50/30">플바</th>
+                <tr className="bg-[#F9FAFB] border-b border-[#F2F4F6]">
+                  <th className="p-6 text-[15px] text-[#8B95A1] font-bold w-1/4">비교 항목</th>
+                  <th className="p-6 text-[16px] text-[#4E5968] font-bold w-1/4 text-center">전단지/오프라인</th>
+                  <th className="p-6 text-[16px] text-[#4E5968] font-bold w-1/4 text-center">SNS/배달앱 광고</th>
+                  <th className="p-6 text-[18px] text-[#3182F6] font-extrabold w-1/4 text-center bg-[#E8F3FF]/50">플바 (PLBA)</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[#F2F4F6]">
                 <tr>
-                  <td className="p-5 font-bold text-gray-900">비용 발생 시점</td>
-                  <td className="p-5 text-gray-600 text-center">노출 or 클릭마다</td>
-                  <td className="p-5 text-gray-600 text-center">클릭마다</td>
-                  <td className="p-5 text-blue-600 font-bold text-center bg-blue-50/30">실구매 시에만</td>
+                  <td className="p-6 font-bold text-[#191F28]">비용 발생</td>
+                  <td className="p-6 text-[#4E5968] text-center font-medium">제작·배포 시점</td>
+                  <td className="p-6 text-[#4E5968] text-center font-medium">클릭/노출 시점</td>
+                  <td className="p-6 text-[#3182F6] font-bold text-center bg-[#E8F3FF]/50">실 방문·결제 시점</td>
                 </tr>
                 <tr>
-                  <td className="p-5 font-bold text-gray-900">매출 직결 여부</td>
-                  <td className="p-5 text-gray-600 text-center">불확실</td>
-                  <td className="p-5 text-gray-600 text-center">불확실</td>
-                  <td className="p-5 text-blue-600 font-bold text-center bg-blue-50/30">100% 확실</td>
+                  <td className="p-6 font-bold text-[#191F28]">매출 연결</td>
+                  <td className="p-6 text-[#4E5968] text-center font-medium">알 수 없음</td>
+                  <td className="p-6 text-[#4E5968] text-center font-medium">불확실</td>
+                  <td className="p-6 text-[#3182F6] font-bold text-center bg-[#E8F3FF]/50">100% 확실</td>
                 </tr>
                 <tr>
-                  <td className="p-5 font-bold text-gray-900">성과 측정</td>
-                  <td className="p-5 text-gray-600 text-center">어려움</td>
-                  <td className="p-5 text-gray-600 text-center">제한적</td>
-                  <td className="p-5 text-blue-600 font-bold text-center bg-blue-50/30">실시간 대시보드</td>
+                  <td className="p-6 font-bold text-[#191F28]">초기 비용</td>
+                  <td className="p-6 text-[#4E5968] text-center font-medium">수십만 원</td>
+                  <td className="p-6 text-[#4E5968] text-center font-medium">수십만 원</td>
+                  <td className="p-6 text-[#3182F6] font-bold text-center bg-[#E8F3FF]/50">0원 (충전식)</td>
                 </tr>
                 <tr>
-                  <td className="p-5 font-bold text-gray-900">초기 비용</td>
-                  <td className="p-5 text-gray-600 text-center">수십만 원↑</td>
-                  <td className="p-5 text-gray-600 text-center">수만 원↑</td>
-                  <td className="p-5 text-blue-600 font-bold text-center bg-blue-50/30">무료 (예산만)</td>
-                </tr>
-                <tr>
-                  <td className="p-5 font-bold text-gray-900">오프라인 구매 연결</td>
-                  <td className="p-5 text-gray-400 text-center text-xl font-bold">✕</td>
-                  <td className="p-5 text-gray-400 text-center text-xl font-bold">△</td>
-                  <td className="p-5 text-blue-600 text-center text-xl font-bold bg-blue-50/30">✔</td>
+                  <td className="p-6 font-bold text-[#191F28]">유지보수</td>
+                  <td className="p-6 text-[#4E5968] text-center font-medium">매번 재제작</td>
+                  <td className="p-6 text-[#4E5968] text-center font-medium">계속 관리 필요</td>
+                  <td className="p-6 text-[#3182F6] font-bold text-center bg-[#E8F3FF]/50">등록 후 자동 홍보</td>
                 </tr>
               </tbody>
             </table>
@@ -330,163 +248,99 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* S7. Social Proof */}
-      <section className="py-24 px-6 bg-white overflow-hidden">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <div className="text-center p-8 bg-gray-50 rounded-3xl border border-gray-100">
-              <p className="text-4xl font-extrabold text-gray-900 mb-2">100<span className="text-2xl text-gray-500 font-bold">개+</span></p>
-              <p className="text-gray-500 font-bold">사전 등록 매장</p>
-            </div>
-            <div className="text-center p-8 bg-gray-50 rounded-3xl border border-gray-100">
-              <p className="text-4xl font-extrabold text-gray-900 mb-2">3<span className="text-2xl text-gray-500 font-bold">억 원+</span></p>
-              <p className="text-gray-500 font-bold">예상 절감 광고 비용</p>
-            </div>
-            <div className="text-center p-8 bg-blue-50 rounded-3xl border border-blue-100">
-              <p className="text-4xl font-extrabold text-blue-600 mb-2">0<span className="text-2xl text-blue-400 font-bold">원</span></p>
-              <p className="text-blue-600 font-bold">매출 없으면 비용 없음</p>
-            </div>
-          </div>
-
-          {/* Review Slider Placeholder (CSS Scroll Snapping) */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-6 pb-8 -mx-6 px-6 md:mx-0 md:px-0">
-            <div className="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white border border-gray-200 rounded-3xl p-8 shadow-sm">
-              <div className="flex gap-1 mb-4 text-[#FFD700]">
-                <Star fill="currentColor" className="w-5 h-5" />
-                <Star fill="currentColor" className="w-5 h-5" />
-                <Star fill="currentColor" className="w-5 h-5" />
-                <Star fill="currentColor" className="w-5 h-5" />
-                <Star fill="currentColor" className="w-5 h-5" />
+      {/* 6. REGISTRATION FORM */}
+      <section id="register" className="py-32 px-6 bg-[#F9FAFB]">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#F2F4F6]">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#E8F3FF] text-[#3182F6] rounded-full mb-6">
+                <Store className="w-8 h-8" />
               </div>
-              <p className="text-gray-700 font-medium leading-relaxed mb-6 break-keep">
-                &quot;매달 광고비 50만 원 썼는데 효과를 몰랐어요. 플바는 실제로 온 손님 기준으로 비용이 나가니까 계산이 딱 됩니다.&quot;
+              <h2 className="text-[32px] font-extrabold text-[#191F28] mb-4">지금 바로 시작하세요</h2>
+              <p className="text-[16px] text-[#4E5968] font-medium break-keep">
+                초기 등록 사장님 100분께 마케팅으로 즉시 사용할 수 있는 <span className="font-bold text-[#3182F6]">20,000P</span>를 무상 지원해 드립니다.
               </p>
-              <p className="text-sm font-bold text-gray-400">홍대 카페 운영, 32세</p>
             </div>
-            <div className="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white border border-gray-200 rounded-3xl p-8 shadow-sm">
-              <div className="flex gap-1 mb-4 text-[#FFD700]">
-                <Star fill="currentColor" className="w-5 h-5" />
-                <Star fill="currentColor" className="w-5 h-5" />
-                <Star fill="currentColor" className="w-5 h-5" />
-                <Star fill="currentColor" className="w-5 h-5" />
-                <Star fill="currentColor" className="w-5 h-5" />
-              </div>
-              <p className="text-gray-700 font-medium leading-relaxed mb-6 break-keep">
-                &quot;배달앱 빼고 오프라인 손님 늘릴 방법이 없었는데 동네 사람들이 직접 소개해준다는 게 신선했어요.&quot;
-              </p>
-              <p className="text-sm font-bold text-gray-400">마포구 고깃집 운영, 45세</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* S8. Pre-registration CTA */}
-      <section id="register" className="py-24 px-6 bg-[#1A1A24] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="max-w-2xl mx-auto relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4">지금 등록하면 얼리버드 혜택</h2>
-            <p className="text-gray-400 text-lg">초기 매장 한정 특별 지원</p>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-white/10 mb-10 space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="text-2xl">🎁</div>
-              <p className="text-white font-bold">출시 즉시 우선 등록 매장 노출</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-2xl">💰</div>
-              <p className="text-white font-bold">첫 캠페인 예산 20,000p 지급</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-2xl">📞</div>
-              <p className="text-white font-bold">1:1 운영 온보딩 지원</p>
-            </div>
-          </div>
-
-          <form onSubmit={handleRegister} className="bg-white rounded-[32px] p-8 md:p-10 shadow-2xl">
-            <div className="space-y-6 mb-8">
+            <form onSubmit={handleRegister} className="space-y-6">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">상호명</label>
+                <label className="block text-[15px] font-bold text-[#333D4B] mb-2">상호명</label>
                 <input 
                   type="text" 
                   required
                   value={storeName}
                   onChange={(e) => setStoreName(e.target.value)}
-                  placeholder="예: 플바식당 홍대점"
-                  className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all font-medium"
+                  placeholder="가게 이름을 입력해주세요 (예: 플바식당 홍대점)"
+                  className="w-full px-5 py-4 bg-[#F9FAFB] border border-[#E5E8EB] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#3182F6] focus:border-transparent transition-all font-medium text-[16px]"
                 />
               </div>
+              
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">연락처</label>
+                <label className="block text-[15px] font-bold text-[#333D4B] mb-2">사장님 연락처</label>
                 <input 
                   type="tel" 
                   required
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
                   placeholder="010-0000-0000"
-                  className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all font-medium"
+                  className="w-full px-5 py-4 bg-[#F9FAFB] border border-[#E5E8EB] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#3182F6] focus:border-transparent transition-all font-medium text-[16px]"
                 />
               </div>
+              
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">매장 카테고리</label>
+                <label className="block text-[15px] font-bold text-[#333D4B] mb-2">가게 업종</label>
                 <div className="relative">
                   <select 
                     required
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all font-medium appearance-none"
+                    className="w-full px-5 py-4 bg-[#F9FAFB] border border-[#E5E8EB] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#3182F6] focus:border-transparent transition-all font-medium text-[16px] appearance-none"
                   >
-                    <option value="" disabled>카테고리 선택</option>
-                    <option value="food">음식점 (한식/중식/일식/양식 등)</option>
-                    <option value="cafe">카페/디저트</option>
-                    <option value="bar">주점/호프</option>
-                    <option value="beauty">뷰티/미용 (헤어/네일/에스테틱)</option>
-                    <option value="other">기타</option>
+                    <option value="" disabled>어떤 가게를 운영하시나요?</option>
+                    <option value="food">음식점 (고깃집/한식/일식/양식 등)</option>
+                    <option value="cafe">카페/베이커리/디저트</option>
+                    <option value="bar">주점/호프/이자카야</option>
+                    <option value="beauty">뷰티/미용실/네일/에스테틱</option>
+                    <option value="other">기타 오프라인 매장</option>
                   </select>
-                  <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 rotate-90 pointer-events-none" />
+                  <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8B95A1] rotate-90 pointer-events-none" />
                 </div>
               </div>
-            </div>
 
-            <button 
-              type="submit"
-              className="w-full py-5 bg-blue-600 text-white rounded-xl font-bold text-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 mb-4"
-            >
-              사장님 무료 등록하기 <ArrowRight className="w-5 h-5" />
-            </button>
-            <p className="text-center text-sm text-gray-500 font-medium">무료 등록 · 의무 없음 · 언제든 취소</p>
-          </form>
+              <button 
+                type="submit"
+                className="w-full py-5 mt-4 bg-[#3182F6] text-white rounded-2xl font-bold text-[18px] hover:bg-[#1B64DA] transition-all shadow-lg shadow-[#3182F6]/20 flex items-center justify-center gap-2"
+              >
+                무료로 내 가게 등록하기 <ArrowRight className="w-5 h-5" />
+              </button>
+              
+              <div className="flex items-center justify-center gap-2 text-[14px] text-[#8B95A1] font-medium pt-2">
+                <ShieldCheck className="w-4 h-4" />
+                입력하신 정보는 상담 목적으로만 안전하게 사용됩니다.
+              </div>
+            </form>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-12 px-6 bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="font-extrabold text-2xl tracking-tighter text-gray-900">
+      {/* 7. MINIMAL FOOTER */}
+      <footer className="py-12 px-6 bg-white border-t border-[#F2F4F6]">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="font-extrabold text-2xl tracking-tighter text-[#191F28]">
             PLBA
           </div>
-          <div className="flex flex-wrap justify-center gap-6 text-sm font-medium text-gray-500">
-            <Link href="#" className="hover:text-gray-900 transition-colors">플바란?</Link>
-            <Link href="#" className="hover:text-gray-900 transition-colors">개인정보처리방침</Link>
-            <Link href="#" className="hover:text-gray-900 transition-colors">이용약관</Link>
-            <a href="mailto:whyhcompany@gmail.com" className="hover:text-gray-900 transition-colors">문의: whyhcompany@gmail.com</a>
+          <div className="text-[14px] text-[#8B95A1] font-medium text-center md:text-left">
+            광고비 낭비 없는 진짜 오프라인 마케팅 플랫폼
+            <br className="block md:hidden" />
+            <span className="hidden md:inline"> · </span>
+            제휴 및 문의: <a href="mailto:whyhcompany@gmail.com" className="hover:text-[#4E5968]">whyhcompany@gmail.com</a>
           </div>
-          <div className="text-sm text-gray-400 font-medium">
+          <div className="text-[14px] text-[#B0B8C1] font-medium">
             ⓒ 2026 PLBA. All rights reserved.
           </div>
         </div>
       </footer>
       
-      <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}} />
     </div>
   );
 }
