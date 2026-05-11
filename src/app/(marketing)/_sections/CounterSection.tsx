@@ -10,7 +10,7 @@ function StatCard({ target, unit, label, sub }: { target: number; unit: string; 
       if (!e.isIntersecting) return;
       obs.disconnect();
       let start: number;
-      const duration = 2000;
+      const duration = 1800;
       const step = (ts: number) => {
         if (!start) start = ts;
         const p = Math.min((ts - start) / duration, 1);
@@ -23,12 +23,12 @@ function StatCard({ target, unit, label, sub }: { target: number; unit: string; 
     return () => obs.disconnect();
   }, [target]);
   return (
-    <div ref={ref} className="text-center py-6 px-3 rounded-2xl bg-[#F9FAFB] border border-[#F2F4F6]">
-      <div className="text-[28px] sm:text-[36px] font-extrabold text-brand leading-none mb-1">
+    <div ref={ref} className="text-center py-8 px-4 rounded-2xl bg-[#141414] border border-white/5">
+      <div className="text-[36px] sm:text-[44px] font-extrabold text-brand leading-none mb-2 tabular-nums">
         {val.toLocaleString()}{unit}
       </div>
-      <div className="text-[13px] font-bold text-[#191F28] mb-1">{label}</div>
-      <div className="text-[11px] text-[#8B95A1]">{sub}</div>
+      <div className="text-[14px] font-bold text-white mb-1">{label}</div>
+      <div className="text-[12px] text-[#4E5968]">{sub}</div>
     </div>
   );
 }
@@ -41,10 +41,17 @@ const STATS = [
 
 export default function CounterSection() {
   return (
-    <section className="py-20 px-5 bg-white">
+    <section className="py-16 px-5 bg-[#0D0D0D] border-t border-white/5">
       <div className="max-w-lg mx-auto">
-        <motion.p initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} className="text-center text-[13px] font-bold tracking-widest text-[#8B95A1] uppercase mb-10">숫자로 증명합니다</motion.p>
-        <div className="grid grid-cols-3 gap-4">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-[12px] font-bold tracking-[0.25em] text-[#4E5968] uppercase mb-8"
+        >
+          숫자로 증명합니다
+        </motion.p>
+        <div className="grid grid-cols-3 gap-3">
           {STATS.map((s, i) => <StatCard key={i} {...s} />)}
         </div>
       </div>

@@ -14,7 +14,7 @@ import StickyBottomCTA from "./_sections/StickyBottomCTA";
 export default function LandingPage() {
   const [showSticky, setShowSticky] = useState(true);
   return (
-    <div className="w-full min-h-screen bg-white text-[#191F28] overflow-x-hidden" style={{fontFamily:"'Pretendard', 'Inter', sans-serif", wordBreak:"keep-all"}}>
+    <div className="w-full min-h-screen bg-[#0D0D0D] text-white overflow-x-hidden" style={{fontFamily:"'Pretendard', 'Inter', sans-serif", wordBreak:"keep-all"}}>
       <HeroSection />
       <QuestionSection />
       <CounterSection />
