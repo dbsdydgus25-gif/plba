@@ -5,6 +5,7 @@ import QuestionSection from "./_sections/QuestionSection";
 import Part1Section from "./_sections/Part1Section";
 import Part2Section from "./_sections/Part2Section";
 import HowItWorksSection from "./_sections/HowItWorksSection";
+import AppPreviewSection from "./_sections/AppPreviewSection";
 import ComparisonSection from "./_sections/ComparisonSection";
 import ReviewSection from "./_sections/ReviewSection";
 import RegisterSection from "./_sections/RegisterSection";
@@ -19,6 +20,7 @@ export default function LandingPage() {
       <Part1Section />
       <Part2Section />
       <HowItWorksSection />
+      <AppPreviewSection />
       <ComparisonSection />
       <ReviewSection />
       <RegisterSection />

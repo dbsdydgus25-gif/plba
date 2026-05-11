@@ -36,10 +36,35 @@ export default function Part1Section() {
         <div className="space-y-6">
           {CASES.map((c, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="rounded-[28px] overflow-hidden bg-white border border-gray-100 shadow-sm">
-              <div className="relative h-52 w-full">
-                <Image src={c.image} alt={c.tag} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                <span className={`absolute top-4 left-4 text-[11px] font-bold px-3 py-1 rounded-full border ${c.tagBg}`}>{c.tag}</span>
+              <div className="relative h-60 w-full overflow-hidden bg-gray-50">
+                <Image src={c.image} alt={c.tag} fill className="object-cover opacity-90 scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                
+                {/* App UI Overlay Simulation */}
+                <div className="absolute inset-x-4 top-4">
+                  <div className="bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/20">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-xl bg-brand flex items-center justify-center shadow-md shadow-brand/20">
+                          <span className="text-[10px] font-black text-white">P</span>
+                        </div>
+                        <div>
+                          <p className="text-[12px] font-black text-[#191F28]">{c.tag}</p>
+                          <p className="text-[10px] text-brand font-bold">인증 완료 · 실시간</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[10px] text-[#8B95A1] font-bold uppercase tracking-tighter">Today</p>
+                        <p className="text-[14px] font-black text-[#191F28] tracking-tighter">₩{i === 0 ? "1,847,300" : "942,000"}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-1 h-6 items-end px-1">
+                      {[30, 45, 35, 60, 55, 80, 70, 95, 85].map((h, idx) => (
+                        <div key={idx} className="flex-1 bg-brand/30 rounded-t-[2px]" style={{ height: `${h}%` }} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="p-6">
                 <h3 className="text-[18px] font-bold text-[#191F28] mb-3 leading-[1.4] whitespace-pre-line">&quot;{c.quote}&quot;</h3>
