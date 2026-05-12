@@ -1,93 +1,101 @@
 "use client";
 import { motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-[100svh] overflow-hidden flex flex-col bg-[#0F1115]">
-      {/* 배경 장식 — 은은한 빛 */}
-      <div className="absolute top-0 right-0 w-[80%] h-[80%] bg-brand/10 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 left-0 w-[60%] h-[60%] bg-brand/5 blur-[100px] rounded-full -translate-x-1/2 translate-y-1/2" />
+    <section className="relative bg-[#5b5bd6] min-h-[100svh] flex flex-col overflow-hidden">
+      {/* 배경 원 장식 */}
+      <div className="absolute top-[-80px] right-[-80px] w-[280px] h-[280px] rounded-full bg-white/5" />
+      <div className="absolute top-[60px] right-[-40px] w-[180px] h-[180px] rounded-full bg-white/5" />
 
-      {/* Hero Mockup Image */}
-      <div className="absolute right-[-10%] top-[15%] w-[80%] aspect-square opacity-60 pointer-events-none">
-        <div className="relative w-full h-full">
-          <Image
-            src="/images/app_mockup.png"
-            alt="Plus-Alba App"
-            fill
-            className="object-contain"
-            priority
-          />
+      {/* 상단 로고 */}
+      <div className="relative z-10 px-6 pt-14 pb-2">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center">
+            <span className="text-[#5b5bd6] font-black text-[14px]">P</span>
+          </div>
+          <span className="text-white font-black text-[18px] tracking-tight">plba.</span>
         </div>
       </div>
 
-      {/* 그라데이션 오버레이 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0F1115] via-[#0F1115]/60 to-transparent" />
-
-      {/* 텍스트 — 이미지 위에 자연스럽게 */}
-      <div className="relative z-10 w-full px-6 flex-1 flex flex-col justify-center max-w-xl mx-auto">
-        {/* 태그 */}
+      {/* 메인 카피 */}
+      <div className="relative z-10 px-6 pt-8 pb-6 flex-1 flex flex-col">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center gap-2 mb-6"
+          transition={{ duration: 0.6 }}
         >
-          <div className="px-3 py-1 bg-brand/20 border border-brand/30 rounded-full">
-            <span className="text-brand text-[10px] font-black tracking-[0.2em] uppercase">PERFORMANCE MARKETING</span>
+          <div className="inline-flex items-center gap-2 bg-white/15 border border-white/20 rounded-full px-3 py-1 mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-white/90 text-[11px] font-bold tracking-widest uppercase">성과형 마케팅 플랫폼</span>
+          </div>
+
+          <h1 className="text-white font-black text-[38px] leading-[1.15] tracking-tight mb-4">
+            결제가 일어날 때만<br />
+            <span className="text-white/60">광고비가 나갑니다</span>
+          </h1>
+          <p className="text-white/70 text-[15px] leading-[1.65] mb-8">
+            동네 파트너가 홍보하고, 손님이 실제로 결제해야만 비용이 차감됩니다.
+            낭비 없는 마케팅의 시작.
+          </p>
+
+          <div className="flex gap-3 flex-wrap">
+            <div className="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-4 py-2">
+              <span className="text-white text-[13px] font-semibold">✓ 가입비 0원</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-4 py-2">
+              <span className="text-white text-[13px] font-semibold">✓ 100% 후불제</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-4 py-2">
+              <span className="text-white text-[13px] font-semibold">✓ 선착순 2만P 지원</span>
+            </div>
           </div>
         </motion.div>
 
-        {/* 헤드라인 */}
-        <div className="space-y-1">
-          {["결제가 일어날 때만", "광고비가 나가는", "마케팅의 혁신"].map((line, i) => (
-            <motion.h1
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 + i * 0.12 }}
-              className={`block font-extrabold leading-[1.1] tracking-tighter ${
-                i === 2
-                  ? "text-brand text-[40px] sm:text-[56px]"
-                  : "text-white text-[40px] sm:text-[56px]"
-              }`}
-            >
-              {line}
-            </motion.h1>
-          ))}
-        </div>
-
-        {/* 서브카피 */}
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-white/60 text-[15px] sm:text-[17px] leading-[1.6] mt-6 mb-10 max-w-sm font-medium"
-        >
-          불확실한 전단지 대신, 실제 매출이 발생할 때만 지불하세요. 동네 전문가들과 함께하는 새로운 마케팅 경험.
-        </motion.p>
-
-        {/* CTA */}
+        {/* 앱 화면 미리보기 */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.65 }}
-          className="flex flex-col gap-5"
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-auto pt-10 flex justify-center"
         >
-          <a
-            href="#register"
-            className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-brand text-white rounded-[24px] font-bold text-[17px] shadow-2xl shadow-brand/40 hover:bg-brand-dark transition-all active:scale-[0.97] w-full sm:w-fit"
-          >
-            무료로 지금 시작하기 
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <div className="flex items-center gap-5 text-[12px] text-white/40 font-bold tracking-tight">
-            <span className="flex items-center gap-1.5"><div className="w-1 h-1 rounded-full bg-brand" /> 가입비 0원</span>
-            <span className="flex items-center gap-1.5"><div className="w-1 h-1 rounded-full bg-brand" /> 100% 후불제</span>
-            <span className="flex items-center gap-1.5"><div className="w-1 h-1 rounded-full bg-brand" /> 선착순 혜택</span>
+          <div className="relative w-[200px]">
+            {/* 폰 프레임 */}
+            <div className="bg-[#111] rounded-[36px] p-2 shadow-2xl shadow-black/50 ring-2 ring-white/10">
+              <div className="bg-white rounded-[28px] overflow-hidden">
+                <Image
+                  src="/images/ux/home_roles.png"
+                  alt="플바 앱 화면"
+                  width={196}
+                  height={380}
+                  className="w-full h-auto object-cover object-top"
+                  style={{ maxHeight: "260px" }}
+                />
+              </div>
+            </div>
+            {/* 뱃지 */}
+            <div className="absolute -right-8 top-8 bg-white rounded-2xl px-3 py-2 shadow-xl shadow-black/20">
+              <p className="text-[10px] text-gray-500 font-medium">이번 달 매출</p>
+              <p className="text-[#5b5bd6] font-black text-[14px]">₩1,847,300</p>
+            </div>
+            <div className="absolute -left-8 bottom-8 bg-white rounded-2xl px-3 py-2 shadow-xl shadow-black/20">
+              <p className="text-[10px] text-gray-500 font-medium">적립 포인트</p>
+              <p className="text-green-600 font-black text-[14px]">+47,800P</p>
+            </div>
           </div>
+        </motion.div>
+
+        {/* 스크롤 유도 */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="flex flex-col items-center gap-2 pt-8 pb-6"
+        >
+          <span className="text-white/50 text-[12px] font-medium">아래로 내려서 플로우 확인</span>
+          <ArrowDown className="w-4 h-4 text-white/40 animate-bounce" />
         </motion.div>
       </div>
     </section>
