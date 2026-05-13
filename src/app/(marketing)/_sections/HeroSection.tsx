@@ -3,100 +3,107 @@ import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 
+const BADGES = [
+  { num: "0원", label: "초기 가입비" },
+  { num: "100%", label: "성과 발생 시만 과금" },
+  { num: "20,000P", label: "선착순 무상 지원" },
+];
+
 export default function HeroSection() {
   return (
-    <section className="relative bg-[#5b5bd6] min-h-[100svh] flex flex-col overflow-hidden">
-      {/* 배경 원 장식 */}
-      <div className="absolute top-[-80px] right-[-80px] w-[280px] h-[280px] rounded-full bg-white/5" />
-      <div className="absolute top-[60px] right-[-40px] w-[180px] h-[180px] rounded-full bg-white/5" />
+    <section className="relative min-h-[100svh] flex flex-col overflow-hidden bg-[#111318]">
+      {/* 배경 이미지 */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/bbq.png"
+          alt="한국 음식점"
+          fill
+          className="object-cover object-center opacity-30"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#111318]/60 via-[#111318]/40 to-[#111318]" />
+      </div>
 
-      {/* 상단 로고 */}
-      <div className="relative z-10 px-6 pt-14 pb-2">
+      {/* 로고 */}
+      <div className="relative z-10 px-6 pt-14">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center">
-            <span className="text-[#5b5bd6] font-black text-[14px]">P</span>
+          <div className="w-8 h-8 rounded-xl bg-[#5b5bd6] flex items-center justify-center">
+            <span className="text-white font-black text-[13px]">P</span>
           </div>
           <span className="text-white font-black text-[18px] tracking-tight">plba.</span>
         </div>
       </div>
 
       {/* 메인 카피 */}
-      <div className="relative z-10 px-6 pt-8 pb-6 flex-1 flex flex-col">
+      <div className="relative z-10 flex-1 flex flex-col justify-center px-6 pt-8 pb-4">
+        {/* Pain 첫 줄 */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
-          <div className="inline-flex items-center gap-2 bg-white/15 border border-white/20 rounded-full px-3 py-1 mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-white/90 text-[11px] font-bold tracking-widest uppercase">성과형 마케팅 플랫폼</span>
-          </div>
-
-          <h1 className="text-white font-black text-[38px] leading-[1.15] tracking-tight mb-4">
-            결제가 일어날 때만<br />
-            <span className="text-white/60">광고비가 나갑니다</span>
-          </h1>
-          <p className="text-white/70 text-[15px] leading-[1.65] mb-8">
-            동네 파트너가 홍보하고, 손님이 실제로 결제해야만 비용이 차감됩니다.
-            낭비 없는 마케팅의 시작.
+          <p className="text-white/50 text-[13px] font-medium mb-3 tracking-wide">
+            전단지, SNS 광고, 배달 수수료...
           </p>
-
-          <div className="flex gap-3 flex-wrap">
-            <div className="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-4 py-2">
-              <span className="text-white text-[13px] font-semibold">✓ 가입비 0원</span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-4 py-2">
-              <span className="text-white text-[13px] font-semibold">✓ 100% 후불제</span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-4 py-2">
-              <span className="text-white text-[13px] font-semibold">✓ 선착순 2만P 지원</span>
-            </div>
-          </div>
+          <h1 className="text-white font-black text-[34px] leading-[1.2] tracking-tight mb-3">
+            마케팅비는 나가는데<br />
+            <span className="text-white/40">손님은 왜 안 올까요?</span>
+          </h1>
         </motion.div>
 
-        {/* 앱 화면 미리보기 */}
+        {/* 솔루션 한 줄 */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-auto pt-10 flex justify-center"
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mt-5 mb-8"
         >
-          <div className="relative w-[200px]">
-            {/* 폰 프레임 */}
-            <div className="bg-[#111] rounded-[36px] p-2 shadow-2xl shadow-black/50 ring-2 ring-white/10">
-              <div className="bg-white rounded-[28px] overflow-hidden">
-                <Image
-                  src="/images/ux/home_roles.png"
-                  alt="플바 앱 화면"
-                  width={196}
-                  height={380}
-                  className="w-full h-auto object-cover object-top"
-                  style={{ maxHeight: "260px" }}
-                />
-              </div>
-            </div>
-            {/* 뱃지 */}
-            <div className="absolute -right-8 top-8 bg-white rounded-2xl px-3 py-2 shadow-xl shadow-black/20">
-              <p className="text-[10px] text-gray-500 font-medium">이번 달 매출</p>
-              <p className="text-[#5b5bd6] font-black text-[14px]">₩1,847,300</p>
-            </div>
-            <div className="absolute -left-8 bottom-8 bg-white rounded-2xl px-3 py-2 shadow-xl shadow-black/20">
-              <p className="text-[10px] text-gray-500 font-medium">적립 포인트</p>
-              <p className="text-green-600 font-black text-[14px]">+47,800P</p>
-            </div>
-          </div>
+          <div className="h-px w-8 bg-[#5b5bd6] mb-4" />
+          <p className="text-[#a8b3ff] font-bold text-[18px] leading-[1.5]">
+            결제가 일어날 때만<br />광고비가 빠져나갑니다.
+          </p>
+          <p className="text-white/50 text-[13px] mt-2 leading-[1.6]">
+            동네 파트너가 홍보하고, 손님이 실제로 결제해야만 비용 차감.
+          </p>
         </motion.div>
 
-        {/* 스크롤 유도 */}
+        {/* 혜택 배지 3개 */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="flex flex-col items-center gap-2 pt-8 pb-6"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex flex-col gap-2 mb-8"
         >
-          <span className="text-white/50 text-[12px] font-medium">아래로 내려서 플로우 확인</span>
-          <ArrowDown className="w-4 h-4 text-white/40 animate-bounce" />
+          {BADGES.map((b, i) => (
+            <div key={i} className="flex items-center gap-3 bg-white/8 border border-white/10 rounded-2xl px-4 py-3">
+              <span className="text-[#a8b3ff] font-black text-[20px] min-w-[80px]">{b.num}</span>
+              <span className="text-white/70 text-[13px] font-medium">{b.label}</span>
+            </div>
+          ))}
         </motion.div>
+
+        {/* CTA 버튼 */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.45 }}
+        >
+          <a
+            href="#register"
+            className="flex items-center justify-center gap-2 w-full py-5 bg-[#5b5bd6] text-white rounded-2xl font-black text-[17px] shadow-2xl shadow-[#5b5bd6]/30 active:scale-[0.98] transition-transform"
+          >
+            무료로 내 가게 등록하기
+          </a>
+          <p className="text-center text-white/30 text-[11px] font-medium mt-3">
+            선착순 100개 가게 · 지금 바로 시작
+          </p>
+        </motion.div>
+      </div>
+
+      {/* 스크롤 유도 */}
+      <div className="relative z-10 flex flex-col items-center pb-8 gap-1">
+        <span className="text-white/25 text-[11px]">아래로 내려보세요</span>
+        <ArrowDown className="w-3.5 h-3.5 text-white/25 animate-bounce" />
       </div>
     </section>
   );

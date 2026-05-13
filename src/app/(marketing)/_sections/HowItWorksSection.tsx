@@ -1,44 +1,110 @@
 "use client";
-import { motion } from "framer-motion";
-import { Wallet, Gift, Users, QrCode, CheckCircle2 } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import Image from "next/image";
 
-const STEPS = [
-  { icon: <Wallet className="w-5 h-5 text-[#4E5968]"/>, title: "포인트 충전", desc: "이번 달 예산만큼 간편 충전", accent: false },
-  { icon: <Gift className="w-5 h-5 text-white"/>, title: "캠페인 & 리워드 설정", desc: "손님 혜택과 파트너 리워드 금액 설정", accent: true },
-  { icon: <Users className="w-5 h-5 text-[#4E5968]"/>, title: "파트너스 자발적 홍보", desc: "동네 파트너들이 SNS·블로그에 홍보 시작", accent: false },
-  { icon: <QrCode className="w-5 h-5 text-white"/>, title: "손님 방문 & QR 스캔", desc: "방문 손님이 결제 시 QR 스캔으로 확인", accent: true },
-  { icon: <CheckCircle2 className="w-5 h-5 text-[#4E5968]"/>, title: "자동 정산 완료", desc: "결제 확인 즉시 차감 + 파트너 리워드 지급", accent: false },
-];
-
+// 3단계 플로우 + 파트너/소비자 생태계 압축
 export default function HowItWorksSection() {
-  return (
-    <section className="py-20 px-5 bg-[#F9FAFB] border-t border-gray-100">
-      <div className="max-w-lg mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <p className="text-[11px] font-black tracking-[0.3em] text-brand uppercase mb-4">HOW IT WORKS</p>
-          <h2 className="text-[28px] sm:text-[36px] font-extrabold leading-[1.25] text-[#191F28]">앱 하나로 끝나는<br />선순환 마케팅 5단계</h2>
-        </motion.div>
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
-        <div className="relative">
-          <div className="absolute left-[23px] top-10 bottom-10 w-px bg-gray-200" />
-          <div className="space-y-4">
-            {STEPS.map((s, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="flex items-center gap-4 relative">
-                <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm z-10 ${s.accent ? "bg-brand shadow-brand/30" : "bg-white border border-gray-200"}`}>
-                  {s.icon}
+  const STEPS = [
+    {
+      num: "01",
+      actor: "🏪 사장님",
+      title: "캠페인 개설",
+      desc: "혜택 금액과 파트너 리워드를 설정. 3분이면 완료.",
+      screen: "/images/ux/owner_campaign.png",
+    },
+    {
+      num: "02",
+      actor: "📣 파트너",
+      title: "고유 링크로 홍보",
+      desc: "동네 파트너가 SNS·카톡에 공유. 비용은 사장님 부담 없음.",
+      screen: "/images/ux/partner_link.png",
+    },
+    {
+      num: "03",
+      actor: "🎁 손님",
+      title: "방문 후 결제",
+      desc: "손님이 결제하면 그 순간 포인트가 차감됩니다.",
+      screen: "/images/ux/owner_qr_scan.png",
+    },
+  ];
+
+  return (
+    <section ref={ref} className="bg-[#F9FAFB] px-6 py-14 border-t border-gray-100">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5 }}
+        className="mb-10"
+      >
+        <span className="inline-block text-[10px] font-black tracking-[0.25em] text-[#5b5bd6] uppercase bg-[#5b5bd6]/10 px-3 py-1 rounded-full mb-4">
+          HOW IT WORKS
+        </span>
+        <h2 className="text-[26px] font-extrabold text-[#191F28] leading-[1.25]">
+          3단계로 끝나는<br />성과형 마케팅
+        </h2>
+      </motion.div>
+
+      {/* 3단계 플로우 */}
+      <div className="space-y-6">
+        {STEPS.map((s, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.45, delay: i * 0.12 }}
+            className="flex gap-4"
+          >
+            {/* 번호 + 세로선 */}
+            <div className="flex flex-col items-center">
+              <div className="w-10 h-10 rounded-full bg-[#5b5bd6] flex items-center justify-center flex-shrink-0">
+                <span className="text-white font-black text-[12px]">{s.num}</span>
+              </div>
+              {i < STEPS.length - 1 && (
+                <div className="w-px flex-1 bg-[#5b5bd6]/20 my-2" />
+              )}
+            </div>
+
+            {/* 내용 */}
+            <div className="flex-1 pb-6">
+              <p className="text-[11px] text-[#5b5bd6] font-bold mb-1">{s.actor}</p>
+              <h3 className="text-[16px] font-bold text-[#191F28] mb-1">{s.title}</h3>
+              <p className="text-[13px] text-[#6B7684] leading-[1.6] mb-4">{s.desc}</p>
+
+              {/* 앱 스크린샷 */}
+              <div className="w-[140px] bg-[#111] rounded-[24px] p-1 shadow-lg ring-1 ring-black/5">
+                <div className="bg-white rounded-[18px] overflow-hidden">
+                  <Image
+                    src={s.screen}
+                    alt={s.title}
+                    width={138}
+                    height={240}
+                    className="w-full h-auto"
+                    style={{ maxHeight: "200px", objectFit: "cover", objectPosition: "top" }}
+                  />
                 </div>
-                <div className="flex-1 bg-white border border-gray-100 rounded-2xl px-5 py-4 shadow-sm">
-                  <div className="flex items-center justify-between mb-0.5">
-                    <p className="font-bold text-[14px] text-[#191F28]">{s.title}</p>
-                    <span className="text-[10px] font-black text-brand/50 tabular-nums">0{i+1}</span>
-                  </div>
-                  <p className="text-[12px] text-[#8B95A1]">{s.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
+
+      {/* 결과 하이라이트 */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.45, delay: 0.5 }}
+        className="mt-4 bg-[#5b5bd6] rounded-3xl p-5 text-white"
+      >
+        <p className="text-[12px] font-bold opacity-70 mb-1">결과</p>
+        <p className="text-[17px] font-black leading-[1.4]">
+          결제가 일어난 순간에만<br />포인트가 차감됩니다.
+        </p>
+        <p className="text-[13px] opacity-70 mt-2">광고비가 매출로 직결되는 구조.</p>
+      </motion.div>
     </section>
   );
 }
