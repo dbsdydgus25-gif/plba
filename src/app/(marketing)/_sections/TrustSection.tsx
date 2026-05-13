@@ -38,7 +38,7 @@ export default function TrustSection() {
           PROBLEM
         </span>
         <h2 className="text-[26px] font-extrabold text-[#191F28] leading-[1.3] mb-2">
-          "광고비만 빨아먹고<br />결과는 블랙박스"
+          &quot;광고비만 빨아먹고<br />결과는 블랙박스&quot;
         </h2>
         <p className="text-[14px] text-[#4E5968] leading-[1.6]">
           불투명한 기존 마케팅 방식,<br />사장님들만 손해보고 있습니다.
