@@ -37,10 +37,10 @@ export default function CompareSection() {
         className="rounded-3xl overflow-hidden border border-gray-200 shadow-sm"
       >
         {/* 헤더 */}
-        <div className="grid grid-cols-3 bg-white border-b border-gray-100">
-          <div className="p-3 text-[11px] font-bold text-[#8B95A1]">항목</div>
-          <div className="p-3 text-[11px] font-bold text-[#8B95A1] text-center border-l border-gray-100">기존 광고</div>
-          <div className="p-3 text-[11px] font-black text-[#5b5bd6] text-center border-l border-gray-100 bg-[#5b5bd6]/5">
+        <div className="grid grid-cols-3 bg-white border-b border-gray-100 items-end">
+          <div className="p-3 text-[11px] font-bold text-[#8B95A1] pb-4">항목</div>
+          <div className="p-3 text-[11px] font-bold text-[#8B95A1] text-center border-l border-gray-100 pb-4">기존 광고</div>
+          <div className="p-3 text-[13px] font-black text-white text-center bg-[#5b5bd6] rounded-t-xl shadow-inner relative z-10">
             플바
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function CompareSection() {
             <div className="p-3 text-[12px] text-[#8B95A1] text-center border-l border-gray-100 flex items-center justify-center">
               {r.old}
             </div>
-            <div className="p-3 text-[12px] text-[#5b5bd6] font-black text-center border-l border-gray-100 bg-[#5b5bd6]/5 flex items-center justify-center">
+            <div className={`p-3 text-[12px] text-[#5b5bd6] font-black text-center bg-[#5b5bd6]/10 flex items-center justify-center border-x border-[#5b5bd6]/20 relative z-10 ${i === ROWS.length - 1 ? 'rounded-b-xl border-b' : ''}`}>
               {r.plba}
             </div>
           </motion.div>

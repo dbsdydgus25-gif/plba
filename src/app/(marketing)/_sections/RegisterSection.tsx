@@ -22,6 +22,7 @@ export default function RegisterSection() {
           <div>
             <p className="text-white font-black text-[13px]">선착순 100개 가게 혜택</p>
             <p className="text-white/70 text-[12px] mt-0.5">무상 마케팅 포인트 <strong className="text-white">20,000P</strong> 지원</p>
+            <p className="text-white/50 text-[10px] mt-0.5">*1P = 현금 1원과 동일, 손님 최대 20명 유치 가능</p>
           </div>
         </div>
 
@@ -69,13 +70,24 @@ export default function RegisterSection() {
 
           <button
             type="submit"
-            className="w-full py-5 bg-white text-[#5b5bd6] rounded-2xl font-black text-[16px] shadow-xl hover:opacity-90 transition-all active:scale-[0.98] flex items-center justify-center gap-2 mt-2"
+            className="w-full py-5 bg-white text-[#5b5bd6] rounded-2xl font-black text-[16px] shadow-xl hover:opacity-90 transition-all active:scale-[0.98] flex items-center justify-center gap-2 mt-4"
           >
             무료 등록하기 <ArrowRight className="w-5 h-5" />
           </button>
-          <p className="flex items-center justify-center gap-2 text-[12px] text-white/60 font-medium">
-            <ShieldCheck className="w-4 h-4" /> 상담 목적으로만 안전하게 사용됩니다.
-          </p>
+          
+          {/* 신뢰 요소 하단 배치 */}
+          <div className="text-center mt-6 space-y-4">
+            <p className="flex justify-center items-center gap-1.5 text-[12px] text-white/80 font-bold bg-white/10 py-2.5 rounded-xl">
+              <ShieldCheck className="w-4 h-4 text-green-400" />
+              남겨주신 정보는 100% 암호화되어 보호됩니다.
+            </p>
+            <div className="text-[10px] text-white/40 leading-relaxed font-medium">
+              <p>주식회사 플바 | 사업자등록번호: 123-45-67890</p>
+              <p className="mt-1">
+                <a href="#" className="underline underline-offset-2">개인정보처리방침</a> 및 <a href="#" className="underline underline-offset-2">이용약관</a>
+              </p>
+            </div>
+          </div>
         </form>
       </motion.div>
     </section>

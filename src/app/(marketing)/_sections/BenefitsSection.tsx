@@ -72,7 +72,10 @@ export default function BenefitsSection() {
         transition={{ duration: 0.45, delay: 0.45 }}
         className="mt-6 bg-[#F9FAFB] border border-gray-100 rounded-3xl p-5"
       >
-        <p className="text-[11px] text-[#8B95A1] font-bold mb-3 uppercase tracking-wider">앱 대시보드 미리보기</p>
+        <div className="flex justify-between items-center mb-3">
+          <p className="text-[11px] text-[#8B95A1] font-bold uppercase tracking-wider">앱 대시보드 미리보기</p>
+          <p className="text-[10px] text-[#8B95A1] font-medium bg-gray-100 px-2 py-0.5 rounded-full">💡 실제 매장 예시 화면</p>
+        </div>
         <div className="bg-[#5b5bd6] rounded-2xl p-4 text-white mb-3">
           <p className="text-[11px] opacity-70 mb-1">플바로 늘어난 매출</p>
           <p className="font-black text-[28px] tracking-tight">₩1,847,300</p>

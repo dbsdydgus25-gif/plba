@@ -1,14 +1,11 @@
-import MarketingHeader from "@/components/layout/MarketingHeader";
-
 export default function MarketingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <MarketingHeader />
-      <main className="flex-1 w-full pt-20 md:pt-24">
+    <div className="min-h-screen bg-[#F0F2F5] flex justify-center w-full">
+      <main className="w-full max-w-[430px] bg-white min-h-screen relative shadow-2xl overflow-x-hidden">
         {children}
       </main>
     </div>

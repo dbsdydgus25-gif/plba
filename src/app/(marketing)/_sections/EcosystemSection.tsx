@@ -36,7 +36,7 @@ export default function EcosystemSection() {
             color: "#7c3aed",
             bgColor: "#7c3aed/8",
             title: "동네 사람이 홍보합니다",
-            desc: "내 가게를 직접 방문한 파트너들이 SNS·블로그·카톡에 고유 링크를 공유해요. 결제 1건마다 자동으로 리워드가 지급됩니다.",
+            desc: "내 가게를 즐겨 찾는 단골이나 동네 주민이 파트너가 됩니다. SNS·블로그에 고유 링크를 공유하고, 손님이 결제하면 현금처럼 쓸 수 있는 리워드를 받기 때문에 자발적으로 열심히 홍보합니다.",
             screen: "/images/ux/partner_link.png",
           },
           {

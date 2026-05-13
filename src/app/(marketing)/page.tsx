@@ -13,10 +13,10 @@ export default function LandingPage() {
   const [showSticky, setShowSticky] = useState(true);
   return (
     <div
-      className="w-full bg-white overflow-x-hidden"
+      className="w-full bg-white"
       style={{ fontFamily: "'Pretendard', 'Apple SD Gothic Neo', sans-serif", wordBreak: "keep-all" }}
     >
-      <div className="mx-auto max-w-[430px] min-h-screen relative">
+      <div className="w-full relative">
         {/* 1. Hero — Pain 첫 줄 → 솔루션 → 배지 → CTA */}
         <HeroSection />
         {/* 2. 신뢰 섹션 — "이미 N곳이 시작했어요" */}
