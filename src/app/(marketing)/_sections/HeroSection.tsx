@@ -13,15 +13,15 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-[100svh] flex flex-col overflow-hidden bg-[#111318]">
       {/* 배경 이미지 */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-[#000000]">
         <Image
           src="/images/bbq.png"
           alt="한국 음식점"
           fill
-          className="object-cover object-center opacity-30"
+          className="object-cover object-center opacity-[0.25]"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#111318]/60 via-[#111318]/40 to-[#111318]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-[#111318]" />
       </div>
 
       {/* 로고 */}
@@ -42,12 +42,12 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-white/50 text-[13px] font-medium mb-3 tracking-wide">
+          <p className="text-white/80 text-[13px] font-bold mb-3 tracking-wide">
             전단지, SNS 광고, 배달 수수료...
           </p>
-          <h1 className="text-white font-black text-[34px] leading-[1.2] tracking-tight mb-3">
+          <h1 className="text-white font-black text-[34px] leading-[1.3] tracking-tight mb-3">
             마케팅비는 나가는데<br />
-            <span className="text-white/40">손님은 왜 안 올까요?</span>
+            <span className="text-white/60">손님은 왜 안 올까요?</span>
           </h1>
         </motion.div>
 
@@ -62,7 +62,7 @@ export default function HeroSection() {
           <p className="text-[#a8b3ff] font-bold text-[18px] leading-[1.5]">
             결제가 일어날 때만<br />광고비가 빠져나갑니다.
           </p>
-          <p className="text-white/50 text-[13px] mt-2 leading-[1.6]">
+          <p className="text-white/70 text-[13px] mt-2 leading-[1.6]">
             동네 파트너가 홍보하고, 손님이 실제로 결제해야만 비용 차감.
           </p>
         </motion.div>
@@ -75,9 +75,9 @@ export default function HeroSection() {
           className="flex flex-col gap-2 mb-8"
         >
           {BADGES.map((b, i) => (
-            <div key={i} className="flex items-center gap-3 bg-white/8 border border-white/10 rounded-2xl px-4 py-3">
+            <div key={i} className="flex items-center gap-3 bg-white/10 border border-white/20 rounded-2xl px-4 py-3 backdrop-blur-sm shadow-sm">
               <span className="text-[#a8b3ff] font-black text-[20px] min-w-[80px]">{b.num}</span>
-              <span className="text-white/70 text-[13px] font-medium">{b.label}</span>
+              <span className="text-white/90 text-[13.5px] font-bold tracking-wide">{b.label}</span>
             </div>
           ))}
         </motion.div>
