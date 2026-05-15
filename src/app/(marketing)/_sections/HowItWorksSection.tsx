@@ -47,38 +47,39 @@ export default function HowItWorksSection() {
       </motion.div>
 
       {/* 3단계 플로우 (타임라인) */}
-      <div className="relative mt-8">
-        {/* 전체 연결선 */}
-        <div className="absolute left-[19px] top-[24px] bottom-[120px] w-[2px] bg-[#5b5bd6]/20 z-0" />
-        
+      <div className="mt-8 space-y-0">
         {STEPS.map((s, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.45, delay: i * 0.12 }}
-            className="relative z-10 flex gap-6 pb-12 last:pb-4"
+            className="relative flex gap-5 pb-14 last:pb-0"
           >
+            {/* 연결선 (마지막 제외) */}
+            {i < STEPS.length - 1 && (
+              <div className="absolute left-[19px] top-[38px] bottom-[-2px] w-[2px] bg-[#5b5bd6]/20 z-0" />
+            )}
+
             {/* 타임라인 노드 */}
-            <div className="w-10 h-10 rounded-full bg-white border-[3px] border-[#5b5bd6] flex items-center justify-center flex-shrink-0 shadow-sm relative z-10 mt-1">
+            <div className="w-10 h-10 rounded-full bg-white border-[3px] border-[#5b5bd6] flex items-center justify-center flex-shrink-0 shadow-sm relative z-10">
               <span className="text-[#5b5bd6] font-black text-[12px]">{s.num}</span>
             </div>
 
             {/* 내용 */}
-            <div className="flex-1 pt-1">
+            <div className="flex-1 pt-0.5">
               <p className="text-[12px] text-[#5b5bd6] font-bold mb-1">{s.actor}</p>
               <h3 className="text-[18px] font-bold text-[#191F28] mb-2">{s.title}</h3>
               <p className="text-[14px] text-[#6B7684] leading-[1.6] mb-5">{s.desc}</p>
 
-              {/* 앱 스크린샷 */}
-              <div className="w-full max-w-[200px] bg-[#111] rounded-2xl p-1 shadow-lg ring-1 ring-black/5">
-                <div className="bg-white rounded-xl overflow-hidden h-[130px]">
+              {/* 앱 스크린샷 (세로형 핸드폰 비율) */}
+              <div className="w-[150px] bg-[#191F28] rounded-[24px] p-1.5 shadow-xl ring-1 ring-black/5">
+                <div className="bg-white rounded-[18px] overflow-hidden relative h-[250px]">
                   <Image
                     src={s.screen}
                     alt={s.title}
-                    width={180}
-                    height={200}
-                    className="w-full h-auto object-cover object-top"
+                    fill
+                    className="object-cover object-top"
                   />
                 </div>
               </div>
