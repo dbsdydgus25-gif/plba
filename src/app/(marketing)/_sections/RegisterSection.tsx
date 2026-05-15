@@ -29,8 +29,8 @@ export default function RegisterSection() {
         <h2 className="text-white font-extrabold text-[28px] leading-[1.25] mb-2">
           지금 무료로<br />내 가게 등록하기
         </h2>
-        <p className="text-white/70 text-[13px] mb-8 leading-[1.6]">
-          등록 후 플바 팀이 직접 연락드려 설정을 도와드립니다.
+        <p className="text-white/90 text-[14px] mb-8 leading-[1.6] font-medium">
+          이미 광고비로 충분히 태웠잖아요.<br />이제 결제된 만큼만 내세요.
         </p>
 
         <form onSubmit={handleRegister} className="space-y-4">

@@ -103,7 +103,7 @@ export default function HowItWorksSection() {
         <p className="text-[17px] font-black leading-[1.4]">
           결제가 일어난 순간에만<br />포인트가 차감됩니다.
         </p>
-        <p className="text-[13px] opacity-70 mt-2">광고비가 매출로 직결되는 구조.</p>
+        <p className="text-[13px] opacity-70 mt-2">매출이 일어났을 때만 광고비를 내세요.</p>
       </motion.div>
     </section>
   );

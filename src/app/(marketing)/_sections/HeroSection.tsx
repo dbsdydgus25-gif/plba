@@ -60,7 +60,7 @@ export default function HeroSection() {
         >
           <div className="h-px w-8 bg-[#5b5bd6] mb-4" />
           <p className="text-[#a8b3ff] font-bold text-[18px] leading-[1.5]">
-            결제가 일어날 때만<br />광고비가 빠져나갑니다.
+            손님이 안 오면,<br />광고비도 안 나갑니다.
           </p>
           <p className="text-white/70 text-[13px] mt-2 leading-[1.6]">
             동네 파트너가 홍보하고, 손님이 실제로 결제해야만 비용 차감.
@@ -88,6 +88,11 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45 }}
         >
+          <div className="text-center mb-3">
+            <span className="inline-block bg-white/10 border border-white/10 text-white/90 text-[13px] font-bold px-3 py-1.5 rounded-full backdrop-blur-md">
+              지금 등록하면 20,000P 즉시 지급 · 선착순 100곳
+            </span>
+          </div>
           <a
             href="#register"
             className="flex items-center justify-center gap-2 w-full py-5 bg-[#5b5bd6] text-white rounded-2xl font-black text-[17px] shadow-2xl shadow-[#5b5bd6]/30 active:scale-[0.98] transition-transform"
@@ -95,7 +100,7 @@ export default function HeroSection() {
             무료로 내 가게 등록하기
           </a>
           <p className="text-center text-white/30 text-[11px] font-medium mt-3">
-            선착순 100개 가게 · 지금 바로 시작
+            1분이면 사전등록이 완료됩니다
           </p>
         </motion.div>
       </div>

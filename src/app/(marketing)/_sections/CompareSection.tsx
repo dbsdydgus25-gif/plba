@@ -73,7 +73,7 @@ export default function CompareSection() {
       >
         <p className="text-[13px] opacity-60 mb-1">한 줄 요약</p>
         <p className="text-[16px] font-black leading-[1.5]">
-          손님이 실제로 결제해야만<br />광고비가 나갑니다.
+          기존 광고는 먼저 내고 기도합니다.<br />플바는 결과가 나온 다음 냅니다.
         </p>
       </motion.div>
     </section>
