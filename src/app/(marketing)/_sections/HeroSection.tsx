@@ -18,10 +18,10 @@ export default function HeroSection() {
           src="/images/bbq.png"
           alt="한국 음식점"
           fill
-          className="object-cover object-center opacity-[0.25]"
+          className="object-cover object-center opacity-[0.4]"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-[#111318]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#111318]/90 via-[#111318]/60 to-[#111318]" />
       </div>
 
       {/* 로고 */}
@@ -72,12 +72,12 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col gap-2 mb-8"
+          className="grid grid-cols-3 gap-2 mb-10"
         >
           {BADGES.map((b, i) => (
-            <div key={i} className="flex items-center gap-3 bg-white/10 border border-white/20 rounded-2xl px-4 py-3 backdrop-blur-sm shadow-sm">
-              <span className="text-[#a8b3ff] font-black text-[20px] min-w-[80px]">{b.num}</span>
-              <span className="text-white/90 text-[13.5px] font-bold tracking-wide">{b.label}</span>
+            <div key={i} className="flex flex-col items-center justify-center bg-white/10 border border-white/20 rounded-2xl px-2 py-4 backdrop-blur-sm shadow-sm">
+              <span className="text-[#a8b3ff] font-black text-[22px] mb-1">{b.num}</span>
+              <span className="text-white/90 text-[11px] font-medium tracking-tight text-center break-keep leading-[1.3]">{b.label}</span>
             </div>
           ))}
         </motion.div>
@@ -87,21 +87,22 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45 }}
+          className="bg-white/10 border border-white/20 rounded-[20px] p-4 backdrop-blur-md relative"
         >
-          <div className="text-center mb-3">
-            <span className="inline-block bg-white/10 border border-white/10 text-white/90 text-[13px] font-bold px-3 py-1.5 rounded-full backdrop-blur-md">
-              지금 등록하면 20,000P 즉시 지급 · 선착순 100곳
-            </span>
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#00C896] animate-pulse" />
+              <span className="text-white/90 text-[14px] font-bold">
+                우리 가게도 비용 낭비 없이 홍보하고 싶다면?
+              </span>
+            </div>
+            <a
+              href="#register"
+              className="flex items-center justify-center w-full py-4 bg-[#5b5bd6] text-white rounded-xl font-black text-[16px] shadow-xl active:scale-[0.98] transition-transform"
+            >
+              선착순 100곳 20,000P 받기
+            </a>
           </div>
-          <a
-            href="#register"
-            className="flex items-center justify-center gap-2 w-full py-5 bg-[#5b5bd6] text-white rounded-2xl font-black text-[17px] shadow-2xl shadow-[#5b5bd6]/30 active:scale-[0.98] transition-transform"
-          >
-            무료로 내 가게 등록하기
-          </a>
-          <p className="text-center text-white/30 text-[11px] font-medium mt-3">
-            1분이면 사전등록이 완료됩니다
-          </p>
         </motion.div>
       </div>
 

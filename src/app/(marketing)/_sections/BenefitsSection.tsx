@@ -2,19 +2,21 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+import { Wallet, BarChart3, Users } from "lucide-react";
+
 const BENEFITS = [
   {
-    emoji: "💸",
+    icon: Wallet,
     title: "광고비 태우는 거 이제 그만",
     desc: "손님이 오지 않으면 한 푼도 나가지 않아요. 전단지처럼 태워버리는 마케팅비가 사라집니다.",
   },
   {
-    emoji: "📊",
+    icon: BarChart3,
     title: "어디서 손님 왔는지 처음으로 보입니다",
     desc: "파트너별 방문 수, 결제 금액, 활성 캠페인을 앱에서 실시간 확인. 어디서 손님이 오는지 정확히 보입니다.",
   },
   {
-    emoji: "🙋",
+    icon: Users,
     title: "알바생이 동네방네 소문내줍니다",
     desc: "내 가게를 직접 다녀본 동네 사람들이 SNS에서 자발적으로 홍보해요. 사장님은 장사에만 집중하세요.",
   },
@@ -32,9 +34,6 @@ export default function BenefitsSection() {
         transition={{ duration: 0.5 }}
         className="mb-10"
       >
-        <span className="inline-block text-[10px] font-black tracking-[0.25em] text-[#5b5bd6] uppercase bg-[#5b5bd6]/10 px-3 py-1 rounded-full mb-4">
-          OWNER BENEFITS
-        </span>
         <h2 className="text-[26px] font-extrabold text-[#191F28] leading-[1.25]">
           사장님이 실제로<br />달라지는 것 3가지
         </h2>
@@ -53,8 +52,8 @@ export default function BenefitsSection() {
             className="bg-[#F9FAFB] rounded-3xl p-5 border border-gray-100"
           >
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">
-                {b.emoji}
+              <div className="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
+                <b.icon className="w-5 h-5 text-[#5b5bd6]" />
               </div>
               <div>
                 <h3 className="text-[15px] font-bold text-[#191F28] mb-2 leading-[1.35]">{b.title}</h3>

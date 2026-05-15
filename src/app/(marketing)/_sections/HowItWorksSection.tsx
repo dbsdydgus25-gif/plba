@@ -40,50 +40,45 @@ export default function HowItWorksSection() {
         transition={{ duration: 0.5 }}
         className="mb-10"
       >
-        <span className="inline-block text-[10px] font-black tracking-[0.25em] text-[#5b5bd6] uppercase bg-[#5b5bd6]/10 px-3 py-1 rounded-full mb-4">
-          HOW IT WORKS
-        </span>
+
         <h2 className="text-[26px] font-extrabold text-[#191F28] leading-[1.25]">
           3단계로 끝나는<br />성과형 마케팅
         </h2>
       </motion.div>
 
-      {/* 3단계 플로우 */}
-      <div className="space-y-6">
+      {/* 3단계 플로우 (타임라인) */}
+      <div className="relative mt-8">
+        {/* 전체 연결선 */}
+        <div className="absolute left-[19px] top-[24px] bottom-[120px] w-[2px] bg-[#5b5bd6]/20 z-0" />
+        
         {STEPS.map((s, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.45, delay: i * 0.12 }}
-            className="flex gap-4"
+            className="relative z-10 flex gap-6 pb-12 last:pb-4"
           >
-            {/* 번호 + 세로선 */}
-            <div className="flex flex-col items-center">
-              <div className="w-10 h-10 rounded-full bg-[#5b5bd6] flex items-center justify-center flex-shrink-0">
-                <span className="text-white font-black text-[12px]">{s.num}</span>
-              </div>
-              {i < STEPS.length - 1 && (
-                <div className="w-px flex-1 bg-[#5b5bd6]/20 my-2" />
-              )}
+            {/* 타임라인 노드 */}
+            <div className="w-10 h-10 rounded-full bg-white border-[3px] border-[#5b5bd6] flex items-center justify-center flex-shrink-0 shadow-sm relative z-10 mt-1">
+              <span className="text-[#5b5bd6] font-black text-[12px]">{s.num}</span>
             </div>
 
             {/* 내용 */}
-            <div className="flex-1 pb-6">
-              <p className="text-[11px] text-[#5b5bd6] font-bold mb-1">{s.actor}</p>
-              <h3 className="text-[16px] font-bold text-[#191F28] mb-1">{s.title}</h3>
-              <p className="text-[13px] text-[#6B7684] leading-[1.6] mb-4">{s.desc}</p>
+            <div className="flex-1 pt-1">
+              <p className="text-[12px] text-[#5b5bd6] font-bold mb-1">{s.actor}</p>
+              <h3 className="text-[18px] font-bold text-[#191F28] mb-2">{s.title}</h3>
+              <p className="text-[14px] text-[#6B7684] leading-[1.6] mb-5">{s.desc}</p>
 
               {/* 앱 스크린샷 */}
-              <div className="w-[140px] bg-[#111] rounded-[24px] p-1 shadow-lg ring-1 ring-black/5">
-                <div className="bg-white rounded-[18px] overflow-hidden">
+              <div className="w-full max-w-[200px] bg-[#111] rounded-2xl p-1 shadow-lg ring-1 ring-black/5">
+                <div className="bg-white rounded-xl overflow-hidden h-[130px]">
                   <Image
                     src={s.screen}
                     alt={s.title}
-                    width={138}
-                    height={240}
-                    className="w-full h-auto"
-                    style={{ maxHeight: "200px", objectFit: "cover", objectPosition: "top" }}
+                    width={180}
+                    height={200}
+                    className="w-full h-auto object-cover object-top"
                   />
                 </div>
               </div>

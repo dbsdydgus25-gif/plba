@@ -22,9 +22,7 @@ export default function CompareSection() {
         transition={{ duration: 0.5 }}
         className="mb-8"
       >
-        <span className="inline-block text-[10px] font-black tracking-[0.25em] text-[#5b5bd6] uppercase bg-[#5b5bd6]/10 px-3 py-1 rounded-full mb-4">
-          COMPARE
-        </span>
+
         <h2 className="text-[26px] font-extrabold text-[#191F28] leading-[1.25]">
           기존 광고와<br />뭐가 다른가요?
         </h2>

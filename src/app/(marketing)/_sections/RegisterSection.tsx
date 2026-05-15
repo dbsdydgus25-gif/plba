@@ -17,12 +17,26 @@ export default function RegisterSection() {
     <section id="register" className="px-6 pt-12 pb-32 bg-[#5b5bd6] border-t border-[#4f4fc4]">
       <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
         {/* 얼리버드 배너 */}
-        <div className="bg-white/15 border border-white/20 rounded-2xl px-4 py-3 flex items-center gap-3 mb-8">
-          <span className="text-2xl">🎁</span>
-          <div>
-            <p className="text-white font-black text-[13px]">선착순 100개 가게 혜택</p>
-            <p className="text-white/70 text-[12px] mt-0.5">무상 마케팅 포인트 <strong className="text-white">20,000P</strong> 지원</p>
-            <p className="text-white/50 text-[10px] mt-0.5">*1P = 현금 1원과 동일, 손님 최대 20명 유치 가능</p>
+        <div className="bg-[#FF6B00] rounded-2xl p-5 mb-8 shadow-xl shadow-black/10 relative overflow-hidden">
+          {/* 장식용 패턴 */}
+          <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-xl" />
+          
+          <div className="flex flex-col gap-1 relative z-10">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-white/90 font-bold text-[12px] bg-black/20 px-2 py-1 rounded-md">
+                특별 혜택
+              </span>
+              <span className="flex items-center gap-1.5 text-white font-black text-[14px]">
+                <span className="w-2 h-2 rounded-full bg-[#FFD600] animate-pulse" />
+                현재 37곳 남음
+              </span>
+            </div>
+            <h3 className="text-white font-black text-[22px] leading-[1.3]">
+              지금 등록하면<br />마케팅 20,000P 무상 지원
+            </h3>
+            <p className="text-white/80 text-[12px] mt-1">
+              *1P = 현금 1원, 손님 최대 20명 유치 가능
+            </p>
           </div>
         </div>
 
@@ -70,7 +84,7 @@ export default function RegisterSection() {
 
           <button
             type="submit"
-            className="w-full py-5 bg-white text-[#5b5bd6] rounded-2xl font-black text-[16px] shadow-xl hover:opacity-90 transition-all active:scale-[0.98] flex items-center justify-center gap-2 mt-4"
+            className="w-full py-5 bg-[#1A1A24] text-white rounded-2xl font-black text-[16px] shadow-xl hover:bg-black transition-all active:scale-[0.98] flex items-center justify-center gap-2 mt-4"
           >
             무료 등록하기 <ArrowRight className="w-5 h-5" />
           </button>

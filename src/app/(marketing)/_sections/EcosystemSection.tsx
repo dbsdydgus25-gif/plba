@@ -16,9 +16,7 @@ export default function EcosystemSection() {
         transition={{ duration: 0.5 }}
         className="mb-8"
       >
-        <span className="inline-block text-[10px] font-black tracking-[0.25em] text-[#7c3aed] uppercase bg-[#7c3aed]/10 px-3 py-1 rounded-full mb-4">
-          ECOSYSTEM
-        </span>
+
         <h2 className="text-[26px] font-extrabold text-[#191F28] leading-[1.25]">
           사장님 혼자<br />홍보 안 해도 됩니다
         </h2>
