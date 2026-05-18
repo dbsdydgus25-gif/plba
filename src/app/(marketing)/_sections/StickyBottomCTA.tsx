@@ -32,6 +32,7 @@ export default function StickyBottomCTA({ onClose }: { onClose: () => void }) {
           >
             선착순 37곳 남음 · 지금 무료 등록 <ArrowRight className="w-4 h-4" />
           </a>
+          <p className="text-center text-[11px] text-[#8B95A1] mt-2">선착순 37곳 남음 · 2만원 상당 포인트 무상 지원</p>
         </div>
       </motion.div>
     </AnimatePresence>

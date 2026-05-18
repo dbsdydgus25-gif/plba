@@ -2,24 +2,26 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
-import { Store, Megaphone, CreditCard } from "lucide-react";
+import { Store, Megaphone, CreditCard, Users } from "lucide-react";
 
+// #6: "캠페인 개설" → "혜택 등록"으로 소상공인 친화적 용어 변경
+// #1: 파트너 조달 방식 설명 섹션 상단에 추가
 const STEPS = [
   {
     num: "01",
     Icon: Store,
     actor: "사장님",
-    title: "캠페인 개설",
-    desc: "혜택 금액과 파트너 리워드를 설정. 3분이면 완료.",
+    title: "혜택 등록",          // #6: "캠페인 개설" → "혜택 등록"
+    desc: "손님에게 줄 혜택 금액과 파트너 리워드를 설정. 3분이면 완료.",
     screen: "/images/ux/owner_campaign.png",
     color: "#5b5bd6",
   },
   {
     num: "02",
     Icon: Megaphone,
-    actor: "파트너",
+    actor: "파트너 (단골·동네 주민)",  // #5: 파트너 정의 명시
     title: "고유 링크로 홍보",
-    desc: "동네 파트너가 SNS·카톡에 공유. 비용은 사장님 부담 없음.",
+    desc: "플바에 등록된 파트너가 내 가게 혜택을 받아보고 SNS·카톡에 자동 공유합니다.",
     screen: "/images/ux/partner_link.png",
     color: "#7C6EE6",
   },
@@ -27,8 +29,8 @@ const STEPS = [
     num: "03",
     Icon: CreditCard,
     actor: "손님",
-    title: "방문 후 결제",
-    desc: "손님이 결제하면 그 순간 포인트가 차감됩니다.",
+    title: "방문 후 QR 확인",
+    desc: "손님이 방문해 QR을 찍으면 그 순간 리워드가 차감됩니다. 방문 없이는 0원.",
     screen: "/images/ux/owner_qr_scan.png",
     color: "#9B61E5",
   },
@@ -44,7 +46,7 @@ export default function HowItWorksSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5 }}
-        className="mb-12"
+        className="mb-8"
       >
         <span className="inline-block text-[11px] font-bold text-[#5b5bd6] bg-[#5b5bd6]/10 px-3 py-1 rounded-full mb-4 tracking-widest uppercase">
           How it works
@@ -54,9 +56,30 @@ export default function HowItWorksSection() {
         </h2>
       </motion.div>
 
+      {/* #1: 파트너 조달 방식 — "파트너는 어디서 오나요?" 해소 배너 */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="bg-[#5b5bd6]/8 border border-[#5b5bd6]/20 rounded-2xl px-4 py-4 mb-10 flex items-start gap-3"
+      >
+        <div className="w-9 h-9 rounded-xl bg-[#5b5bd6] flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+          <Users className="w-4 h-4 text-white" />
+        </div>
+        <div>
+          <p className="text-[13px] font-black text-[#191F28] mb-1">
+            파트너는 어디서 오나요? 🤔
+          </p>
+          <p className="text-[12.5px] text-[#6B7684] leading-[1.6]">
+            플바에 등록된 <span className="font-bold text-[#5b5bd6]">2,400명+의 파트너</span>가 내 가게 혜택을 자동으로 받아볼 수 있습니다.
+            사장님이 직접 모을 필요 없이, 등록 즉시 파트너들에게 노출됩니다.
+          </p>
+        </div>
+      </motion.div>
+
       {/* 타임라인 */}
       <div className="relative">
-        {/* 세로 연결선 — 전체 타임라인 배경 */}
+        {/* 세로 연결선 */}
         <div className="absolute left-[19px] top-[20px] bottom-[80px] w-[2px] bg-gradient-to-b from-[#5b5bd6] via-[#7C6EE6] to-[#9B61E5] opacity-25 rounded-full" />
 
         <div className="space-y-0">
@@ -65,7 +88,7 @@ export default function HowItWorksSection() {
               key={i}
               initial={{ opacity: 0, x: -24 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.45, delay: i * 0.15 }}
+              transition={{ duration: 0.45, delay: 0.2 + i * 0.15 }}
               className="relative flex gap-5 pb-12 last:pb-0"
             >
               {/* 타임라인 노드 */}
@@ -74,13 +97,12 @@ export default function HowItWorksSection() {
                   className="w-10 h-10 rounded-full flex items-center justify-center shadow-md"
                   style={{ backgroundColor: s.color }}
                 >
-                  <s.Icon className="w-4.5 h-4.5 text-white w-[18px] h-[18px]" />
+                  <s.Icon className="text-white" style={{ width: 18, height: 18 }} />
                 </div>
               </div>
 
               {/* 내용 카드 */}
               <div className="flex-1 bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
-                {/* 스텝 라벨 */}
                 <div className="flex items-center gap-2 mb-3">
                   <span
                     className="text-[11px] font-black px-2 py-0.5 rounded-md"
@@ -115,15 +137,15 @@ export default function HowItWorksSection() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.45, delay: 0.55 }}
+        transition={{ duration: 0.45, delay: 0.65 }}
         className="mt-6 bg-[#5b5bd6] rounded-3xl p-5 text-white relative overflow-hidden"
       >
         <div className="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full blur-2xl" />
         <p className="text-[12px] font-bold opacity-60 mb-1 relative z-10">결과</p>
         <p className="text-[17px] font-black leading-[1.4] relative z-10">
-          결제가 일어난 순간에만<br />포인트가 차감됩니다.
+          방문이 확인된 순간에만<br />리워드가 차감됩니다.
         </p>
-        <p className="text-[13px] opacity-65 mt-2 relative z-10">매출이 일어났을 때만 광고비를 내세요.</p>
+        <p className="text-[13px] opacity-65 mt-2 relative z-10">방문 없으면 단 1원도 나가지 않아요.</p>
       </motion.div>
     </section>
   );

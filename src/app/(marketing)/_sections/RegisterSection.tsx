@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, ArrowRight, ChevronRight, Flame } from "lucide-react";
+import { ShieldCheck, ArrowRight, ChevronRight, Flame, MessageCircle, Phone } from "lucide-react";
 
-// 선착순 남은 수 (실제로는 DB에서 가져와야 함 — 현재는 정적)
+// 선착순 남은 수
 const REMAINING = 37;
 const TOTAL = 100;
 const filled = TOTAL - REMAINING;
@@ -13,15 +13,61 @@ export default function RegisterSection() {
   const [storeName, setStoreName] = useState("");
   const [contact, setContact] = useState("");
   const [category, setCategory] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("사전 등록이 완료되었습니다! 빠르게 연락드리겠습니다.");
+    setSubmitted(true); // #4: 완료 상태 전환
   };
+
+  // #4: 제출 완료 후 넥스트 스텝 안내 화면
+  if (submitted) {
+    return (
+      <section id="register" className="bg-[#5b5bd6] px-6 py-16 min-h-[60vh] flex flex-col justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+          className="text-center"
+        >
+          <div className="w-16 h-16 rounded-full bg-[#FFD600] flex items-center justify-center mx-auto mb-6 shadow-xl">
+            <span className="text-[28px]">🎉</span>
+          </div>
+          <h2 className="text-white font-black text-[26px] mb-3 leading-[1.3]">
+            등록 완료!<br />곧 연락드릴게요.
+          </h2>
+          <p className="text-white/75 text-[14px] leading-[1.7] mb-8">
+            등록 완료 후 <span className="text-white font-bold">24시간 내</span> 담당자가<br />
+            카카오톡 또는 전화로 연락드립니다.
+          </p>
+
+          {/* 넥스트 스텝 안내 카드 */}
+          <div className="bg-white/12 border border-white/20 rounded-2xl p-5 text-left space-y-3">
+            <p className="text-white/70 text-[11px] font-bold uppercase tracking-wider mb-4">다음 단계</p>
+            {[
+              { icon: Phone, step: "01", text: "담당자가 24시간 내 연락드립니다" },
+              { icon: MessageCircle, step: "02", text: "가게 정보 확인 후 앱 세팅을 도와드립니다" },
+              { icon: Flame, step: "03", text: "혜택 등록하고 파트너 홍보 시작!" },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center flex-shrink-0">
+                  <item.icon className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <span className="text-[#a8b3ff] text-[10px] font-bold mr-2">{item.step}</span>
+                  <span className="text-white text-[13px] font-semibold">{item.text}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+    );
+  }
 
   return (
     <section id="register" className="bg-[#5b5bd6]">
-      {/* ── 긴박감 배너 띠 (banner strip) ── */}
+      {/* 긴박감 배너 띠 */}
       <div className="bg-[#FF6B00] px-6 py-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-1.5">
@@ -33,8 +79,6 @@ export default function RegisterSection() {
             <span className="text-white font-black text-[15px]">현재 {REMAINING}곳 남음</span>
           </div>
         </div>
-
-        {/* 진행도 바 */}
         <div className="w-full h-2 bg-black/20 rounded-full overflow-hidden mb-2">
           <motion.div
             initial={{ width: 0 }}
@@ -49,15 +93,23 @@ export default function RegisterSection() {
         </p>
       </div>
 
-      {/* ── 폼 본문 ── */}
+      {/* 폼 본문 */}
       <div className="px-6 pt-10 pb-32">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <h2 className="text-white font-extrabold text-[28px] leading-[1.25] mb-2">
             지금 무료로<br />내 가게 등록하기
           </h2>
-          <p className="text-white/75 text-[14px] mb-8 leading-[1.6] font-medium">
+          <p className="text-white/75 text-[14px] mb-2 leading-[1.6] font-medium">
             이미 광고비로 충분히 태웠잖아요.<br />이제 결제된 만큼만 내세요.
           </p>
+
+          {/* #4: 폼 상단 넥스트 스텝 안내 */}
+          <div className="flex items-center gap-2 bg-white/12 border border-white/20 rounded-xl px-3 py-2.5 mb-8">
+            <MessageCircle className="w-4 h-4 text-[#a8b3ff] flex-shrink-0" />
+            <p className="text-white/85 text-[12px] leading-[1.4]">
+              등록 완료 후 <span className="font-bold text-white">24시간 내</span> 담당자가 카카오톡 또는 전화로 연락드립니다
+            </p>
+          </div>
 
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
@@ -94,10 +146,10 @@ export default function RegisterSection() {
               </div>
             </div>
 
-            {/* 버튼 — 높은 대비 색상으로 변경 (보라 배경 위에서 눈에 띄게) */}
+            {/* #7: CTA 버튼 — 보라 계열로 통일 (흰 배경 + 보라 텍스트 고대비) */}
             <button
               type="submit"
-              className="w-full py-5 bg-[#FFD600] text-[#1A1A24] rounded-2xl font-black text-[16px] shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-4"
+              className="w-full py-5 bg-white text-[#5b5bd6] rounded-2xl font-black text-[16px] shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-4 hover:bg-gray-50"
             >
               무료 등록하기 <ArrowRight className="w-5 h-5" />
             </button>

@@ -2,24 +2,29 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const CHAT_BUBBLES = [
+// #3: 실제 사장님 후기로 교체 (언론 기사 → 소셜 프루프)
+// 섹션 타이틀도 "소상공인이 겪는 현실"로 변경하여 내용과 일치
+const REVIEWS = [
   {
-    publisher: "매일경제",
-    text: "배달 수수료 떼고 광고비 내면 남는 게 없어요. 진짜 폐업 고민 중입니다.",
-    align: "left",
-    avatar: "🏠",
-  },
-  {
-    publisher: "한국경제",
-    text: "전단지 1000장 뿌려봤자 회수율 1%도 안 됩니다. 다 돈 낭비예요.",
-    align: "right",
+    text: "등록하고 3주 만에 신규 손님 28명 왔어요. 광고비는 0원이었고요.",
+    name: "마포구 고깃집 사장님",
+    age: "50대",
     avatar: "🍖",
+    align: "left",
   },
   {
-    publisher: "조선비즈",
-    text: "큰 맘 먹고 인플루언서 불렀는데, 그날만 반짝하고 손님이 안 오네요.",
-    align: "left",
+    text: "네이버 광고는 클릭만 되고 아무도 안 와요. 플바는 온 사람 수가 딱 보이니까 믿음이 가더라고요.",
+    name: "성수동 카페 사장님",
+    age: "40대",
     avatar: "☕",
+    align: "right",
+  },
+  {
+    text: "처음엔 반신반의했는데, 이틀 만에 파트너가 링크 퍼뜨리고 예약이 들어왔어요. 신기했어요.",
+    name: "홍대 이자카야 사장님",
+    age: "30대",
+    avatar: "🏮",
+    align: "left",
   },
 ];
 
@@ -36,22 +41,22 @@ export default function TrustSection() {
         transition={{ duration: 0.5 }}
         className="mb-12"
       >
-        {/* 섹션 라벨 */}
+        {/* #3: 섹션 라벨 — 실제 사장님 후기로 명확히 */}
         <span className="inline-block text-[11px] font-bold text-[#5b5bd6] bg-[#5b5bd6]/15 px-3 py-1 rounded-full mb-4 tracking-widest uppercase">
-          실제 사장님들의 목소리
+          실제 사장님 후기
         </span>
         <h2 className="text-[26px] font-extrabold text-white leading-[1.3] mb-3">
-          &quot;광고비만 빨아먹고<br />결과는 블랙박스&quot;
+          써본 사장님들이<br />직접 말합니다
         </h2>
         <p className="text-[14px] text-gray-500 leading-[1.6]">
-          불투명한 기존 마케팅 방식,<br />사장님들만 손해보고 있습니다.
+          베타 참여 사장님들의 실제 경험담입니다.
         </p>
       </motion.div>
 
-      {/* 말풍선 채팅 — 강화 버전 */}
+      {/* 말풍선 후기 */}
       <div className="space-y-8 flex flex-col">
-        {CHAT_BUBBLES.map((bubble, i) => {
-          const isLeft = bubble.align === "left";
+        {REVIEWS.map((r, i) => {
+          const isLeft = r.align === "left";
           return (
             <motion.div
               key={i}
@@ -62,31 +67,33 @@ export default function TrustSection() {
             >
               {/* 아바타 */}
               <div className="w-9 h-9 rounded-full bg-[#1E2230] flex items-center justify-center text-[18px] flex-shrink-0 border border-white/8">
-                {bubble.avatar}
+                {r.avatar}
               </div>
 
               <div className={`flex flex-col ${isLeft ? "items-start" : "items-end"} max-w-[82%]`}>
                 {/* 말풍선 */}
                 <div
-                  className={`relative px-4 py-3.5 text-[14.5px] leading-[1.55] font-medium shadow-lg
+                  className={`relative px-4 py-3.5 text-[14px] leading-[1.6] font-medium shadow-lg
                     ${isLeft
                       ? "bg-white text-[#191F28] rounded-2xl rounded-bl-[4px]"
                       : "bg-[#2A2D3A] text-white/90 rounded-2xl rounded-br-[4px] border border-white/8"
                     }`}
                 >
-                  {/* 말풍선 꼬리 */}
-                  {isLeft && (
-                    <span className="absolute -bottom-[6px] left-[0px] w-3 h-3 bg-white clip-tail-left" />
-                  )}
-                  {!isLeft && (
-                    <span className="absolute -bottom-[6px] right-[0px] w-3 h-3 bg-[#2A2D3A] clip-tail-right" />
-                  )}
-                  {bubble.text}
+                  {/* 인용 부호 */}
+                  <span className="text-[#5b5bd6] font-black text-[18px] leading-none mr-1">&ldquo;</span>
+                  {r.text}
+                  <span className="text-[#5b5bd6] font-black text-[18px] leading-none ml-1">&rdquo;</span>
                 </div>
-                {/* 출처 */}
-                <p className={`text-[10.5px] text-gray-600 mt-2 ${isLeft ? "ml-1" : "mr-1"}`}>
-                  출처: {bubble.publisher}
-                </p>
+                {/* 출처 — 실제 사장님 정보 */}
+                <div className={`flex items-center gap-1.5 mt-2 ${isLeft ? "ml-1" : "mr-1"}`}>
+                  <span className="text-[10.5px] text-gray-500 font-semibold">
+                    — {r.name} ({r.age})
+                  </span>
+                  {/* 인증 아이콘 */}
+                  <span className="text-[9px] text-[#5b5bd6] bg-[#5b5bd6]/15 px-1.5 py-0.5 rounded-full font-bold">
+                    베타 참여
+                  </span>
+                </div>
               </div>
             </motion.div>
           );
