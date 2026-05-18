@@ -11,17 +11,18 @@ const BADGES = [
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[100svh] flex flex-col overflow-hidden bg-[#111318]">
-      {/* 배경 이미지 */}
-      <div className="absolute inset-0 bg-[#000000]">
+    <section className="relative min-h-[100svh] flex flex-col overflow-hidden bg-[#0D0F14]">
+      {/* 배경 이미지 — 감성 살리기 위해 밝기 올림 */}
+      <div className="absolute inset-0">
         <Image
           src="/images/bbq.png"
           alt="한국 음식점"
           fill
-          className="object-cover object-center opacity-[0.4]"
+          className="object-cover object-center opacity-[0.55]"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#111318]/90 via-[#111318]/60 to-[#111318]" />
+        {/* 상단만 진하게, 하단은 투명하게 — 이미지 감성 최대한 살림 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D0F14]/85 via-[#0D0F14]/50 to-[#0D0F14]/95" />
       </div>
 
       {/* 로고 */}
@@ -42,12 +43,12 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-white/80 text-[13px] font-bold mb-3 tracking-wide">
+          <p className="text-white/70 text-[13px] font-bold mb-3 tracking-wide">
             전단지, SNS 광고, 배달 수수료...
           </p>
           <h1 className="text-white font-black text-[34px] leading-[1.3] tracking-tight mb-3">
             마케팅비는 나가는데<br />
-            <span className="text-white/60">손님은 왜 안 올까요?</span>
+            <span className="text-white/50">손님은 왜 안 올까요?</span>
           </h1>
         </motion.div>
 
@@ -62,54 +63,59 @@ export default function HeroSection() {
           <p className="text-[#a8b3ff] font-bold text-[18px] leading-[1.5]">
             손님이 안 오면,<br />광고비도 안 나갑니다.
           </p>
-          <p className="text-white/70 text-[13px] mt-2 leading-[1.6]">
+          <p className="text-white/60 text-[13px] mt-2 leading-[1.6]">
             동네 파트너가 홍보하고, 손님이 실제로 결제해야만 비용 차감.
           </p>
         </motion.div>
 
-        {/* 혜택 배지 3개 */}
+        {/* 혜택 배지 — 풀 너비 pill → 3분할 카드 */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="grid grid-cols-3 gap-2 mb-10"
+          className="grid grid-cols-3 gap-2.5 mb-10"
         >
           {BADGES.map((b, i) => (
-            <div key={i} className="flex flex-col items-center justify-center bg-white/10 border border-white/20 rounded-2xl px-2 py-4 backdrop-blur-sm shadow-sm">
-              <span className="text-[#a8b3ff] font-black text-[22px] mb-1">{b.num}</span>
-              <span className="text-white/90 text-[11px] font-medium tracking-tight text-center break-keep leading-[1.3]">{b.label}</span>
+            <div
+              key={i}
+              className="flex flex-col items-center justify-center bg-white/10 border border-white/15 rounded-2xl px-2 py-5 backdrop-blur-sm"
+            >
+              <span className="text-[#a8b3ff] font-black text-[20px] mb-1.5 leading-none">{b.num}</span>
+              <span className="text-white/75 text-[10px] font-medium tracking-tight text-center break-keep leading-[1.4]">{b.label}</span>
             </div>
           ))}
         </motion.div>
 
-        {/* CTA 버튼 */}
+        {/* recatch 스타일 — 질문 + 버튼 분리 구조 */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45 }}
-          className="bg-white/10 border border-white/20 rounded-[20px] p-4 backdrop-blur-md relative"
+          className="rounded-[22px] overflow-hidden border border-white/15 backdrop-blur-md"
         >
-          <div className="flex flex-col gap-3">
+          {/* 질문 맥락 — 버튼 위에 붙임 */}
+          <div className="bg-white/8 px-4 py-3 border-b border-white/10">
             <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#00C896] animate-pulse" />
-              <span className="text-white/90 text-[14px] font-bold">
-                우리 가게도 비용 낭비 없이 홍보하고 싶다면?
+              <div className="w-1.5 h-1.5 rounded-full bg-[#00C896] animate-pulse flex-shrink-0" />
+              <span className="text-white/85 text-[13.5px] font-semibold leading-[1.4]">
+                우리 가게도 결제된 만큼만 광고비 내고 싶다면?
               </span>
             </div>
-            <a
-              href="#register"
-              className="flex items-center justify-center w-full py-4 bg-[#5b5bd6] text-white rounded-xl font-black text-[16px] shadow-xl active:scale-[0.98] transition-transform"
-            >
-              선착순 100곳 20,000P 받기
-            </a>
           </div>
+          {/* 버튼 */}
+          <a
+            href="#register"
+            className="flex items-center justify-center w-full py-4 bg-[#5b5bd6] text-white font-black text-[16px] shadow-xl active:scale-[0.98] transition-transform"
+          >
+            선착순 100곳 20,000P 받기 →
+          </a>
         </motion.div>
       </div>
 
       {/* 스크롤 유도 */}
       <div className="relative z-10 flex flex-col items-center pb-8 gap-1">
-        <span className="text-white/25 text-[11px]">아래로 내려보세요</span>
-        <ArrowDown className="w-3.5 h-3.5 text-white/25 animate-bounce" />
+        <span className="text-white/20 text-[11px]">아래로 내려보세요</span>
+        <ArrowDown className="w-3.5 h-3.5 text-white/20 animate-bounce" />
       </div>
     </section>
   );
