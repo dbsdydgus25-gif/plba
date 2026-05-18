@@ -71,7 +71,7 @@ export default function HowItWorksSection() {
             파트너는 어디서 오나요? 🤔
           </p>
           <p className="text-[12.5px] text-[#6B7684] leading-[1.6]">
-            플바에 등록된 <span className="font-bold text-[#5b5bd6]">2,400명+의 파트너</span>가 내 가게 혜택을 자동으로 받아볼 수 있습니다.
+            플바에 등록된 파트너들이 내 가게 혜택을 자동으로 받아볼 수 있습니다.
             사장님이 직접 모을 필요 없이, 등록 즉시 파트너들에게 노출됩니다.
           </p>
         </div>

@@ -64,8 +64,8 @@ export default function RegisterSection() {
 
   return (
     <section id="register" className="bg-[#5b5bd6]">
-      {/* ✅ 긴박감 배너 — 수치 없는 정성적 표현으로 교체 */}
-      <div className="bg-[#FF6B00] px-6 py-4">
+      {/* ✅ 긴박감 배너 — 민트/연두 컬러 */}
+      <div className="bg-[#00C896] px-6 py-4">
         <div className="flex items-center gap-2 mb-1">
           <Flame className="w-4 h-4 text-white flex-shrink-0" />
           <p className="text-white font-black text-[15px]">선착순 초기 파트너 가게 모집 중</p>
