@@ -12,17 +12,19 @@ const BADGES = [
 export default function HeroSection() {
   return (
     <section className="relative min-h-[100svh] flex flex-col overflow-hidden bg-[#0D0F14]">
-      {/* 배경 이미지 — 감성 살리기 위해 밝기 올림 */}
+      {/* 배경 이미지 */}
       <div className="absolute inset-0">
         <Image
           src="/images/bbq.png"
           alt="한국 음식점"
           fill
-          className="object-cover object-center opacity-[0.55]"
+          className="object-cover object-center opacity-[0.45]"
           priority
         />
-        {/* 상단만 진하게, 하단은 투명하게 — 이미지 감성 최대한 살림 */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0D0F14]/85 via-[#0D0F14]/50 to-[#0D0F14]/95" />
+        {/* 텍스트 가독성 확보용 멀티레이어 그라데이션 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D0F14]/92 via-[#0D0F14]/55 to-[#0D0F14]/97" />
+        {/* 상단 좌측 텍스트 영역 추가 어둠 처리 */}
+        <div className="absolute top-0 left-0 right-0 h-[65%] bg-gradient-to-b from-black/60 to-transparent" />
       </div>
 
       {/* 로고 */}
@@ -37,75 +39,95 @@ export default function HeroSection() {
 
       {/* 메인 카피 */}
       <div className="relative z-10 flex-1 flex flex-col justify-center px-6 pt-8 pb-4">
-        {/* Pain 첫 줄 */}
+
+        {/* ① 공감 유발 질문 — 새 플로우 */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-white/70 text-[13px] font-bold mb-3 tracking-wide">
-            전단지, SNS 광고, 배달 수수료...
+          {/* 서브 레이블 */}
+          <p className="text-white/55 text-[13px] font-semibold mb-4 tracking-wide">
+            매달 마케팅비는 쓰는데...
           </p>
-          <h1 className="text-white font-black text-[34px] leading-[1.3] tracking-tight mb-3">
-            마케팅비는 나가는데<br />
-            <span className="text-white/50">손님은 왜 안 올까요?</span>
+
+          {/* 메인 헤드라인 — 그림자로 가독성 확보 */}
+          <h1
+            className="text-white font-black text-[36px] leading-[1.25] tracking-tight mb-2"
+            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.8)" }}
+          >
+            진짜 손님이<br />
+            <span
+              className="text-[#a8b3ff]"
+              style={{ textShadow: "0 2px 20px rgba(91,91,214,0.5), 0 1px 4px rgba(0,0,0,0.8)" }}
+            >
+              오고 있는 거 맞나요?
+            </span>
           </h1>
         </motion.div>
 
-        {/* 솔루션 한 줄 */}
+        {/* ② 솔루션 */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="mt-5 mb-8"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-6 mb-8"
         >
-          <div className="h-px w-8 bg-[#5b5bd6] mb-4" />
-          <p className="text-[#a8b3ff] font-bold text-[18px] leading-[1.5]">
-            손님이 안 오면,<br />광고비도 안 나갑니다.
+          <div className="h-[2px] w-10 bg-[#5b5bd6] mb-4 rounded-full" />
+          <p
+            className="text-white font-bold text-[20px] leading-[1.5]"
+            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.7)" }}
+          >
+            손님이 안 오면,<br />
+            <span className="text-[#a8b3ff]">광고비도 안 나갑니다.</span>
           </p>
-          <p className="text-white/60 text-[13px] mt-2 leading-[1.6]">
-            동네 파트너가 홍보하고, 손님이 실제로 결제해야만 비용 차감.
+          <p className="text-white/65 text-[13px] mt-2 leading-[1.65]"
+            style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}>
+            동네 파트너가 홍보하고, 손님이 실제로 방문해야만 리워드 차감.
           </p>
         </motion.div>
 
-        {/* 혜택 배지 — 풀 너비 pill → 3분할 카드 */}
+        {/* ③ 혜택 배지 3분할 카드 */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
           className="grid grid-cols-3 gap-2.5 mb-10"
         >
           {BADGES.map((b, i) => (
             <div
               key={i}
-              className="flex flex-col items-center justify-center bg-white/10 border border-white/15 rounded-2xl px-2 py-5 backdrop-blur-sm"
+              className="flex flex-col items-center justify-center bg-black/40 border border-white/18 rounded-2xl px-2 py-5 backdrop-blur-md"
             >
-              <span className="text-[#a8b3ff] font-black text-[20px] mb-1.5 leading-none">{b.num}</span>
-              <span className="text-white/75 text-[10px] font-medium tracking-tight text-center break-keep leading-[1.4]">{b.label}</span>
+              <span className="text-[#a8b3ff] font-black text-[20px] mb-1.5 leading-none"
+                style={{ textShadow: "0 0 12px rgba(168,179,255,0.4)" }}>
+                {b.num}
+              </span>
+              <span className="text-white/75 text-[10px] font-medium tracking-tight text-center break-keep leading-[1.4]">
+                {b.label}
+              </span>
             </div>
           ))}
         </motion.div>
 
-        {/* recatch 스타일 — 질문 + 버튼 분리 구조 */}
+        {/* ④ recatch 스타일 — 질문 + 버튼 분리 */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.45 }}
-          className="rounded-[22px] overflow-hidden border border-white/15 backdrop-blur-md"
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="rounded-[22px] overflow-hidden border border-white/18 backdrop-blur-md"
         >
-          {/* 질문 맥락 — 버튼 위에 붙임 */}
-          <div className="bg-white/8 px-4 py-3 border-b border-white/10">
+          <div className="bg-white/10 px-4 py-3 border-b border-white/10">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-[#00C896] animate-pulse flex-shrink-0" />
-              <span className="text-white/85 text-[13.5px] font-semibold leading-[1.4]">
-                우리 가게도 결제된 만큼만 광고비 내고 싶다면?
+              <span className="text-white/90 text-[13.5px] font-semibold leading-[1.4]">
+                우리 가게도 결과 나온 만큼만 내고 싶다면?
               </span>
             </div>
           </div>
-          {/* 버튼 */}
           <a
             href="#register"
-            className="flex items-center justify-center w-full py-4 bg-[#5b5bd6] text-white font-black text-[16px] shadow-xl active:scale-[0.98] transition-transform"
+            className="flex items-center justify-center w-full py-4 bg-[#5b5bd6] text-white font-black text-[16px] active:scale-[0.98] transition-transform"
           >
             선착순 100곳 20,000P 받기 →
           </a>
@@ -114,8 +136,8 @@ export default function HeroSection() {
 
       {/* 스크롤 유도 */}
       <div className="relative z-10 flex flex-col items-center pb-8 gap-1">
-        <span className="text-white/20 text-[11px]">아래로 내려보세요</span>
-        <ArrowDown className="w-3.5 h-3.5 text-white/20 animate-bounce" />
+        <span className="text-white/25 text-[11px]">아래로 내려보세요</span>
+        <ArrowDown className="w-3.5 h-3.5 text-white/25 animate-bounce" />
       </div>
     </section>
   );

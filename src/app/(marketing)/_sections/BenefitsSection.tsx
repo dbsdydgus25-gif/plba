@@ -95,34 +95,51 @@ export default function BenefitsSection() {
         ))}
       </div>
 
-      {/* 성과 대시보드 미리보기 */}
+      {/* 성과 대시보드 미리보기 — 플바는 결제금액 미집계, 실제 트래킹 지표만 표시 */}
       <motion.div
         initial={{ opacity: 0, scale: 0.97 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 0.45, delay: 0.5 }}
         className="mt-6 bg-[#F4F6FA] border border-gray-100 rounded-3xl p-5"
       >
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-between items-center mb-4">
           <p className="text-[11px] text-[#8B95A1] font-bold uppercase tracking-wider">앱 대시보드 미리보기</p>
-          <p className="text-[10px] text-[#8B95A1] font-medium bg-white px-2 py-0.5 rounded-full border border-gray-100">실제 매장 예시 화면</p>
+          <p className="text-[10px] text-[#8B95A1] font-medium bg-white px-2 py-0.5 rounded-full border border-gray-100">실제 매장 예시</p>
         </div>
+
+        {/* 이번 달 요약 헤더 */}
         <div className="bg-[#5b5bd6] rounded-2xl p-4 text-white mb-3">
-          <p className="text-[11px] opacity-70 mb-1">플바로 늘어난 매출</p>
-          <p className="font-black text-[28px] tracking-tight">₩1,847,300</p>
-          <p className="text-[11px] opacity-70 mt-1">지난 달 대비 +414,500원 증가했어요</p>
+          <p className="text-[11px] opacity-65 mb-0.5">이번 달 캠페인 현황</p>
+          <div className="flex items-end gap-2">
+            <p className="font-black text-[26px] tracking-tight">142건</p>
+            <p className="text-[13px] font-bold opacity-80 pb-0.5">방문 확인</p>
+          </div>
+          <div className="flex items-center gap-1.5 mt-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00C896]" />
+            <p className="text-[11px] opacity-70">지난 달 대비 +38건 더 방문했어요</p>
+          </div>
         </div>
+
+        {/* 4개 지표 그리드 */}
         <div className="grid grid-cols-2 gap-2">
           {[
-            { label: "방문 손님", val: "142명", sub: "+24" },
-            { label: "활성 파트너", val: "17명", sub: "+3" },
+            { label: "리워드 지급", val: "142건", sub: "방문 1건 = 리워드 1건", color: "text-[#5b5bd6]" },
+            { label: "활성 파트너", val: "17명", sub: "+3명 이번 달 합류", color: "text-green-600" },
+            { label: "진행 캠페인", val: "2개", sub: "고깃집 런치 / 카페 쿠폰", color: "text-orange-500" },
+            { label: "총 리워드 차감", val: "213,000P", sub: "방문 건당 1,500P 설정", color: "text-[#8B95A1]" },
           ].map((item, i) => (
             <div key={i} className="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
-              <p className="text-[11px] text-[#8B95A1]">{item.label}</p>
-              <p className="text-[18px] font-black text-[#191F28] mt-0.5">{item.val}</p>
-              <p className="text-[11px] text-green-600 font-bold">{item.sub}</p>
+              <p className="text-[10px] text-[#8B95A1] font-medium mb-1">{item.label}</p>
+              <p className={`text-[16px] font-black text-[#191F28] mt-0.5`}>{item.val}</p>
+              <p className={`text-[10px] font-medium mt-1 ${item.color}`}>{item.sub}</p>
             </div>
           ))}
         </div>
+
+        {/* 안내 텍스트 */}
+        <p className="text-[10.5px] text-[#8B95A1] mt-3 leading-[1.5] text-center">
+          💡 방문 확인은 QR 스캔 기준 · 실제 결제금액은 별도 집계
+        </p>
       </motion.div>
     </section>
   );
