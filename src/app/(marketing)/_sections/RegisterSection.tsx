@@ -3,18 +3,46 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck, ArrowRight, ChevronRight, Flame, MessageCircle, Phone } from "lucide-react";
 
-// ✅ 허위 수치(37곳, 63곳, 진행바) 전면 제거
-// ✅ 정성적 긴박감 문구로 대체
-
 export default function RegisterSection() {
   const [storeName, setStoreName] = useState("");
   const [contact, setContact] = useState("");
+  const [email, setEmail] = useState("");
   const [category, setCategory] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          store_name: storeName,
+          contact,
+          email,
+          category,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error ?? "등록에 실패했습니다. 다시 시도해 주세요.");
+        return;
+      }
+
+      // 성공
+      setSubmitted(true);
+    } catch {
+      setError("서버 연결에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // 제출 완료 — 넥스트 스텝 안내 화면
@@ -31,11 +59,12 @@ export default function RegisterSection() {
             <span className="text-[28px]">🎉</span>
           </div>
           <h2 className="text-white font-black text-[26px] mb-3 leading-[1.3]">
-            등록 완료!<br />곧 연락드릴게요.
+            등록 완료!<br />확인 메일을 보냈어요.
           </h2>
           <p className="text-white/75 text-[14px] leading-[1.7] mb-8">
-            등록 완료 후 <span className="text-white font-bold">24시간 내</span> 담당자가<br />
-            카카오톡 또는 전화로 연락드립니다.
+            <span className="text-white font-bold">{email}</span> 으로<br />
+            사전등록 확인 이메일을 발송했습니다.<br />
+            <span className="text-white font-bold">24시간 내</span> 담당자가 연락드립니다.
           </p>
 
           {/* 넥스트 스텝 3단계 */}
@@ -64,7 +93,7 @@ export default function RegisterSection() {
 
   return (
     <section id="register" className="bg-[#5b5bd6]">
-      {/* ✅ 긴박감 배너 — 민트/연두 컬러 */}
+      {/* 긴박감 배너 — 민트/연두 컬러 */}
       <div className="bg-[#00C896] px-6 py-4">
         <div className="flex items-center gap-2 mb-1">
           <Flame className="w-4 h-4 text-white flex-shrink-0" />
@@ -94,6 +123,7 @@ export default function RegisterSection() {
           </div>
 
           <form onSubmit={handleRegister} className="space-y-4">
+            {/* 상호명 */}
             <div>
               <label className="block text-[12px] font-bold text-white/70 mb-2">상호명</label>
               <input
@@ -102,6 +132,8 @@ export default function RegisterSection() {
                 className="w-full px-4 py-4 bg-white rounded-2xl text-[#191F28] text-[15px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60"
               />
             </div>
+
+            {/* 연락처 */}
             <div>
               <label className="block text-[12px] font-bold text-white/70 mb-2">연락처</label>
               <input
@@ -110,6 +142,21 @@ export default function RegisterSection() {
                 className="w-full px-4 py-4 bg-white rounded-2xl text-[#191F28] text-[15px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60"
               />
             </div>
+
+            {/* 이메일 — 신규 추가 */}
+            <div>
+              <label className="block text-[12px] font-bold text-white/70 mb-2">
+                이메일
+                <span className="ml-1.5 text-[#a8b3ff] font-normal">(확인 메일을 보내드립니다)</span>
+              </label>
+              <input
+                type="email" required value={email} onChange={e => setEmail(e.target.value)}
+                placeholder="example@gmail.com"
+                className="w-full px-4 py-4 bg-white rounded-2xl text-[#191F28] text-[15px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60"
+              />
+            </div>
+
+            {/* 업종 */}
             <div>
               <label className="block text-[12px] font-bold text-white/70 mb-2">업종</label>
               <div className="relative">
@@ -128,12 +175,27 @@ export default function RegisterSection() {
               </div>
             </div>
 
-            {/* ✅ CTA 버튼 — 흰 배경 + 보라 텍스트 (보라 배경 섹션 위 최고 대비) */}
+            {/* 에러 메시지 */}
+            {error && (
+              <div className="bg-red-500/20 border border-red-400/30 rounded-xl px-4 py-3">
+                <p className="text-red-200 text-[13px] font-medium">{error}</p>
+              </div>
+            )}
+
+            {/* CTA 버튼 */}
             <button
               type="submit"
-              className="w-full py-5 bg-white text-[#5b5bd6] rounded-2xl font-black text-[16px] shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-4 hover:bg-gray-50"
+              disabled={loading}
+              className="w-full py-5 bg-white text-[#5b5bd6] rounded-2xl font-black text-[16px] shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-4 hover:bg-gray-50 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              무료 등록하기 <ArrowRight className="w-5 h-5" />
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-[#5b5bd6]/30 border-t-[#5b5bd6] rounded-full animate-spin" />
+                  등록 중...
+                </>
+              ) : (
+                <>무료 등록하기 <ArrowRight className="w-5 h-5" /></>
+              )}
             </button>
 
             {/* 신뢰 요소 */}
@@ -145,7 +207,8 @@ export default function RegisterSection() {
               <div className="text-[10px] text-white/35 leading-relaxed font-medium">
                 <p>주식회사 플바 | 사업자등록번호: 123-45-67890</p>
                 <p className="mt-1">
-                  <a href="#" className="underline underline-offset-2">개인정보처리방침</a> 및 <a href="#" className="underline underline-offset-2">이용약관</a>
+                  <a href="#" className="underline underline-offset-2">개인정보처리방침</a> 및{" "}
+                  <a href="#" className="underline underline-offset-2">이용약관</a>
                 </p>
               </div>
             </div>
