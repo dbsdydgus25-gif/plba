@@ -104,7 +104,7 @@ export default function BenefitsSection() {
       >
         <div className="flex justify-between items-center mb-4">
           <p className="text-[11px] text-[#8B95A1] font-bold uppercase tracking-wider">앱 대시보드 미리보기</p>
-          <p className="text-[10px] text-[#8B95A1] font-medium bg-white px-2 py-0.5 rounded-full border border-gray-100">실제 매장 예시</p>
+          <p className="text-[10px] text-[#5b5bd6] font-bold bg-[#5b5bd6]/10 px-2 py-0.5 rounded-full border border-[#5b5bd6]/20">예시 수치</p>
         </div>
 
         {/* 이번 달 요약 헤더 */}

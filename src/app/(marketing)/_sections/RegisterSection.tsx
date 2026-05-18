@@ -3,11 +3,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck, ArrowRight, ChevronRight, Flame, MessageCircle, Phone } from "lucide-react";
 
-// 선착순 남은 수
-const REMAINING = 37;
-const TOTAL = 100;
-const filled = TOTAL - REMAINING;
-const pct = Math.round((filled / TOTAL) * 100);
+// ✅ 허위 수치(37곳, 63곳, 진행바) 전면 제거
+// ✅ 정성적 긴박감 문구로 대체
 
 export default function RegisterSection() {
   const [storeName, setStoreName] = useState("");
@@ -17,10 +14,10 @@ export default function RegisterSection() {
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true); // #4: 완료 상태 전환
+    setSubmitted(true);
   };
 
-  // #4: 제출 완료 후 넥스트 스텝 안내 화면
+  // 제출 완료 — 넥스트 스텝 안내 화면
   if (submitted) {
     return (
       <section id="register" className="bg-[#5b5bd6] px-6 py-16 min-h-[60vh] flex flex-col justify-center">
@@ -30,7 +27,7 @@ export default function RegisterSection() {
           transition={{ duration: 0.4 }}
           className="text-center"
         >
-          <div className="w-16 h-16 rounded-full bg-[#FFD600] flex items-center justify-center mx-auto mb-6 shadow-xl">
+          <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-6 shadow-xl">
             <span className="text-[28px]">🎉</span>
           </div>
           <h2 className="text-white font-black text-[26px] mb-3 leading-[1.3]">
@@ -41,9 +38,9 @@ export default function RegisterSection() {
             카카오톡 또는 전화로 연락드립니다.
           </p>
 
-          {/* 넥스트 스텝 안내 카드 */}
-          <div className="bg-white/12 border border-white/20 rounded-2xl p-5 text-left space-y-3">
-            <p className="text-white/70 text-[11px] font-bold uppercase tracking-wider mb-4">다음 단계</p>
+          {/* 넥스트 스텝 3단계 */}
+          <div className="bg-white/12 border border-white/20 rounded-2xl p-5 text-left space-y-4">
+            <p className="text-white/60 text-[11px] font-bold uppercase tracking-wider mb-2">다음 단계</p>
             {[
               { icon: Phone, step: "01", text: "담당자가 24시간 내 연락드립니다" },
               { icon: MessageCircle, step: "02", text: "가게 정보 확인 후 앱 세팅을 도와드립니다" },
@@ -67,29 +64,14 @@ export default function RegisterSection() {
 
   return (
     <section id="register" className="bg-[#5b5bd6]">
-      {/* 긴박감 배너 띠 */}
+      {/* ✅ 긴박감 배너 — 수치 없는 정성적 표현으로 교체 */}
       <div className="bg-[#FF6B00] px-6 py-4">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-1.5">
-            <Flame className="w-4 h-4 text-white" />
-            <span className="text-white font-black text-[14px]">선착순 100곳 한정</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#FFD600] animate-pulse" />
-            <span className="text-white font-black text-[15px]">현재 {REMAINING}곳 남음</span>
-          </div>
+        <div className="flex items-center gap-2 mb-1">
+          <Flame className="w-4 h-4 text-white flex-shrink-0" />
+          <p className="text-white font-black text-[15px]">선착순 초기 파트너 가게 모집 중</p>
         </div>
-        <div className="w-full h-2 bg-black/20 rounded-full overflow-hidden mb-2">
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: `${pct}%` }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="h-full bg-[#FFD600] rounded-full"
-          />
-        </div>
-        <p className="text-white/80 text-[11px] font-medium">
-          {filled}곳 등록 완료 · 남은 자리 {REMAINING}곳
+        <p className="text-white/80 text-[12px] font-medium">
+          초기 등록 가게에는 <span className="text-white font-bold">2만원 상당 포인트</span>를 무상으로 드립니다 · 현재 마감 임박
         </p>
       </div>
 
@@ -103,7 +85,7 @@ export default function RegisterSection() {
             이미 광고비로 충분히 태웠잖아요.<br />이제 결제된 만큼만 내세요.
           </p>
 
-          {/* #4: 폼 상단 넥스트 스텝 안내 */}
+          {/* 넥스트 스텝 안내 */}
           <div className="flex items-center gap-2 bg-white/12 border border-white/20 rounded-xl px-3 py-2.5 mb-8">
             <MessageCircle className="w-4 h-4 text-[#a8b3ff] flex-shrink-0" />
             <p className="text-white/85 text-[12px] leading-[1.4]">
@@ -146,7 +128,7 @@ export default function RegisterSection() {
               </div>
             </div>
 
-            {/* #7: CTA 버튼 — 보라 계열로 통일 (흰 배경 + 보라 텍스트 고대비) */}
+            {/* ✅ CTA 버튼 — 흰 배경 + 보라 텍스트 (보라 배경 섹션 위 최고 대비) */}
             <button
               type="submit"
               className="w-full py-5 bg-white text-[#5b5bd6] rounded-2xl font-black text-[16px] shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-4 hover:bg-gray-50"
