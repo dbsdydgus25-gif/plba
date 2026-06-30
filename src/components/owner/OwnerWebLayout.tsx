@@ -22,7 +22,7 @@ const NAV_ITEMS: { id: OwnerWebTab; label: string; icon: React.ReactNode }[] = [
     icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7V5.5A1.5 1.5 0 0 1 5.5 4H7M17 4h1.5A1.5 1.5 0 0 1 20 5.5V7M20 17v1.5a1.5 1.5 0 0 1-1.5 1.5H17M7 20H5.5A1.5 1.5 0 0 1 4 18.5V17M8 12h8" /></svg>
   },
   {
-    id: "payroll", label: "급여 정산",
+    id: "payroll", label: "급여 관리",
     icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="5" width="22" height="14" rx="2" /><path d="M1 10h22" /></svg>
   },
   {
@@ -46,7 +46,7 @@ const NAV_ITEMS: { id: OwnerWebTab; label: string; icon: React.ReactNode }[] = [
 const WEB_TITLES: Record<OwnerWebTab, string> = {
   dashboard: "대시보드",
   attendance: "근태 관리",
-  payroll: "급여 정산",
+  payroll: "급여 관리",
   schedule: "스케줄 관리",
   staff: "직원 관리",
   onboarding: "가게 온보딩",
@@ -219,11 +219,11 @@ export default function OwnerWebLayout({ tab, onTabChange, onLogout }: {
         {/* Page content */}
         <div style={{ flex: 1, overflowY: "auto", padding: "28px 32px 48px" }}>
           {tab === "dashboard" && <OwnerDashboard storeId={storeId} />}
-          {tab === "attendance" && <OwnerAttendance />}
-          {tab === "payroll" && <OwnerPayroll />}
-          {tab === "schedule" && <OwnerSchedule />}
+          {tab === "attendance" && <OwnerAttendance storeId={storeId || undefined} />}
+          {tab === "payroll" && <OwnerPayroll storeId={storeId || undefined} />}
+          {tab === "schedule" && <OwnerSchedule storeId={storeId || undefined} />}
           {tab === "staff" && <OwnerStaff />}
-          {tab === "onboarding" && <OwnerOnboarding />}
+          {tab === "onboarding" && <OwnerOnboarding storeId={storeId || undefined} />}
           {tab === "billing" && storeId && <OwnerBilling storeId={storeId} />}
         </div>
       </div>
