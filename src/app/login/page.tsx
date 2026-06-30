@@ -7,8 +7,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   async function kakaoLogin(role: "alba" | "owner") {
-    // 브라우저에 캐시된 Supabase 세션 완전 삭제
-    await supabase.auth.signOut();
+    try { await supabase.auth.signOut(); } catch (_) {}
     Object.keys(localStorage).forEach(k => {
       if (k.startsWith("sb-")) localStorage.removeItem(k);
     });
