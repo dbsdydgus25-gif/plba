@@ -7,6 +7,9 @@ export default function LoginPage() {
   const router = useRouter();
 
   async function kakaoLogin(role: "alba" | "owner") {
+    await supabase.auth.signOut();
+    localStorage.removeItem("plba_uid");
+    localStorage.removeItem("plba_name");
     const redirectTo = `${window.location.origin}/auth/callback?role=${role}`;
     await supabase.auth.signInWithOAuth({
       provider: "kakao",
