@@ -1,13 +1,19 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { supabase } from "@/lib/supabase";
 
 type Step = "bizreg" | "address" | "name" | "phone" | "verify";
 
-export default function OwnerSignupPage() {
+function OwnerSignupInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const kakaoId = searchParams.get("kakao_id") ?? "";
+  const kakaoName = searchParams.get("kakao_name") ? decodeURIComponent(searchParams.get("kakao_name")!) : "";
+
   const [step, setStep] = useState<Step>("bizreg");
+  const [storeName, setStoreName] = useState("");
   const [bizReg, setBizReg] = useState("");
   const [bizVerified, setBizVerified] = useState(false);
   const [bizName, setBizName] = useState("");
@@ -20,6 +26,9 @@ export default function OwnerSignupPage() {
   const [bizLoading, setBizLoading] = useState(false);
   const [smsError, setSmsError] = useState("");
   const [smsLoading, setSmsLoading] = useState(false);
+  const [saveError, setSaveError] = useState("");
+
+  useEffect(() => { if (kakaoName) setOwnerName(kakaoName); }, [kakaoName]);
 
   const otpDigits = otp.padEnd(6, "").split("");
 
@@ -81,6 +90,7 @@ export default function OwnerSignupPage() {
   async function verifyOtp() {
     setSmsLoading(true);
     setSmsError("");
+    setSaveError("");
     try {
       const res = await fetch("/api/sms", {
         method: "POST",
@@ -89,15 +99,36 @@ export default function OwnerSignupPage() {
       });
       const data = await res.json();
       if (!data.ok) throw new Error("인증번호가 올바르지 않아요.");
-      router.push("/owner");
+
+      // DB 저장: users
+      const { data: user, error: userErr } = await supabase
+        .from("users")
+        .insert({ phone: phone.replace(/\D/g, ""), name: ownerName, role: "owner", kakao_id: kakaoId || null })
+        .select("id")
+        .single();
+      if (userErr) throw new Error("계정 저장 실패: " + userErr.message);
+
+      // DB 저장: stores
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      const { error: storeErr } = await supabase
+        .from("stores")
+        .insert({ name: storeName || ownerName + "의 가게", address, code, owner_id: user.id });
+      if (storeErr) throw new Error("가게 저장 실패: " + storeErr.message);
+
+      localStorage.setItem("plba_uid", user.id);
+      localStorage.setItem("plba_name", ownerName);
+      router.push(`/owner?uid=${user.id}&name=${encodeURIComponent(ownerName)}`);
     } catch (e) {
-      setSmsError((e as Error).message);
+      const msg = (e as Error).message;
+      if (msg.includes("인증번호")) setSmsError(msg);
+      else setSaveError(msg);
     } finally {
       setSmsLoading(false);
     }
   }
 
   const progress = { bizreg: 1, address: 2, name: 3, phone: 4, verify: 5 }[step];
+  if (saveError) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", padding: 24, textAlign: "center", color: "red" }}>{saveError}</div>;
   const totalSteps = 5;
 
   const bizDigits = bizReg.replace(/\D/g, "").length;
@@ -149,13 +180,14 @@ export default function OwnerSignupPage() {
               bizReg={bizReg} setBizReg={v => setBizReg(formatBizReg(v))}
               bizVerified={bizVerified} bizName={bizName} verifyBizReg={verifyBizReg}
               bizError={bizError} bizLoading={bizLoading}
+              storeName={storeName} setStoreName={setStoreName}
               address={address} setAddress={setAddress}
               ownerName={ownerName} setOwnerName={setOwnerName}
               phone={phone} setPhone={v => setPhone(formatPhone(v))}
               otp={otp} setOtp={setOtp} otpSent={otpSent} sendOtp={sendOtp} verifyOtp={verifyOtp}
               smsError={smsError} smsLoading={smsLoading}
               otpDigits={otpDigits}
-              onComplete={() => router.push("/owner")}
+              onComplete={() => {}}
               onBack={() => {
                 const prev: Record<Step, Step | "login"> = { bizreg: "login", address: "bizreg", name: "address", phone: "name", verify: "phone" };
                 const p = prev[step];
@@ -203,13 +235,14 @@ export default function OwnerSignupPage() {
               bizReg={bizReg} setBizReg={v => setBizReg(formatBizReg(v))}
               bizVerified={bizVerified} bizName={bizName} verifyBizReg={verifyBizReg}
               bizError={bizError} bizLoading={bizLoading}
+              storeName={storeName} setStoreName={setStoreName}
               address={address} setAddress={setAddress}
               ownerName={ownerName} setOwnerName={setOwnerName}
               phone={phone} setPhone={v => setPhone(formatPhone(v))}
               otp={otp} setOtp={setOtp} otpSent={otpSent} sendOtp={sendOtp} verifyOtp={verifyOtp}
               smsError={smsError} smsLoading={smsLoading}
               otpDigits={otpDigits}
-              onComplete={() => router.push("/owner")}
+              onComplete={() => {}}
               onBack={() => {}}
               bizDigits={bizDigits}
             />
@@ -223,6 +256,7 @@ export default function OwnerSignupPage() {
 function FormContent({
   step, setStep,
   bizReg, setBizReg, bizVerified, bizName, verifyBizReg, bizError, bizLoading,
+  storeName, setStoreName,
   address, setAddress,
   ownerName, setOwnerName,
   phone, setPhone,
@@ -234,6 +268,7 @@ function FormContent({
   bizReg: string; setBizReg: (v: string) => void;
   bizVerified: boolean; bizName: string; verifyBizReg: () => void;
   bizError: string; bizLoading: boolean;
+  storeName: string; setStoreName: (v: string) => void;
   address: string; setAddress: (v: string) => void;
   ownerName: string; setOwnerName: (v: string) => void;
   phone: string; setPhone: (v: string) => void;
@@ -305,13 +340,25 @@ function FormContent({
       {step === "address" && (
         <div style={{ animation: "fadeUp .25s ease" }}>
           <h2 style={{ fontWeight: 800, fontSize: 24, color: "var(--text)", lineHeight: 1.3 }}>
-            사업장 주소를<br />입력해주세요
+            가게 정보를<br />입력해주세요
           </h2>
           <p style={{ fontWeight: 500, fontSize: 14, color: "var(--text-sub)", marginTop: 8 }}>
-            알바생 앱에서 가게 위치로 표시돼요.
+            알바생 앱에서 표시되는 가게 이름이에요.
           </p>
 
           <div style={{ marginTop: 32 }}>
+            <label style={{ fontWeight: 600, fontSize: 13, color: "var(--text)", display: "block", marginBottom: 8 }}>가게 이름</label>
+            <input
+              type="text"
+              value={storeName}
+              onChange={e => setStoreName(e.target.value)}
+              placeholder="예) 홍길동 카페"
+              autoFocus
+              style={inputStyle}
+            />
+          </div>
+
+          <div style={{ marginTop: 20 }}>
             <label style={{ fontWeight: 600, fontSize: 13, color: "var(--text)", display: "block", marginBottom: 8 }}>사업장 주소</label>
             <button
               onClick={() => {
@@ -337,7 +384,7 @@ function FormContent({
             )}
           </div>
 
-          <button onClick={() => setStep("name")} disabled={address.trim().length < 5} style={btnPrimary(address.trim().length < 5)}>
+          <button onClick={() => setStep("name")} disabled={storeName.trim().length < 1 || address.trim().length < 5} style={btnPrimary(storeName.trim().length < 1 || address.trim().length < 5)}>
             다음
           </button>
         </div>
@@ -451,5 +498,13 @@ function FormContent({
         </div>
       )}
     </>
+  );
+}
+
+export default function OwnerSignupPage() {
+  return (
+    <Suspense fallback={<div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>로딩 중...</div>}>
+      <OwnerSignupInner />
+    </Suspense>
   );
 }
