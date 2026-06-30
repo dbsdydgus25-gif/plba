@@ -21,6 +21,7 @@ export type User = {
   birth_date: string | null;
   role: "owner" | "alba";
   created_at: string;
+  // id = Supabase Auth UUID (auth.users.id)
 };
 
 export type StoreMember = {

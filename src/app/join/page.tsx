@@ -125,7 +125,7 @@ function JoinInner() {
     try {
       // 1. users 테이블에 upsert (같은 폰번호면 업데이트)
       const upsertData: Record<string, unknown> = { phone, name, birth_date: birth || null, role: "alba" };
-      if (kakaoId) upsertData.kakao_id = kakaoId;
+      if (kakaoId) upsertData.id = kakaoId;
       const { data: userData, error: userErr } = await supabase
         .from("users")
         .upsert(upsertData, { onConflict: "phone" })

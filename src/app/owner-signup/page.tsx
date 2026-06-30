@@ -103,9 +103,11 @@ function OwnerSignupInner() {
       if (!data.ok) throw new Error("인증번호가 올바르지 않아요.");
 
       // DB 저장: users
+      const insertData: Record<string, unknown> = { phone: phone.replace(/\D/g, ""), name: ownerName, role: "owner" };
+      if (kakaoId) insertData.id = kakaoId;
       const { data: user, error: userErr } = await supabase
         .from("users")
-        .upsert({ phone: phone.replace(/\D/g, ""), name: ownerName, role: "owner", kakao_id: kakaoId || null }, { onConflict: "kakao_id" })
+        .upsert(insertData, { onConflict: "phone" })
         .select("id")
         .single();
       if (userErr) throw new Error("계정 저장 실패: " + userErr.message);

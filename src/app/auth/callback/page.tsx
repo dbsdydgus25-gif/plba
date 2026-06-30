@@ -21,7 +21,7 @@ function CallbackInner() {
         const { data: existing } = await supabase
           .from("users")
           .select("id, name, phone, role")
-          .eq("kakao_id", kakaoId)
+          .eq("id", kakaoId)
           .maybeSingle();
 
         if (existing && existing.role === role) {
