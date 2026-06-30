@@ -150,8 +150,8 @@ function JoinInner() {
       if (memberErr) throw new Error("가게 연결 중 오류가 발생했어요.");
 
       // 3. 세션 저장 (localStorage)
-      localStorage.setItem("plba_user_id", userId);
-      localStorage.setItem("plba_user_name", name);
+      localStorage.setItem("plba_uid", userId);
+      localStorage.setItem("plba_name", name);
       localStorage.setItem("plba_store_id", storeId);
       localStorage.setItem("plba_store_name", storeName);
 
