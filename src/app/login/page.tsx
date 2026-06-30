@@ -8,18 +8,10 @@ export default function LoginPage() {
 
   async function kakaoLogin(role: "alba" | "owner") {
     const redirectTo = `${window.location.origin}/auth/callback?role=${role}`;
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: "kakao",
-      options: { redirectTo, skipBrowserRedirect: true },
+      options: { redirectTo },
     });
-    if (error || !data?.url) {
-      alert("카카오 URL 생성 실패: " + (error?.message ?? "unknown"));
-      return;
-    }
-    // 디버그: 실제 URL 확인 후 이동
-    console.log("[kakao URL]", data.url);
-    alert("Kakao URL:\n" + data.url);
-    window.location.href = data.url;
   }
 
   return (
