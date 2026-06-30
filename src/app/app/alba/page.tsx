@@ -184,7 +184,7 @@ export default function AlbaAppPage() {
         })}
       </div>
 
-      {qrOpen && <QROverlay mode={qrMode} onSuccess={onQRSuccess} onClose={() => setQrOpen(false)} />}
+      {qrOpen && <QROverlay mode={qrMode} storeCode={session?.storeCode} onSuccess={onQRSuccess} onClose={() => setQrOpen(false)} />}
       {guideOpen && <GuideOverlay onClose={() => setGuideOpen(false)} onOpenCamera={() => { setGuideOpen(false); setCameraOpen(true); }} />}
       {cameraOpen && <CameraOverlay onClose={() => setCameraOpen(false)} />}
       {onboardingOpen && <OnboardingOverlay onClose={() => setOnboardingOpen(false)} storeName={session?.storeName} />}

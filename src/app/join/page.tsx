@@ -152,6 +152,7 @@ function JoinInner() {
       localStorage.setItem("plba_name", name);
       localStorage.setItem("plba_store_id", storeId);
       localStorage.setItem("plba_store_name", storeName);
+      localStorage.setItem("plba_store_code", storeCode);
 
       router.push("/app/alba");
     } catch (e: unknown) {
