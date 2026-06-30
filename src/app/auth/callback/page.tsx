@@ -22,7 +22,8 @@ function CallbackInner() {
           supabase.from("users").select("id, name, role").eq("id", kakaoId).maybeSingle(),
           supabase.from("users").select("id, name, role").eq("kakao_id", kakaoId).maybeSingle(),
         ]);
-        const existing = byId ?? byKakaoId;
+        // role과 일치하는 레코드 우선 선택 (같은 카카오 계정이 owner+alba 둘 다 있을 수 있음)
+        const existing = (byId?.role === role ? byId : null) ?? (byKakaoId?.role === role ? byKakaoId : null) ?? byId ?? byKakaoId;
 
         if (existing && existing.role === role) {
           localStorage.setItem("plba_uid", existing.id);
