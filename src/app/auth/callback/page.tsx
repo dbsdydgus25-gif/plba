@@ -8,39 +8,34 @@ function CallbackInner() {
   const router = useRouter();
 
   useEffect(() => {
-    (async () => {
-      const role = localStorage.getItem("plba_role") ?? "alba";
-      const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_IN" && session) {
+        const role = localStorage.getItem("plba_role") ?? "alba";
+        const kakaoId = session.user.id;
+        const nickname =
+          session.user.user_metadata?.name ??
+          session.user.user_metadata?.full_name ??
+          "카카오 사용자";
 
-      if (error || !data.session) {
-        router.replace("/login");
-        return;
+        const { data: existing } = await supabase
+          .from("users")
+          .select("id, name, role")
+          .eq("id", kakaoId)
+          .maybeSingle();
+
+        if (existing && existing.role === role) {
+          localStorage.setItem("plba_uid", existing.id);
+          localStorage.setItem("plba_name", existing.name);
+          const dest = role === "owner" ? "/owner" : "/app/alba";
+          router.replace(`${dest}?uid=${existing.id}&name=${encodeURIComponent(existing.name)}`);
+          return;
+        }
+
+        const dest = role === "owner" ? "/owner-signup" : "/join";
+        router.replace(`${dest}?kakao_id=${encodeURIComponent(kakaoId)}&kakao_name=${encodeURIComponent(nickname)}`);
       }
-
-      const user = data.session.user;
-      const kakaoId = user.id;
-      const nickname =
-        user.user_metadata?.name ??
-        user.user_metadata?.full_name ??
-        "카카오 사용자";
-
-      const { data: existing } = await supabase
-        .from("users")
-        .select("id, name, role")
-        .eq("id", kakaoId)
-        .maybeSingle();
-
-      if (existing && existing.role === role) {
-        localStorage.setItem("plba_uid", existing.id);
-        localStorage.setItem("plba_name", existing.name);
-        const dest = role === "owner" ? "/owner" : "/app/alba";
-        router.replace(`${dest}?uid=${existing.id}&name=${encodeURIComponent(existing.name)}`);
-        return;
-      }
-
-      const dest = role === "owner" ? "/owner-signup" : "/join";
-      router.replace(`${dest}?kakao_id=${encodeURIComponent(kakaoId)}&kakao_name=${encodeURIComponent(nickname)}`);
-    })();
+    });
+    return () => subscription.unsubscribe();
   }, [router]);
 
   return (
