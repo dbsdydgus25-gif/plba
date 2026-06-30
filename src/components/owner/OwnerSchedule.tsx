@@ -104,7 +104,7 @@ export default function OwnerSchedule({ storeId }: { storeId?: string }) {
                 <span style={{ fontWeight: 700, fontSize: 13, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.name}</span>
               </div>
               {row.schedule.map((cell, di) => (
-                <button key={di} onClick={() => openCell(ri, di)} style={{ borderLeft: "1px solid rgba(112,115,124,0.08)", border: "none", borderLeft: "1px solid rgba(112,115,124,0.08)", padding: "8px 6px", background: cell ? "var(--p-soft)" : "transparent", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 2, minHeight: 56, transition: "background 0.12s" }}>
+                <button key={di} onClick={() => openCell(ri, di)} style={{ border: "none", borderLeft: "1px solid rgba(112,115,124,0.08)", padding: "8px 6px", background: cell ? "var(--p-soft)" : "transparent", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 2, minHeight: 56, transition: "background 0.12s" }}>
                   {cell ? (
                     <>
                       <span style={{ fontWeight: 700, fontSize: 11, color: "var(--p-tint)" }}>{cell.s}</span>

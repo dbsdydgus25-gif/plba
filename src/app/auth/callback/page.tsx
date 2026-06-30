@@ -17,17 +17,34 @@ function CallbackInner() {
           session.user.user_metadata?.full_name ??
           "카카오 사용자";
 
-        const { data: existing } = await supabase
-          .from("users")
-          .select("id, name, role")
-          .eq("id", kakaoId)
-          .maybeSingle();
+        // id(owner용) 또는 kakao_id(alba용) 둘 다 검색
+        const [{ data: byId }, { data: byKakaoId }] = await Promise.all([
+          supabase.from("users").select("id, name, role").eq("id", kakaoId).maybeSingle(),
+          supabase.from("users").select("id, name, role").eq("kakao_id", kakaoId).maybeSingle(),
+        ]);
+        const existing = byId ?? byKakaoId;
 
         if (existing && existing.role === role) {
           localStorage.setItem("plba_uid", existing.id);
           localStorage.setItem("plba_name", existing.name);
+          // alba는 storeId/storeCode도 불러와서 저장
+          if (role === "alba") {
+            const { data: member } = await supabase
+              .from("store_members")
+              .select("store_id, stores(name, code)")
+              .eq("user_id", existing.id)
+              .eq("status", "active")
+              .limit(1)
+              .single();
+            if (member) {
+              const store = member.stores as unknown as { name: string; code: string } | null;
+              localStorage.setItem("plba_store_id", member.store_id);
+              localStorage.setItem("plba_store_name", store?.name ?? "");
+              localStorage.setItem("plba_store_code", store?.code ?? "");
+            }
+          }
           const dest = role === "owner" ? "/owner" : "/app/alba";
-          router.replace(`${dest}?uid=${existing.id}&name=${encodeURIComponent(existing.name)}`);
+          router.replace(dest);
           return;
         }
 

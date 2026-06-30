@@ -123,10 +123,12 @@ function JoinInner() {
     setError("");
 
     try {
-      // 1. users 테이블에 upsert (같은 폰번호면 업데이트, kakaoId는 이름 자동완성용으로만 사용)
+      // 1. users 테이블에 upsert (같은 폰번호면 업데이트)
+      const upsertPayload: Record<string, unknown> = { phone, name, birth_date: birth || null, role: "alba" };
+      if (kakaoId) upsertPayload.kakao_id = kakaoId;
       const { data: userData, error: userErr } = await supabase
         .from("users")
-        .upsert({ phone, name, birth_date: birth || null, role: "alba" }, { onConflict: "phone" })
+        .upsert(upsertPayload, { onConflict: "phone" })
         .select("id")
         .single();
 
