@@ -7,7 +7,8 @@ export default function LoginPage() {
   const router = useRouter();
 
   function kakaoLogin(role: "alba" | "owner") {
-    const redirectTo = `${window.location.origin}/auth/callback?role=${role}`;
+    localStorage.setItem("plba_role", role);
+    const redirectTo = `${window.location.origin}/auth/callback`;
     supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: { redirectTo },

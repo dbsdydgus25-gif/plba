@@ -1,17 +1,15 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { Suspense } from "react";
 
 function CallbackInner() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const role = searchParams.get("role") ?? "alba";
 
   useEffect(() => {
     (async () => {
-      // PKCE: 클라이언트에서 직접 code exchange (localStorage verifier 사용)
+      const role = localStorage.getItem("plba_role") ?? "alba";
       const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href);
 
       if (error || !data.session) {
