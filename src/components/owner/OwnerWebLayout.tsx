@@ -9,6 +9,7 @@ import OwnerPayroll from "./OwnerPayroll";
 import OwnerSchedule from "./OwnerSchedule";
 import OwnerStaff from "./OwnerStaff";
 import OwnerOnboarding from "./OwnerOnboarding";
+import OwnerBilling from "./OwnerBilling";
 import { supabase } from "@/lib/supabase";
 
 const NAV_ITEMS: { id: OwnerWebTab; label: string; icon: React.ReactNode }[] = [
@@ -36,6 +37,10 @@ const NAV_ITEMS: { id: OwnerWebTab; label: string; icon: React.ReactNode }[] = [
     id: "onboarding", label: "가게 온보딩",
     icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 11l18-7-7 18-2.5-7.5L3 11Z" /></svg>
   },
+  {
+    id: "billing", label: "구독 / 결제",
+    icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="5" width="22" height="14" rx="2"/><path d="M1 10h22"/></svg>
+  },
 ];
 
 const WEB_TITLES: Record<OwnerWebTab, string> = {
@@ -45,6 +50,7 @@ const WEB_TITLES: Record<OwnerWebTab, string> = {
   schedule: "스케줄 관리",
   staff: "직원 관리",
   onboarding: "가게 온보딩",
+  billing: "구독 / 결제",
 };
 
 function InviteModal({ storeCode, onClose }: { storeCode: string; onClose: () => void }) {
@@ -218,6 +224,7 @@ export default function OwnerWebLayout({ tab, onTabChange, onLogout }: {
           {tab === "schedule" && <OwnerSchedule />}
           {tab === "staff" && <OwnerStaff />}
           {tab === "onboarding" && <OwnerOnboarding />}
+          {tab === "billing" && storeId && <OwnerBilling storeId={storeId} />}
         </div>
       </div>
     </div>

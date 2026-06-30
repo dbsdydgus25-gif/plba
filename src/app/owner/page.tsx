@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import OwnerWebLayout from "@/components/owner/OwnerWebLayout";
 import OwnerMobileLayout from "@/components/owner/OwnerMobileLayout";
 
-export type OwnerWebTab = "dashboard" | "attendance" | "payroll" | "schedule" | "staff" | "onboarding";
+export type OwnerWebTab = "dashboard" | "attendance" | "payroll" | "schedule" | "staff" | "onboarding" | "billing";
 
 function OwnerInner() {
   const router = useRouter();
