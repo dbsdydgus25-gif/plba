@@ -103,7 +103,7 @@ function OwnerSignupInner() {
       // DB 저장: users
       const { data: user, error: userErr } = await supabase
         .from("users")
-        .insert({ phone: phone.replace(/\D/g, ""), name: ownerName, role: "owner", kakao_id: kakaoId || null })
+        .upsert({ phone: phone.replace(/\D/g, ""), name: ownerName, role: "owner", kakao_id: kakaoId || null }, { onConflict: "kakao_id" })
         .select("id")
         .single();
       if (userErr) throw new Error("계정 저장 실패: " + userErr.message);
@@ -460,16 +460,21 @@ function FormContent({
             <span style={{ color: "var(--p)", fontWeight: 700 }}>{phone}</span>으로 보냈어요.
           </p>
 
-          <input
-            type="text"
-            value={otp}
-            onChange={e => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
-            inputMode="numeric"
-            maxLength={6}
-            placeholder="인증번호 6자리"
-            autoFocus
-            style={{ marginTop: 32, width: "100%", height: 62, borderRadius: 14, border: "2px solid var(--p)", textAlign: "center", fontSize: 26, fontWeight: 800, letterSpacing: "0.35em", color: "var(--text)", outline: "none", boxSizing: "border-box", background: "#fff" }}
-          />
+          <div style={{ position: "relative", marginTop: 32 }}>
+            <div style={{ display: "flex", gap: 9 }}>
+              {otpDigits.map((ch, i) => {
+                const isActive = i === otp.length && otp.length < 6;
+                const hasCh = i < otp.length;
+                return (
+                  <div key={i} style={{ flex: 1, height: 58, borderRadius: 13, border: `2px solid ${isActive ? "var(--p)" : hasCh ? "var(--p-border)" : "rgba(112,115,124,0.22)"}`, background: hasCh ? "var(--p-softer)" : "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 24, color: "var(--text)", transition: "border-color 0.12s" }}>
+                    {ch !== " " ? ch : ""}
+                  </div>
+                );
+              })}
+            </div>
+            <input value={otp} onChange={e => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))} inputMode="numeric" maxLength={6} autoFocus
+              style={{ position: "absolute", inset: 0, opacity: 0, cursor: "text", fontSize: 16 }} />
+          </div>
 
           <button onClick={sendOtp} style={{ marginTop: 14, display: "inline-flex", alignItems: "center", gap: 6, background: "none", border: "none", cursor: "pointer", fontWeight: 600, fontSize: 13, color: "var(--p)" }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 4v6h6M23 20v-6h-6" /><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15" /></svg>
