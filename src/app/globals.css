@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* Pretendard */
+@font-face { font-family:"Pretendard"; font-weight:400; src:url("/fonts/Pretendard-Regular.otf") format("opentype"); font-display:swap; }
+@font-face { font-family:"Pretendard"; font-weight:500; src:url("/fonts/Pretendard-Medium.otf") format("opentype"); font-display:swap; }
+@font-face { font-family:"Pretendard"; font-weight:600; src:url("/fonts/Pretendard-SemiBold.otf") format("opentype"); font-display:swap; }
+@font-face { font-family:"Pretendard"; font-weight:700; src:url("/fonts/Pretendard-Bold.otf") format("opentype"); font-display:swap; }
+@font-face { font-family:"Pretendard"; font-weight:800; src:url("/fonts/Pretendard-ExtraBold.otf") format("opentype"); font-display:swap; }
+
+/* Design tokens — violet theme (default) */
+:root {
+  --p: #6541F2;
+  --p-strong: #4F29E5;
+  --p-soft: #EFEBFE;
+  --p-softer: #FAF9FF;
+  --p-border: #DBD3FE;
+  --p-tint: #4F29E5;
+  --brand: #6B4DF6;
+
+  --text: #171719;
+  --text-sub: rgba(55,56,60,0.55);
+  --text-sub2: rgba(55,56,60,0.35);
+  --hairline: rgba(112,115,124,0.16);
+  --surface: #F7F7F8;
+  --surface2: #FAFAFB;
+  --bg: #ECECEF;
+
+  --positive: #2E7A00;
+  --positive-bg: #EAFCE0;
+  --cautionary: #CC6A00;
+  --cautionary-bg: #FEF4E6;
+  --negative: #E52222;
+  --negative-bg: #FEECEC;
+  --leave: #CC4B00;
+  --leave-bg: #FEEEE5;
+
+  --kakao: #FEE500;
+  --kakao-text: #191600;
+
+  --radius-chip: 9999px;
+  --radius-btn: 12px;
+  --radius-card: 16px;
+  --radius-sheet: 24px;
+}
+
+/* Lime theme */
+[data-theme="lime"] {
+  --p: #48AD00;
+  --p-strong: #3B8F00;
+  --p-soft: #EAFCE0;
+  --p-softer: #F6FEF0;
+  --p-border: #C4F0A0;
+  --p-tint: #347D00;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: "Pretendard", -apple-system, sans-serif;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: rgba(112,115,124,0.25); border-radius: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, textarea { font-family: inherit; }
+
+/* Animations */
+@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes scanline { 0%{transform:translateY(0)} 50%{transform:translateY(190px)} 100%{transform:translateY(0)} }
+@keyframes popIn { 0%{transform:scale(.5);opacity:0} 60%{transform:scale(1.12)} 100%{transform:scale(1);opacity:1} }
+@keyframes softPulse { 0%,100%{opacity:1} 50%{opacity:.45} }
+@keyframes ringPulse { 0%{transform:scale(1);opacity:.55} 70%{transform:scale(1.5);opacity:0} 100%{opacity:0} }
+@keyframes flashOverlay { 0%{opacity:0.7} 100%{opacity:0} }
+@keyframes timerTick { from{opacity:.6} to{opacity:1} }
+
+.animate-fadeUp { animation: fadeUp 0.35s ease; }
+.animate-popIn { animation: popIn 0.32s cubic-bezier(.34,1.56,.64,1); }
+.animate-scanline { animation: scanline 2s ease-in-out infinite; }
+.animate-ringPulse { animation: ringPulse 1.2s ease-out infinite; }
+.animate-softPulse { animation: softPulse 1.6s ease-in-out infinite; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
