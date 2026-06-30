@@ -6,17 +6,11 @@ import { supabase } from "@/lib/supabase";
 export default function LoginPage() {
   const router = useRouter();
 
-  async function kakaoLogin(role: "alba" | "owner") {
-    try { await supabase.auth.signOut(); } catch (_) {}
-    Object.keys(localStorage).forEach(k => {
-      if (k.startsWith("sb-")) localStorage.removeItem(k);
-    });
-    localStorage.removeItem("plba_uid");
-    localStorage.removeItem("plba_name");
+  function kakaoLogin(role: "alba" | "owner") {
     const redirectTo = `${window.location.origin}/auth/callback?role=${role}`;
-    await supabase.auth.signInWithOAuth({
+    supabase.auth.signInWithOAuth({
       provider: "kakao",
-      options: { redirectTo, scopes: "profile_nickname profile_image" },
+      options: { redirectTo },
     });
   }
 
