@@ -27,7 +27,7 @@ function CallbackInner() {
         if (existing) {
           localStorage.setItem("plba_uid", existing.id);
           localStorage.setItem("plba_name", existing.name);
-          const dest = role === "owner" ? "/app/owner" : "/app/alba";
+          const dest = role === "owner" ? "/owner" : "/app/alba";
           router.replace(`${dest}?uid=${existing.id}&name=${encodeURIComponent(existing.name)}`);
           return;
         }
