@@ -462,7 +462,7 @@ function FormContent({
 
           <div style={{ position: "relative", marginTop: 32 }}>
             <div style={{ display: "flex", gap: 9 }}>
-              {otpDigits.map((ch, i) => {
+              {otp.padEnd(6, " ").split("").map((ch, i) => {
                 const isActive = i === otp.length && otp.length < 6;
                 const hasCh = i < otp.length;
                 return (
