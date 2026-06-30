@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 
-type Step = "bizreg" | "address" | "name" | "phone" | "verify";
+type Step = "bizreg" | "bizinfo" | "address" | "name" | "phone" | "verify";
 
 function OwnerSignupInner() {
   const router = useRouter();
@@ -13,6 +13,8 @@ function OwnerSignupInner() {
   const kakaoName = searchParams.get("kakao_name") ? decodeURIComponent(searchParams.get("kakao_name")!) : "";
 
   const [step, setStep] = useState<Step>("bizreg");
+  const [businessType, setBusinessType] = useState("");
+  const [employeeCount, setEmployeeCount] = useState("");
   const [storeName, setStoreName] = useState("");
   const [bizReg, setBizReg] = useState("");
   const [bizVerified, setBizVerified] = useState(false);
@@ -112,7 +114,7 @@ function OwnerSignupInner() {
       const code = Math.floor(100000 + Math.random() * 900000).toString();
       const { error: storeErr } = await supabase
         .from("stores")
-        .insert({ name: storeName || ownerName + "의 가게", address, code, owner_id: user.id });
+        .insert({ name: storeName || ownerName + "의 가게", address, code, owner_id: user.id, business_type: businessType, employee_count: employeeCount });
       if (storeErr) throw new Error("가게 저장 실패: " + storeErr.message);
 
       localStorage.setItem("plba_uid", user.id);
@@ -127,9 +129,9 @@ function OwnerSignupInner() {
     }
   }
 
-  const progress = { bizreg: 1, address: 2, name: 3, phone: 4, verify: 5 }[step];
+  const progress = { bizreg: 1, bizinfo: 2, address: 3, name: 4, phone: 5, verify: 6 }[step];
   if (saveError) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", padding: 24, textAlign: "center", color: "red" }}>{saveError}</div>;
-  const totalSteps = 5;
+  const totalSteps = 6;
 
   const bizDigits = bizReg.replace(/\D/g, "").length;
 
@@ -180,6 +182,8 @@ function OwnerSignupInner() {
               bizReg={bizReg} setBizReg={v => setBizReg(formatBizReg(v))}
               bizVerified={bizVerified} bizName={bizName} verifyBizReg={verifyBizReg}
               bizError={bizError} bizLoading={bizLoading}
+              businessType={businessType} setBusinessType={setBusinessType}
+              employeeCount={employeeCount} setEmployeeCount={setEmployeeCount}
               storeName={storeName} setStoreName={setStoreName}
               address={address} setAddress={setAddress}
               ownerName={ownerName} setOwnerName={setOwnerName}
@@ -189,7 +193,7 @@ function OwnerSignupInner() {
               otpDigits={otpDigits}
               onComplete={() => {}}
               onBack={() => {
-                const prev: Record<Step, Step | "login"> = { bizreg: "login", address: "bizreg", name: "address", phone: "name", verify: "phone" };
+                const prev: Record<Step, Step | "login"> = { bizreg: "login", bizinfo: "bizreg", address: "bizinfo", name: "address", phone: "name", verify: "phone" };
                 const p = prev[step];
                 if (p === "login") router.push("/login");
                 else setStep(p);
@@ -207,7 +211,7 @@ function OwnerSignupInner() {
           <div style={{ padding: "16px 20px 0", display: "flex", alignItems: "center", gap: 12 }}>
             <button
               onClick={() => {
-                const prev: Record<Step, Step | "login"> = { bizreg: "login", address: "bizreg", name: "address", phone: "name", verify: "phone" };
+                const prev: Record<Step, Step | "login"> = { bizreg: "login", bizinfo: "bizreg", address: "bizinfo", name: "address", phone: "name", verify: "phone" };
                 const p = prev[step];
                 if (p === "login") router.push("/login");
                 else setStep(p);
@@ -235,6 +239,8 @@ function OwnerSignupInner() {
               bizReg={bizReg} setBizReg={v => setBizReg(formatBizReg(v))}
               bizVerified={bizVerified} bizName={bizName} verifyBizReg={verifyBizReg}
               bizError={bizError} bizLoading={bizLoading}
+              businessType={businessType} setBusinessType={setBusinessType}
+              employeeCount={employeeCount} setEmployeeCount={setEmployeeCount}
               storeName={storeName} setStoreName={setStoreName}
               address={address} setAddress={setAddress}
               ownerName={ownerName} setOwnerName={setOwnerName}
@@ -256,6 +262,7 @@ function OwnerSignupInner() {
 function FormContent({
   step, setStep,
   bizReg, setBizReg, bizVerified, bizName, verifyBizReg, bizError, bizLoading,
+  businessType, setBusinessType, employeeCount, setEmployeeCount,
   storeName, setStoreName,
   address, setAddress,
   ownerName, setOwnerName,
@@ -268,6 +275,8 @@ function FormContent({
   bizReg: string; setBizReg: (v: string) => void;
   bizVerified: boolean; bizName: string; verifyBizReg: () => void;
   bizError: string; bizLoading: boolean;
+  businessType: string; setBusinessType: (v: string) => void;
+  employeeCount: string; setEmployeeCount: (v: string) => void;
   storeName: string; setStoreName: (v: string) => void;
   address: string; setAddress: (v: string) => void;
   ownerName: string; setOwnerName: (v: string) => void;
@@ -327,7 +336,7 @@ function FormContent({
           </div>
 
           <button
-            onClick={() => setStep("address")}
+            onClick={() => setStep("bizinfo")}
             disabled={!bizVerified}
             style={btnPrimary(!bizVerified)}
           >
@@ -336,7 +345,65 @@ function FormContent({
         </div>
       )}
 
-      {/* STEP 2: 사업장 주소 */}
+      {/* STEP 2: 업종 & 직원수 */}
+      {step === "bizinfo" && (
+        <div style={{ animation: "fadeUp .25s ease" }}>
+          <h2 style={{ fontWeight: 800, fontSize: 24, color: "var(--text)", lineHeight: 1.3 }}>
+            사업장 업종을<br />선택해주세요
+          </h2>
+          <p style={{ fontWeight: 500, fontSize: 14, color: "var(--text-sub)", marginTop: 8 }}>
+            알바생에게 맞는 서비스를 제공하는 데 활용돼요.
+          </p>
+
+          <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            {[
+              { value: "카페", icon: "☕" },
+              { value: "식당", icon: "🍽️" },
+              { value: "편의점", icon: "🏪" },
+              { value: "마트/슈퍼", icon: "🛒" },
+              { value: "베이커리", icon: "🥐" },
+              { value: "기타", icon: "📦" },
+            ].map(({ value, icon }) => (
+              <button
+                key={value}
+                onClick={() => setBusinessType(value)}
+                style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 16px", border: `2px solid ${businessType === value ? "var(--p)" : "rgba(112,115,124,0.2)"}`, borderRadius: 14, background: businessType === value ? "var(--p-softer)" : "#fff", cursor: "pointer", fontWeight: 700, fontSize: 15, color: businessType === value ? "var(--p-tint)" : "var(--text)", transition: "all 0.12s" }}
+              >
+                <span style={{ fontSize: 20 }}>{icon}</span>
+                {value}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 28 }}>
+            <h3 style={{ fontWeight: 700, fontSize: 16, color: "var(--text)", marginBottom: 12 }}>현재 직원 수는요?</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {["1~3명", "4~9명", "10~19명", "20명 이상"].map(v => (
+                <button
+                  key={v}
+                  onClick={() => setEmployeeCount(v)}
+                  style={{ display: "flex", alignItems: "center", gap: 12, padding: "13px 16px", border: `2px solid ${employeeCount === v ? "var(--p)" : "rgba(112,115,124,0.2)"}`, borderRadius: 14, background: employeeCount === v ? "var(--p-softer)" : "#fff", cursor: "pointer", fontWeight: 700, fontSize: 14, color: employeeCount === v ? "var(--p-tint)" : "var(--text)", textAlign: "left", transition: "all 0.12s" }}
+                >
+                  <div style={{ width: 20, height: 20, borderRadius: "50%", border: `2px solid ${employeeCount === v ? "var(--p)" : "rgba(112,115,124,0.35)"}`, background: employeeCount === v ? "var(--p)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    {employeeCount === v && <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#fff" }} />}
+                  </div>
+                  {v}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={() => setStep("address")}
+            disabled={!businessType || !employeeCount}
+            style={{ ...btnPrimary(!businessType || !employeeCount), marginTop: 28 }}
+          >
+            다음
+          </button>
+        </div>
+      )}
+
+      {/* STEP 3: 사업장 주소 */}
       {step === "address" && (
         <div style={{ animation: "fadeUp .25s ease" }}>
           <h2 style={{ fontWeight: 800, fontSize: 24, color: "var(--text)", lineHeight: 1.3 }}>

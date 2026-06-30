@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import type { OwnerWebTab } from "@/app/owner/page";
 import OwnerDashboard from "./OwnerDashboard";
@@ -8,6 +9,7 @@ import OwnerPayroll from "./OwnerPayroll";
 import OwnerSchedule from "./OwnerSchedule";
 import OwnerStaff from "./OwnerStaff";
 import OwnerOnboarding from "./OwnerOnboarding";
+import { supabase } from "@/lib/supabase";
 
 const NAV_ITEMS: { id: OwnerWebTab; label: string; icon: React.ReactNode }[] = [
   {
@@ -45,15 +47,13 @@ const WEB_TITLES: Record<OwnerWebTab, string> = {
   onboarding: "가게 온보딩",
 };
 
-const STORE_CODE = "482910";
-const INVITE_URL = `plba.co.kr/join?code=${STORE_CODE}`;
-
-function InviteModal({ onClose }: { onClose: () => void }) {
+function InviteModal({ storeCode, onClose }: { storeCode: string; onClose: () => void }) {
   const [copiedUrl, setCopiedUrl] = useState(false);
-  function copy(text: string, setCopied: (v: boolean) => void) {
+  const INVITE_URL = `plba.co.kr/join?code=${storeCode}`;
+  function copy(text: string) {
     navigator.clipboard.writeText(text).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
+    setCopiedUrl(true);
+    setTimeout(() => setCopiedUrl(false), 1800);
   }
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }} onClick={onClose}>
@@ -70,18 +70,13 @@ function InviteModal({ onClose }: { onClose: () => void }) {
 
         <div style={{ marginBottom: 16 }}>
           <div style={{ fontWeight: 600, fontSize: 12, color: "var(--text-sub)", marginBottom: 8 }}>가게 코드</div>
-          {/* 가게 코드 강조 */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 72, background: "var(--p-soft)", border: "1.5px solid var(--p-border)", borderRadius: 16 }}>
-            <span style={{ fontWeight: 900, fontSize: 36, color: "var(--p-tint)", letterSpacing: "0.22em", fontFamily: "monospace" }}>{STORE_CODE}</span>
+            <span style={{ fontWeight: 900, fontSize: 36, color: "var(--p-tint)", letterSpacing: "0.22em", fontFamily: "monospace" }}>{storeCode}</span>
           </div>
         </div>
 
-        {/* 한번에 복사 */}
         <button
-          onClick={() => {
-            const msg = `안녕하세요! 플바 앱으로 출퇴근을 관리해요 :)\n\n가입 링크: https://${INVITE_URL}\n가게 코드: ${STORE_CODE}\n\n링크로 가입 후 코드를 입력하면 바로 합류돼요!`;
-            copy(msg, setCopiedUrl);
-          }}
+          onClick={() => copy(`안녕하세요! 플바 앱으로 출퇴근을 관리해요 :)\n\n가입 링크: https://${INVITE_URL}\n가게 코드: ${storeCode}\n\n링크로 가입 후 코드를 입력하면 바로 합류돼요!`)}
           style={{ width: "100%", height: 52, border: "none", borderRadius: 14, background: copiedUrl ? "var(--positive)" : "var(--p)", color: "#fff", fontWeight: 800, fontSize: 15, cursor: "pointer", transition: "background 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
         >
           {copiedUrl ? (
@@ -94,7 +89,7 @@ function InviteModal({ onClose }: { onClose: () => void }) {
           )}
         </button>
 
-        <div style={{ padding: "10px 14px", background: "#f7f7f8", borderRadius: 12 }}>
+        <div style={{ padding: "10px 14px", background: "#f7f7f8", borderRadius: 12, marginTop: 10 }}>
           <div style={{ fontWeight: 500, fontSize: 12, color: "var(--text-sub)", lineHeight: 1.6 }}>
             복사 후 카카오톡이나 문자로 붙여넣어 전달하면 돼요.
           </div>
@@ -109,14 +104,33 @@ export default function OwnerWebLayout({ tab, onTabChange, onLogout }: {
   onTabChange: (t: OwnerWebTab) => void;
   onLogout: () => void;
 }) {
+  const searchParams = useSearchParams();
+  const uid = searchParams.get("uid") ?? (typeof window !== "undefined" ? localStorage.getItem("plba_uid") ?? "" : "");
+  const nameParam = searchParams.get("name") ?? (typeof window !== "undefined" ? localStorage.getItem("plba_name") ?? "사장님" : "사장님");
+
   const [inviteOpen, setInviteOpen] = useState(false);
+  const [storeCode, setStoreCode] = useState("------");
+  const [storeName, setStoreName] = useState("");
+  const [storeId, setStoreId] = useState("");
+
   const today = new Date();
   const dateLabel = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 ${"일월화수목금토"[today.getDay()]}요일`;
+
+  useEffect(() => {
+    if (!uid) return;
+    supabase.from("stores").select("id, name, code").eq("owner_id", uid).maybeSingle().then(({ data }) => {
+      if (data) {
+        setStoreCode(data.code);
+        setStoreName(data.name);
+        setStoreId(data.id);
+      }
+    });
+  }, [uid]);
 
   return (
     <>
     <div style={{ display: "flex", width: "100%", minHeight: "100vh" }}>
-      {/* Sidebar — fixed width, full height */}
+      {/* Sidebar */}
       <div style={{
         width: 256,
         flexShrink: 0,
@@ -138,10 +152,13 @@ export default function OwnerWebLayout({ tab, onTabChange, onLogout }: {
         </div>
 
         {/* Shop code */}
-        <div style={{ background: "var(--p-soft)", borderRadius: 13, padding: "12px 14px", marginBottom: 16 }}>
+        <div
+          onClick={() => storeCode !== "------" && setInviteOpen(true)}
+          style={{ background: "var(--p-soft)", borderRadius: 13, padding: "12px 14px", marginBottom: 16, cursor: storeCode !== "------" ? "pointer" : "default" }}
+        >
           <div style={{ fontWeight: 600, fontSize: 11, color: "var(--p-tint)", opacity: 0.85 }}>우리 가게 코드</div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 3 }}>
-            <span style={{ fontWeight: 800, fontSize: 22, letterSpacing: "0.1em", color: "var(--p-tint)" }}>482910</span>
+            <span style={{ fontWeight: 800, fontSize: 22, letterSpacing: "0.1em", color: "var(--p-tint)" }}>{storeCode}</span>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--p-tint)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>
           </div>
           <div style={{ fontWeight: 500, fontSize: 11, color: "var(--p-tint)", opacity: 0.7, marginTop: 1 }}>알바생에게 공유하세요</div>
@@ -163,10 +180,12 @@ export default function OwnerWebLayout({ tab, onTabChange, onLogout }: {
         {/* Profile + logout */}
         <div style={{ marginTop: "auto", paddingTop: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 11, padding: 12, background: "#f7f7f8", border: "1px solid var(--hairline)", borderRadius: 14 }}>
-            <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#e1e2e4", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 14, color: "#46474c" }}>사</div>
+            <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#e1e2e4", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 14, color: "#46474c" }}>
+              {nameParam.charAt(0)}
+            </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontWeight: 700, fontSize: 13, color: "var(--text)" }}>사장님</div>
-              <div style={{ fontWeight: 500, fontSize: 11, color: "var(--text-sub)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>카페 모먼트 성수점</div>
+              <div style={{ fontWeight: 700, fontSize: 13, color: "var(--text)" }}>{nameParam}</div>
+              <div style={{ fontWeight: 500, fontSize: 11, color: "var(--text-sub)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{storeName || "가게 정보 로딩 중..."}</div>
             </div>
             <button onClick={onLogout} title="로그아웃" style={{ padding: 6, border: "none", background: "none", cursor: "pointer", color: "var(--text-sub)" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 17l5-5-5-5M20 12H9M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3" /></svg>
@@ -175,7 +194,7 @@ export default function OwnerWebLayout({ tab, onTabChange, onLogout }: {
         </div>
       </div>
 
-      {/* Content — fills remaining space */}
+      {/* Content */}
       <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", background: "#fafafb" }}>
         {/* Top bar */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 32px", borderBottom: "1px solid rgba(112,115,124,0.12)", background: "#fff", position: "sticky", top: 0, zIndex: 10 }}>
@@ -193,7 +212,7 @@ export default function OwnerWebLayout({ tab, onTabChange, onLogout }: {
 
         {/* Page content */}
         <div style={{ flex: 1, overflowY: "auto", padding: "28px 32px 48px" }}>
-          {tab === "dashboard" && <OwnerDashboard />}
+          {tab === "dashboard" && <OwnerDashboard storeId={storeId} />}
           {tab === "attendance" && <OwnerAttendance />}
           {tab === "payroll" && <OwnerPayroll />}
           {tab === "schedule" && <OwnerSchedule />}
@@ -202,7 +221,7 @@ export default function OwnerWebLayout({ tab, onTabChange, onLogout }: {
         </div>
       </div>
     </div>
-    {inviteOpen && <InviteModal onClose={() => setInviteOpen(false)} />}
+    {inviteOpen && <InviteModal storeCode={storeCode} onClose={() => setInviteOpen(false)} />}
     </>
   );
 }
