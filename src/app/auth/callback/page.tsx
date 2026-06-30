@@ -8,8 +8,15 @@ function CallbackInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role") ?? "alba";
+  const code = searchParams.get("code");
 
   useEffect(() => {
+    // code 파라미터 없으면 카카오를 거친 게 아님 → 로그인으로
+    if (!code) {
+      router.replace("/login");
+      return;
+    }
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN" && session) {
         const kakaoId = session.user.id;
@@ -25,7 +32,6 @@ function CallbackInner() {
           .maybeSingle();
 
         if (existing && existing.role === role) {
-          // 역할이 일치하는 기존 유저 → 바로 홈
           localStorage.setItem("plba_uid", existing.id);
           localStorage.setItem("plba_name", existing.name);
           const dest = role === "owner" ? "/owner" : "/app/alba";
@@ -33,13 +39,12 @@ function CallbackInner() {
           return;
         }
 
-        // 신규 유저 또는 역할 불일치 → 해당 역할 회원가입
         const dest = role === "owner" ? "/owner-signup" : "/join";
         router.replace(`${dest}?kakao_id=${encodeURIComponent(kakaoId)}&kakao_name=${encodeURIComponent(nickname)}`);
       }
     });
     return () => subscription.unsubscribe();
-  }, [role, router]);
+  }, [code, role, router]);
 
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", flexDirection: "column", gap: 16 }}>
