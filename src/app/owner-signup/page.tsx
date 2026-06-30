@@ -318,11 +318,11 @@ function FormContent({
             {bizVerified && (
               <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8, padding: "12px 14px", background: "var(--positive-bg)", borderRadius: 12 }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--positive)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
-                <span style={{ fontWeight: 600, fontSize: 13, color: "var(--positive)" }}>{bizName} — 등록 사업자 확인됐어요!</span>
+                <span style={{ fontWeight: 600, fontSize: 13, color: "var(--positive)" }}>사업자가 확인되었습니다!</span>
               </div>
             )}
             {bizError && (
-              <div style={{ marginTop: 10, padding: "10px 14px", background: "var(--negative-bg)", borderRadius: 12, fontWeight: 600, fontSize: 13, color: "var(--negative)" }}>{bizError}</div>
+              <div style={{ marginTop: 10, padding: "10px 14px", background: "var(--negative-bg)", borderRadius: 12, fontWeight: 600, fontSize: 13, color: "var(--negative)" }}>사업자 번호를 다시 확인해주세요</div>
             )}
           </div>
 
@@ -460,8 +460,8 @@ function FormContent({
             <span style={{ color: "var(--p)", fontWeight: 700 }}>{phone}</span>으로 보냈어요.
           </p>
 
-          <div style={{ position: "relative", marginTop: 32 }}>
-            <div style={{ display: "flex", gap: 9 }}>
+          <div style={{ position: "relative", marginTop: 32, width: "100%" }}>
+            <div style={{ display: "flex", gap: 9, width: "100%", position: "relative", zIndex: 0 }}>
               {otpDigits.map((ch, i) => {
                 const isActive = i === otp.length && otp.length < 6;
                 const hasCh = i < otp.length;
@@ -478,7 +478,7 @@ function FormContent({
               inputMode="numeric"
               maxLength={6}
               autoFocus
-              style={{ position: "absolute", inset: 0, opacity: 0, cursor: "text", fontSize: 16 }}
+              style={{ position: "absolute", inset: 0, opacity: 0, cursor: "text", fontSize: 16, zIndex: 1 }}
             />
           </div>
 
