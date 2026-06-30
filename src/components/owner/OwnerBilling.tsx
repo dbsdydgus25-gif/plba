@@ -111,19 +111,37 @@ export default function OwnerBilling({ storeId }: { storeId: string }) {
         </div>
       )}
 
-      {/* QR 코드 미리보기 */}
-      <div style={{ background: "#fff", border: "1.5px solid #E5E7EB", borderRadius: 16, padding: "20px", marginBottom: 24 }}>
-        <p style={{ fontWeight: 700, fontSize: 15, color: "#333", marginBottom: 4 }}>가게 QR 코드</p>
-        <p style={{ fontSize: 13, color: "#888", marginBottom: 16 }}>이 링크를 QR로 출력해 가게에 붙여두세요.</p>
-        <div style={{ background: "#f7f7fb", borderRadius: 10, padding: "12px 16px", fontFamily: "monospace", fontSize: 13, color: "#6B4DF6", wordBreak: "break-all", marginBottom: 12 }}>
-          https://plba.co.kr/qr/{store.code}
+      {/* QR 코드 */}
+      <div style={{ background: "#fff", border: "1.5px solid #E5E7EB", borderRadius: 16, padding: "24px 20px", marginBottom: 24 }}>
+        <p style={{ fontWeight: 700, fontSize: 15, color: "#333", marginBottom: 4 }}>출퇴근 QR 코드</p>
+        <p style={{ fontSize: 13, color: "#888", marginBottom: 20 }}>출력해서 가게에 붙여두면 알바생이 스캔해서 출퇴근해요.</p>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(`https://plba.co.kr/qr/${store.code}`)}&size=220x220&margin=10`}
+            alt="QR 코드"
+            width={220}
+            height={220}
+            style={{ borderRadius: 12, border: "1px solid #eee" }}
+          />
         </div>
-        <button
-          onClick={() => window.open(`https://plba.co.kr/qr/${store.code}`, "_blank")}
-          style={{ width: "100%", height: 44, borderRadius: 10, border: "1.5px solid #6B4DF6", background: "#fff", color: "#6B4DF6", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
-        >
-          QR 링크 열기
-        </button>
+        <div style={{ background: "#f7f7fb", borderRadius: 10, padding: "10px 14px", fontFamily: "monospace", fontSize: 13, color: "#6B4DF6", wordBreak: "break-all", marginBottom: 12, textAlign: "center" }}>
+          plba.co.kr/qr/{store.code}
+        </div>
+        <div style={{ display: "flex", gap: 10 }}>
+          <button
+            onClick={() => window.open(`https://plba.co.kr/qr/${store.code}`, "_blank")}
+            style={{ flex: 1, height: 44, borderRadius: 10, border: "1.5px solid #6B4DF6", background: "#fff", color: "#6B4DF6", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
+          >
+            링크 테스트
+          </button>
+          <button
+            onClick={() => window.open(`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(`https://plba.co.kr/qr/${store.code}`)}&size=600x600&margin=20`, "_blank")}
+            style={{ flex: 1, height: 44, borderRadius: 10, border: "none", background: "#6B4DF6", color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
+          >
+            QR 크게 보기 / 인쇄
+          </button>
+        </div>
       </div>
 
       {isActive && (
