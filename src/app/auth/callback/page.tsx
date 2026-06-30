@@ -41,7 +41,7 @@ function CallbackInner() {
       const dest = role === "owner" ? "/owner-signup" : "/join";
       router.replace(`${dest}?kakao_id=${encodeURIComponent(kakaoId)}&kakao_name=${encodeURIComponent(nickname)}`);
     })();
-  }, [role, router]);
+  }, [router]);
 
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", flexDirection: "column", gap: 16 }}>
