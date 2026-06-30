@@ -20,11 +20,12 @@ function CallbackInner() {
 
         const { data: existing } = await supabase
           .from("users")
-          .select("id, name, phone")
+          .select("id, name, phone, role")
           .eq("kakao_id", kakaoId)
           .maybeSingle();
 
-        if (existing) {
+        if (existing && existing.role === role) {
+          // 역할이 일치하는 기존 유저 → 바로 홈
           localStorage.setItem("plba_uid", existing.id);
           localStorage.setItem("plba_name", existing.name);
           const dest = role === "owner" ? "/owner" : "/app/alba";
@@ -32,7 +33,7 @@ function CallbackInner() {
           return;
         }
 
-        // 신규 유저 → 회원가입
+        // 신규 유저 또는 역할 불일치 → 해당 역할 회원가입
         const dest = role === "owner" ? "/owner-signup" : "/join";
         router.replace(`${dest}?kakao_id=${encodeURIComponent(kakaoId)}&kakao_name=${encodeURIComponent(nickname)}`);
       }
