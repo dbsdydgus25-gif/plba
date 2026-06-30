@@ -11,7 +11,7 @@ function CallbackInner() {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === "SIGNED_IN" && session) {
+      if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session) {
         const kakaoId = session.user.id;
         const nickname =
           session.user.user_metadata?.name ??
