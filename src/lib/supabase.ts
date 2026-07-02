@@ -12,6 +12,13 @@ export type Store = {
   code: string;
   address: string | null;
   created_at: string;
+  subscription_status: string | null;
+  trial_ends_at: string | null;
+  creem_subscription_id: string | null;
+  creem_customer_id: string | null;
+  subscription_current_period_end: string | null;
+  subscription_cancel_at_period_end: boolean | null;
+  subscription_started_at: string | null;
 };
 
 export type User = {
