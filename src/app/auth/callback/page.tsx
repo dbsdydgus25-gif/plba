@@ -11,7 +11,9 @@ function CallbackInner() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event !== "SIGNED_IN" || !session) return;
 
-      const role = localStorage.getItem("plba_role") ?? "alba";
+      // 이메일/비번 가입자는 항상 owner (알바생은 Kakao만 사용)
+      const provider = session.user.app_metadata?.provider ?? "";
+      const role = provider === "email" ? "owner" : (localStorage.getItem("plba_role") ?? "alba");
       const authId = session.user.id;
       const nickname =
         session.user.user_metadata?.name ??
