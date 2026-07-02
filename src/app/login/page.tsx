@@ -63,7 +63,10 @@ export default function LoginPage() {
     localStorage.setItem("plba_role", "alba");
     supabase.auth.signInWithOAuth({
       provider: "kakao",
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+        queryParams: { prompt: "login" },
+      },
     });
   }
 
