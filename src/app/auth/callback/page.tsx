@@ -45,8 +45,8 @@ function CallbackInner() {
           }
           router.replace("/owner");
         } else {
-          // 신규 사장님 → 사업자 정보 입력 플로우
-          router.replace(`/owner-auth?step=bizinfo`);
+          // 신규 사장님 → 비밀번호 설정 플로우
+          router.replace(`/owner-auth?step=password`);
         }
       } else {
         // 알바생: 카카오 OAuth → kakao_id 컬럼으로 매칭

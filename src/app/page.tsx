@@ -112,7 +112,7 @@ export default function LandingPage() {
         </p>
 
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
-          <button onClick={() => router.push("/owner-signup")} style={{ height: 54, padding: "0 32px", borderRadius: 14, border: "none", background: "var(--p)", color: "#fff", fontWeight: 800, fontSize: 16, cursor: "pointer", boxShadow: "0 8px 24px rgba(107,77,246,0.3)" }}>
+          <button onClick={() => router.push("/owner-auth")} style={{ height: 54, padding: "0 32px", borderRadius: 14, border: "none", background: "var(--p)", color: "#fff", fontWeight: 800, fontSize: 16, cursor: "pointer", boxShadow: "0 8px 24px rgba(107,77,246,0.3)" }}>
             사장님 무료로 시작하기 →
           </button>
           <button onClick={() => router.push("/login?role=alba")} style={{ height: 54, padding: "0 28px", borderRadius: 14, border: "1.5px solid var(--p-border)", background: "#fff", color: "var(--p-tint)", fontWeight: 700, fontSize: 15, cursor: "pointer" }}>
@@ -202,7 +202,7 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-          <button onClick={() => router.push("/owner-signup")} style={{ width: "100%", height: 52, borderRadius: 13, border: "none", background: "var(--p)", color: "#fff", fontSize: 15, fontWeight: 800, cursor: "pointer", boxShadow: "0 6px 20px rgba(107,77,246,0.25)" }}>
+          <button onClick={() => router.push("/owner-auth")} style={{ width: "100%", height: 52, borderRadius: 13, border: "none", background: "var(--p)", color: "#fff", fontSize: 15, fontWeight: 800, cursor: "pointer", boxShadow: "0 6px 20px rgba(107,77,246,0.25)" }}>
             30일 무료로 시작하기
           </button>
           <p style={{ marginTop: 12, fontSize: 12, color: "var(--text-sub2)" }}>신용카드 불필요 · 언제든지 해지 가능</p>
@@ -214,7 +214,7 @@ export default function LandingPage() {
         <h2 style={{ fontWeight: 900, fontSize: "clamp(26px, 4vw, 42px)", color: "#fff", letterSpacing: "-1px", marginBottom: 16 }}>지금 바로 시작해보세요</h2>
         <p style={{ fontWeight: 500, fontSize: 15, color: "rgba(255,255,255,0.75)", marginBottom: 36 }}>30일 무료 체험, 카드 정보 없이 시작 가능합니다.</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <button onClick={() => router.push("/owner-signup")} style={{ height: 52, padding: "0 32px", borderRadius: 13, border: "none", background: "#fff", color: "var(--p)", fontWeight: 800, fontSize: 15, cursor: "pointer" }}>
+          <button onClick={() => router.push("/owner-auth")} style={{ height: 52, padding: "0 32px", borderRadius: 13, border: "none", background: "#fff", color: "var(--p)", fontWeight: 800, fontSize: 15, cursor: "pointer" }}>
             사장님 무료 시작 →
           </button>
           <button onClick={() => router.push("/login?role=alba")} style={{ height: 52, padding: "0 28px", borderRadius: 13, border: "1.5px solid rgba(255,255,255,0.4)", background: "transparent", color: "#fff", fontWeight: 700, fontSize: 15, cursor: "pointer" }}>
