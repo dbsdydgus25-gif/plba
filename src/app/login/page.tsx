@@ -1,10 +1,63 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%", height: 54, border: "1.5px solid #e0e0e4", borderRadius: 14,
+    padding: "0 16px", fontSize: 16, fontFamily: "Pretendard", fontWeight: 500,
+    color: "#1a1a1a", outline: "none", boxSizing: "border-box", background: "#fff",
+  };
+
+  async function handleLogin() {
+    if (!email || !password) return;
+    setError("");
+    setLoading(true);
+    try {
+      const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
+      if (err) throw err;
+
+      const userId = data.user.id;
+      localStorage.setItem("plba_role", "owner");
+
+      const { data: existing } = await supabase
+        .from("users").select("id, name").eq("id", userId).maybeSingle();
+
+      if (existing) {
+        localStorage.setItem("plba_uid", existing.id);
+        localStorage.setItem("plba_name", existing.name);
+        const { data: store } = await supabase
+          .from("stores").select("id, name, code").eq("owner_id", existing.id).maybeSingle();
+        if (store) {
+          localStorage.setItem("plba_store_id", store.id);
+          localStorage.setItem("plba_store_name", store.name);
+          localStorage.setItem("plba_store_code", store.code);
+        }
+        router.replace("/owner");
+      } else {
+        router.replace(`/owner-signup?google_id=${encodeURIComponent(userId)}&google_name=`);
+      }
+    } catch (e) {
+      const msg = (e as { message?: string }).message ?? "";
+      if (msg.includes("Invalid login credentials") || msg.includes("invalid_credentials")) {
+        setError("이메일 또는 비밀번호가 올바르지 않아요.");
+      } else if (msg.includes("Email not confirmed")) {
+        setError("이메일 인증을 완료해주세요. 받은 편지함을 확인하세요.");
+      } else {
+        setError(msg || "로그인 중 오류가 발생했어요.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
 
   function kakaoLogin() {
     localStorage.setItem("plba_role", "alba");
@@ -14,138 +67,99 @@ export default function LoginPage() {
     });
   }
 
-  function ownerLogin() {
-    router.push("/owner-auth");
-  }
-
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
-      {/* Desktop */}
-      <div style={{ display: "flex", minHeight: "100vh" }} className="hidden md:flex">
-        {/* Left brand panel */}
-        <div style={{ width: 480, flexShrink: 0, background: "var(--p)", display: "flex", flexDirection: "column", justifyContent: "center", padding: "64px 56px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 40 }}>
-            <Image src="/plba-symbol.png" width={48} height={48} alt="plba" style={{ objectFit: "contain", filter: "brightness(10)" }} />
-            <Image src="/plba-logo.png" width={80} height={28} alt="plba" style={{ objectFit: "contain", filter: "brightness(10)" }} />
-          </div>
-          <h1 style={{ fontWeight: 800, fontSize: 36, color: "#fff", lineHeight: 1.25, letterSpacing: "-0.02em" }}>
-            QR 하나로 끝내는<br />알바 근태 관리
-          </h1>
-          <p style={{ fontWeight: 500, fontSize: 16, color: "rgba(255,255,255,0.75)", marginTop: 18, lineHeight: 1.65 }}>
-            매장에 부착된 QR을 알바생이 스캔하면,<br />
-            사장님 대시보드에 실시간으로 기록돼요.
-          </p>
-          <div style={{ marginTop: 48, display: "flex", flexDirection: "column", gap: 14 }}>
-            {[
-              { icon: "📱", text: "QR 한 번으로 출퇴근 완료" },
-              { icon: "📊", text: "실시간 근태 현황 대시보드" },
-              { icon: "💰", text: "주휴수당 포함 자동 급여 계산" },
-              { icon: "📅", text: "스케줄 관리 & 직원 알림" },
-            ].map(item => (
-              <div key={item.text} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <span style={{ fontSize: 18 }}>{item.icon}</span>
-                <span style={{ fontWeight: 500, fontSize: 15, color: "rgba(255,255,255,0.85)" }}>{item.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div style={{ minHeight: "100vh", background: "#f7f7f9", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 16px" }}>
+      <div style={{ width: "100%", maxWidth: 420, background: "#fff", borderRadius: 24, padding: "48px 36px 40px", boxShadow: "0 2px 20px rgba(0,0,0,0.07)" }}>
 
-        {/* Right login */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "48px" }}>
-          <div style={{ width: "100%", maxWidth: 520 }}>
-            <h2 style={{ fontWeight: 800, fontSize: 26, color: "var(--text)", marginBottom: 8 }}>시작하기</h2>
-            <p style={{ fontWeight: 500, fontSize: 15, color: "var(--text-sub)", marginBottom: 32 }}>어떤 계정으로 시작할까요?</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <AlbaCard onLogin={kakaoLogin} />
-              <OwnerCard onLogin={ownerLogin} />
-            </div>
-            <p style={{ marginTop: 20, fontWeight: 500, fontSize: 12, color: "var(--text-sub)", textAlign: "center", lineHeight: 1.6 }}>
-              알바생은 카카오 간편 로그인으로,<br />사장님은 이메일로 시작할 수 있어요.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile */}
-      <div className="flex md:hidden flex-col min-h-screen" style={{ background: "#fff" }}>
-        <div style={{ padding: "52px 28px 32px", textAlign: "center" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
+        {/* Logo */}
+        <div style={{ textAlign: "center", marginBottom: 36 }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
             <Image src="/plba-symbol.png" width={40} height={40} alt="plba" style={{ objectFit: "contain" }} />
             <Image src="/plba-logo.png" width={64} height={22} alt="plba" style={{ objectFit: "contain" }} />
           </div>
-          <h1 style={{ fontWeight: 800, fontSize: 22, color: "var(--text)", lineHeight: 1.3, letterSpacing: "-0.02em" }}>
-            QR 하나로 끝내는<br />알바 근태 관리
-          </h1>
-          <p style={{ fontWeight: 500, fontSize: 14, color: "var(--text-sub)", marginTop: 10, lineHeight: 1.6 }}>
-            어떤 계정으로 시작할까요?
-          </p>
         </div>
-        <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", gap: 14 }}>
-          <AlbaCard onLogin={kakaoLogin} />
-          <OwnerCard onLogin={ownerLogin} />
+
+        {/* 이메일/비번 */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="이메일 입력"
+            style={inputStyle}
+            autoComplete="email"
+            onKeyDown={e => e.key === "Enter" && handleLogin()}
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="비밀번호 입력"
+            style={inputStyle}
+            autoComplete="current-password"
+            onKeyDown={e => e.key === "Enter" && handleLogin()}
+          />
         </div>
-        <p style={{ margin: "20px 24px 40px", fontWeight: 500, fontSize: 12, color: "var(--text-sub)", textAlign: "center", lineHeight: 1.6 }}>
-          알바생은 카카오로, 사장님은 이메일로<br />바로 시작할 수 있어요.
+
+        {error && (
+          <div style={{ marginTop: 10, padding: "10px 14px", background: "#fff1f0", borderRadius: 11, fontWeight: 600, fontSize: 13, color: "#d32f2f" }}>
+            {error}
+          </div>
+        )}
+
+        {/* 로그인 버튼 */}
+        <button
+          onClick={handleLogin}
+          disabled={loading || !email || !password}
+          style={{ marginTop: 16, width: "100%", height: 54, border: "none", borderRadius: 14, background: "var(--p)", color: "#fff", fontWeight: 800, fontSize: 16, cursor: loading || !email || !password ? "not-allowed" : "pointer", opacity: loading || !email || !password ? 0.45 : 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "opacity 0.15s" }}
+        >
+          {loading && <div style={{ width: 16, height: 16, border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "#fff", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />}
+          로그인
+        </button>
+
+        {/* 비번 찾기 */}
+        <div style={{ marginTop: 12, textAlign: "right" }}>
+          <button
+            onClick={() => router.push("/owner-auth?tab=reset")}
+            style={{ background: "none", border: "none", cursor: "pointer", fontWeight: 500, fontSize: 13, color: "#aaa" }}
+          >
+            비밀번호 찾기
+          </button>
+        </div>
+
+        {/* 구분선 */}
+        <div style={{ margin: "24px 0", display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ flex: 1, height: 1, background: "#ebebee" }} />
+          <div style={{ flex: 1, height: 1, background: "#ebebee" }} />
+        </div>
+
+        {/* 사업자 신규 가입 */}
+        <button
+          onClick={() => router.push("/owner-auth")}
+          style={{ width: "100%", height: 54, border: "2px solid var(--p)", borderRadius: 14, background: "#fff", color: "var(--p)", fontWeight: 800, fontSize: 15, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          </svg>
+          사업자 신규 가입하기
+        </button>
+
+        {/* 알바생 구분 안내 */}
+        <p style={{ margin: "20px 0 12px", fontWeight: 500, fontSize: 13, color: "#aaa", textAlign: "center" }}>
+          알바생이신가요?
         </p>
+
+        {/* 카카오 로그인 */}
+        <button
+          onClick={kakaoLogin}
+          style={{ width: "100%", height: 54, border: "none", borderRadius: 14, background: "#FEE500", color: "#191600", fontWeight: 700, fontSize: 15, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+        >
+          <KakaoIcon />
+          알바생 간편 로그인
+        </button>
       </div>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
-  );
-}
-
-function AlbaCard({ onLogin }: { onLogin: () => void }) {
-  return (
-    <button onClick={onLogin} style={{ width: "100%", textAlign: "left", background: "#fff", border: "1.5px solid rgba(112,115,124,0.18)", borderRadius: 20, padding: "22px 22px 20px", cursor: "pointer" }}>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 14 }}>
-        <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--p-soft)", color: "var(--p-tint)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M11 18.5h2" />
-          </svg>
-        </div>
-        <div>
-          <div style={{ fontWeight: 800, fontSize: 17, color: "var(--text)" }}>알바생으로 시작</div>
-          <div style={{ fontWeight: 500, fontSize: 13, color: "var(--text-sub)", marginTop: 4, lineHeight: 1.5 }}>QR 찍어 출퇴근하고, 내 근무·급여를 확인해요.</div>
-        </div>
-      </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
-        {["QR 출퇴근", "근무기록", "급여조회"].map(tag => (
-          <span key={tag} style={{ padding: "4px 10px", background: "#f1f1f3", borderRadius: 9999, fontWeight: 600, fontSize: 12, color: "rgba(55,56,60,0.65)" }}>{tag}</span>
-        ))}
-      </div>
-      <div style={{ width: "100%", height: 50, borderRadius: 12, background: "#FEE500", color: "#191600", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 700, fontSize: 15 }}>
-        <KakaoIcon />
-        카카오로 알바생 시작
-      </div>
-    </button>
-  );
-}
-
-function OwnerCard({ onLogin }: { onLogin: () => void }) {
-  return (
-    <button onClick={onLogin} style={{ width: "100%", textAlign: "left", background: "#fff", border: "1.5px solid rgba(112,115,124,0.18)", borderRadius: 20, padding: "22px 22px 20px", cursor: "pointer" }}>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 14 }}>
-        <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--p-soft)", color: "var(--p-tint)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="3" width="8" height="9" rx="1.5" /><rect x="13" y="3" width="8" height="5" rx="1.5" />
-            <rect x="13" y="11" width="8" height="10" rx="1.5" /><rect x="3" y="15" width="8" height="6" rx="1.5" />
-          </svg>
-        </div>
-        <div>
-          <div style={{ fontWeight: 800, fontSize: 17, color: "var(--text)" }}>사장님으로 시작</div>
-          <div style={{ fontWeight: 500, fontSize: 13, color: "var(--text-sub)", marginTop: 4, lineHeight: 1.5 }}>직원 근태·급여 관리와 스케줄을 한눈에.</div>
-        </div>
-      </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
-        {["실시간 근태", "급여정산", "스케줄"].map(tag => (
-          <span key={tag} style={{ padding: "4px 10px", background: "#f1f1f3", borderRadius: 9999, fontWeight: 600, fontSize: 12, color: "rgba(55,56,60,0.65)" }}>{tag}</span>
-        ))}
-      </div>
-      <div style={{ width: "100%", height: 50, borderRadius: 12, background: "#6B4DF6", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 700, fontSize: 15 }}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-        </svg>
-        이메일로 사장님 시작
-      </div>
-    </button>
   );
 }
 
@@ -156,4 +170,3 @@ function KakaoIcon() {
     </svg>
   );
 }
-
