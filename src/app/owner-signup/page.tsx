@@ -9,8 +9,8 @@ type Step = "bizreg" | "bizinfo" | "address" | "name" | "phone" | "verify";
 function OwnerSignupInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const kakaoId = searchParams.get("kakao_id") ?? "";
-  const kakaoName = searchParams.get("kakao_name") ? decodeURIComponent(searchParams.get("kakao_name")!) : "";
+  const googleId = searchParams.get("google_id") ?? "";
+  const googleName = searchParams.get("google_name") ? decodeURIComponent(searchParams.get("google_name")!) : "";
 
   const [step, setStep] = useState<Step>("bizreg");
   const [businessType, setBusinessType] = useState("");
@@ -30,7 +30,7 @@ function OwnerSignupInner() {
   const [smsLoading, setSmsLoading] = useState(false);
   const [saveError, setSaveError] = useState("");
 
-  useEffect(() => { if (kakaoName) setOwnerName(kakaoName); }, [kakaoName]);
+  useEffect(() => { if (googleName) setOwnerName(googleName); }, [googleName]);
 
   const otpDigits = otp.padEnd(6, "").split("");
 
@@ -102,26 +102,44 @@ function OwnerSignupInner() {
       const data = await res.json();
       if (!data.ok) throw new Error("인증번호가 올바르지 않아요.");
 
-      // DB 저장: users
+      // DB 저장: users (Google auth user ID = users.id)
       const insertData: Record<string, unknown> = { phone: phone.replace(/\D/g, ""), name: ownerName, role: "owner" };
-      if (kakaoId) insertData.id = kakaoId;
+      if (googleId) insertData.id = googleId;
       const { data: user, error: userErr } = await supabase
         .from("users")
-        .upsert(insertData, { onConflict: "phone" })
+        .upsert(insertData, { onConflict: "id" })
         .select("id")
         .single();
       if (userErr) throw new Error("계정 저장 실패: " + userErr.message);
 
-      // DB 저장: stores
+      // DB 저장: stores (14일 무료체험 상태)
       const code = Math.floor(100000 + Math.random() * 900000).toString();
-      const { error: storeErr } = await supabase
+      const trialEndsAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
+      const { data: store, error: storeErr } = await supabase
         .from("stores")
-        .insert({ name: storeName || ownerName + "의 가게", address, code, owner_id: user.id, business_type: businessType, employee_count: employeeCount });
+        .insert({ name: storeName || ownerName + "의 가게", address, code, owner_id: user.id, business_type: businessType, employee_count: employeeCount, subscription_status: "trial", trial_ends_at: trialEndsAt })
+        .select("id, name, code")
+        .single();
       if (storeErr) throw new Error("가게 저장 실패: " + storeErr.message);
 
       localStorage.setItem("plba_uid", user.id);
       localStorage.setItem("plba_name", ownerName);
-      router.push(`/owner?uid=${user.id}&name=${encodeURIComponent(ownerName)}`);
+      localStorage.setItem("plba_store_id", store.id);
+      localStorage.setItem("plba_store_name", store.name);
+      localStorage.setItem("plba_store_code", store.code);
+
+      // Creem 결제 등록 체크아웃으로 이동
+      const checkoutRes = await fetch("/api/creem/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ storeId: store.id, storeName: store.name, successUrl: `${window.location.origin}/owner?payment=success` }),
+      });
+      const checkoutData = await checkoutRes.json();
+      if (checkoutData.checkoutUrl) {
+        window.location.href = checkoutData.checkoutUrl;
+      } else {
+        router.push("/owner");
+      }
     } catch (e) {
       const msg = (e as Error).message;
       if (msg.includes("인증번호")) setSmsError(msg);
